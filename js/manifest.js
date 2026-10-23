@@ -18,12 +18,15 @@ window.RIPPL_MANIFEST = {
     'js/core/auth-gate-preshow.js',
     'js/features/auth.js',
     'js/pages/profile/edit-profile.js',
+    'js/pages/profile/settings.js',
     'js/features/offline-db.js',
     'js/features/chats-sync.js',
     'js/features/feed-sync.js',
     'js/features/social-sync.js',
     'js/features/notifications-sync.js',
     'js/features/live-presence.js',
+    'js/features/pull-refresh.js',
+    'js/features/scroll-hide.js',
     'js/core/native-shell.js'
   ]
 };

@@ -1,7 +1,7 @@
 /* Rippl — ورقة حالة الاتصال */
 /* ---------- online status sheet ---------- */
 const ST={online:['Online','#23a55a'],idle:['Idle','#f0b232'],dnd:['Do Not Disturb','#ed4245'],invisible:['Invisible','#80848e']};
-let curSt='invisible';
+let curSt='online';
 function stSync(){
   document.querySelectorAll('#stSheet .scard:not(.scus) .sopt').forEach(o=>o.classList.toggle('on',o.dataset.s===curSt));
   const sm=document.querySelector('.me small');if(sm)sm.textContent=ST[curSt][0];

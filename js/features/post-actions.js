@@ -17,6 +17,6 @@ document.addEventListener('keydown',e=>{
  if(e.key!=='Enter')return;const i=e.target.closest&&e.target.closest('.fcmt input');if(!i)return;
  const v=i.value.trim();if(!v)return;
  const post=i.closest('.fpost'),c=document.createElement('div');c.className='cmt';c.dir='auto';
- const b=document.createElement('b');b.textContent='شين';c.append(b,v);
+ const b=document.createElement('b');b.textContent='Rippl';c.append(b,v);
  post.querySelector('.cmlist').append(c);i.value='';
  const cc=post.querySelector('.cc');cc.textContent=(+cc.textContent||0)+1});

@@ -45,7 +45,7 @@
       chatList.append(mkRow({ img: s.id, fb: n[0] || "S", name: n, sq: 1, sub: s.is_public ? "Server" : "Group", time: "" }));
     });
     if (!chatList.querySelector(".row")) { const e = document.createElement("div"); e.id = "liveEmpty";
-      e.style.cssText = "padding:40px 20px;text-align:center;color:var(--mut)"; e.textContent = "اضغط + لإضافة أصدقاء أو إنشاء خادم"; chatList.append(e); }
+      e.style.cssText = "padding:40px 20px;text-align:center;color:var(--mut)"; e.textContent = "Tap + to add friends or create a server"; chatList.append(e); }
     hydrate(chatList); lucide.createIcons();
     if (mine) { const b = document.querySelector("#meBtn b");
       if (b && b.firstChild && b.firstChild.nodeType === 3 && mine.display_name) b.firstChild.nodeValue = mine.display_name + " ";
@@ -141,11 +141,11 @@
   async function loadOlder(it) {
     const key = convKey(it); if (LOADING[key] || !MORE[key]) return;
     const rows = ROWS[key] || []; if (!rows.length) return;
-    if (!RipplNet.online) return RipplNet.guard("لا يوجد اتصال — الرسائل الأقدم غير محفوظة على الجهاز");
+    if (!RipplNet.online) return RipplNet.guard("You’re offline — older messages aren’t saved on this device");
     LOADING[key] = 1; paintLoader(it);
     try {
       const { data, error } = await page(it, rows[0].created_at);
-      if (error || !data) return toast("تعذّر تحميل الرسائل الأقدم");
+      if (error || !data) return toast("Couldn’t load older messages");
       const have = new Set(rows.map(r => r.id)), older = data.filter(r => !have.has(r.id)).reverse();
       ROWS[key] = older.concat(rows); MORE[key] = data.length === PAGE; persist(key);
       window.__keepScroll = true; await buildConv(it);
@@ -156,7 +156,7 @@
     const b = $("chBody"), key = it && convKey(it), old = b.querySelector(".chload"); if (old) old.remove();
     if (!it || !MORE[key] || b.querySelector(".chempty")) return;
     const l = document.createElement("button"); l.className = "chload"; l.type = "button";
-    l.textContent = LOADING[key] ? "جارٍ تحميل رسائل أقدم…" : "تحميل رسائل أقدم"; l.onclick = () => loadOlder(it); b.prepend(l);
+    l.textContent = LOADING[key] ? "Loading older messages…" : "Load older messages"; l.onclick = () => loadOlder(it); b.prepend(l);
   }
   const rc = window.chRender;
   window.chRender = function () {
@@ -187,7 +187,7 @@
     if (BURL[it.id]) { URL.revokeObjectURL(BURL[it.id]); delete BURL[it.id]; }
     sched();
   });
-  RipplNet.on("failed", it => { if (it.type !== "dm_msg" && it.type !== "ch_msg") return; toast("تعذّر إرسال رسالة");
+  RipplNet.on("failed", it => { if (it.type !== "dm_msg" && it.type !== "ch_msg") return; toast("Couldn’t send message");
     if (chCur && convKey(chCur) === it.key) buildConv(chCur); });
   window.addEventListener("rippl-reconnect", () => { if (!me) return; loadAll(); if (chCur && (chCur.chan ? CHID[chCur.name] : F[chCur.k])) loadConv(chCur); });
   window.ripplMarkRead = (peer, id) => { // the other person read my messages up to `id`
@@ -200,8 +200,8 @@
   const osd = window.chSend;
   window.chSend = function () {
     const inp = $("chInput"), v = inp.value.trim(), it = chCur; if (!v || !it) return;
-    if (!it.chan && !F[it.k]) { osd(); return toast("هذه محادثة تجريبية"); }
-    if (it.chan && !CHID[it.name]) { osd(); return toast("تعذّر الإرسال"); }
+    if (!it.chan && !F[it.k]) return toast("Couldn’t send message");
+    if (it.chan && !CHID[it.name]) { osd(); return toast("Couldn’t send"); }
     inp.value = ""; $("chSend").classList.add("off");
     RipplNet.enqueue({ type: it.chan ? "ch_msg" : "dm_msg", key: convKey(it), payload: { content: v, to: it.chan ? CHID[it.name] : it.k } })
       .then(() => { buildConv(it); if (!it.chan) chBump(it, v); });
@@ -216,9 +216,9 @@
     if (!b) { b = document.createElement("button"); b.id = "srAdd"; b.textContent = "+"; b.setAttribute("aria-label", "New channel");
       b.style.cssText = "background:none;border:0;color:var(--txt);font-size:26px;margin-left:auto;padding:0 8px;cursor:pointer";
       document.querySelector("#srv .chh").append(b);
-      b.onclick = async () => { const n = prompt("اسم القناة الجديدة"); if (!n || !n.trim()) return;
+      b.onclick = async () => { const n = prompt("New channel name"); if (!n || !n.trim()) return;
         const { error } = await c.from("channels").insert({ server_id: curSrv, name: n.trim().toLowerCase().replace(/\s+/g, "-") });
-        if (error) return toast("تعذّر إنشاء القناة"); await loadAll(); window.openSrv(curSrv); }; }
+        if (error) return toast("Couldn’t create channel"); await loadAll(); window.openSrv(curSrv); }; }
     b.style.display = (ROLE[k] === "owner" || ROLE[k] === "admin") ? "" : "none";
   };
   const ob = $("srBody").onclick;
@@ -229,12 +229,12 @@
   window.rSGN = function () {
     r0(); const B = $("sgBody"); if (!B || sgQ || !PEND.length) return;
     const box = document.createElement("div"); box.id = "liveReq";
-    const h = document.createElement("div"); h.className = "gsec"; h.textContent = "طلبات الصداقة"; box.append(h);
+    const h = document.createElement("div"); h.className = "gsec"; h.textContent = "Friend requests"; box.append(h);
     PEND.forEach(q => { const p = PROF[q.id], d = document.createElement("div");
       d.style.cssText = "display:flex;align-items:center;gap:10px;padding:8px 16px";
       d.innerHTML = '<div class="av"></div><b style="flex:1" dir="auto"></b><button class="sgf2 pr" style="width:auto"></button>';
       d.querySelector(".av").dataset.img = q.id; d.querySelector(".av").dataset.fb = nm(p)[0]; d.querySelector("b").textContent = nm(p);
-      const bt = d.querySelector("button"); bt.textContent = "قبول";
+      const bt = d.querySelector("button"); bt.textContent = "Accept";
       bt.onclick = async e => { e.stopPropagation(); await c.from("friendships").update({ status: "accepted" }).eq("id", q.fid); loadAll(); };
       box.append(d); });
     B.prepend(box); hydrate(box);
@@ -247,15 +247,15 @@
       const { data } = await c.from("profiles").select("id,username,display_name,avatar_url").or(`username.ilike.%${q}%,display_name.ilike.%${q}%`).neq("id", me).limit(8);
       const rs = (data || []).filter(p => !F[p.id]); if (!rs.length) return;
       const box = document.createElement("div"); box.id = "liveRes";
-      const h = document.createElement("div"); h.className = "gsec"; h.textContent = "أشخاص في Rippl"; box.append(h);
+      const h = document.createElement("div"); h.className = "gsec"; h.textContent = "People on Rippl"; box.append(h);
       rs.forEach(p => { PROF[p.id] = p; IMG[p.id] = p.avatar_url || NOIMG; const d = document.createElement("div");
         d.style.cssText = "display:flex;align-items:center;gap:10px;padding:8px 16px";
         d.innerHTML = '<div class="av"></div><div style="flex:1"><b dir="auto"></b><br><small style="color:var(--mut)"></small></div><button class="sgf2 pr" style="width:auto"></button>';
         d.querySelector(".av").dataset.img = p.id; d.querySelector(".av").dataset.fb = nm(p)[0];
         d.querySelector("b").textContent = nm(p); d.querySelector("small").textContent = p.username ? "@" + p.username : "";
-        const bt = d.querySelector("button"); bt.textContent = SENT.has(p.id) ? "Sent" : "إضافة"; if (SENT.has(p.id)) bt.disabled = true;
+        const bt = d.querySelector("button"); bt.textContent = SENT.has(p.id) ? "Sent" : "Add"; if (SENT.has(p.id)) bt.disabled = true;
         bt.onclick = async ev => { ev.stopPropagation(); const { error } = await c.from("friendships").insert({ requester_id: me, addressee_id: p.id });
-          bt.textContent = error ? "تعذّر" : "Sent"; if (!error) SENT.add(p.id); };
+          bt.textContent = error ? "Failed" : "Sent"; if (!error) SENT.add(p.id); };
         box.append(d); });
       $("sgBody").append(box); hydrate(box);
     }, 350);
@@ -267,16 +267,16 @@
     const i = e.target.closest(".nmi"); if (!i || !me) return; const a = i.dataset.a; if (a !== "server" && a !== "join") return;
     e.stopImmediatePropagation(); e.preventDefault(); menu.classList.remove("on"); $("nmPlus").classList.remove("on");
     if (a === "server") {
-      const n = prompt("اسم الخادم الجديد"); if (!n || n.trim().length < 2) return;
+      const n = prompt("New server name"); if (!n || n.trim().length < 2) return;
       const { error } = await c.from("servers").insert({ name: n.trim(), owner_id: me });
-      if (error) return toast("تعذّر إنشاء الخادم"); await loadAll(); toast("تم إنشاء الخادم ✓");
+      if (error) return toast("Couldn’t create server"); await loadAll(); toast("Server created ✓");
     } else {
-      const q = prompt("اكتب اسم الخادم العام للانضمام"); if (!q || !q.trim()) return;
+      const q = prompt("Enter the public server name to join"); if (!q || !q.trim()) return;
       const { data } = await c.from("servers").select("id,name").eq("is_public", true).ilike("name", "%" + q.trim().replace(/[%,]/g, "") + "%").limit(10);
-      const s = (data || []).find(x => !SRVS[x.id]); if (!s) return toast("لا يوجد خادم عام بهذا الاسم");
-      if (!confirm("الانضمام إلى «" + s.name + "»؟")) return;
+      const s = (data || []).find(x => !SRVS[x.id]); if (!s) return toast("No public server with that name");
+      if (!confirm("Join “" + s.name + "”?")) return;
       const { error } = await c.from("server_members").insert({ server_id: s.id, user_id: me });
-      if (error) return toast("تعذّر الانضمام"); await loadAll(); toast("تم الانضمام ✓");
+      if (error) return toast("Couldn’t join"); await loadAll(); toast("Joined ✓");
     }
   }, true);
   // ----- long-press your own message: edit (channels) / delete
@@ -288,15 +288,15 @@
       b.style.cssText = "display:block;width:100%;padding:14px;background:none;border:0;font:inherit;font-size:16px;color:" + (red ? "#f23f43" : "var(--txt)");
       b.onclick = async () => { o.remove(); await f(); }; s.append(b); };
     const reload = () => it.chan ? loadChannel(it) : loadDM(it);
-    if (msg.pending) { add("إلغاء الإرسال", async () => { await RipplNet.cancel(msg.id); buildConv(it); }, 1); add("إغلاق", () => {});
+    if (msg.pending) { add("Cancel sending", async () => { await RipplNet.cancel(msg.id); buildConv(it); }, 1); add("Close", () => {});
       o.onclick = ev => { if (ev.target === o) o.remove(); }; o.append(s); document.body.append(o); return; }
-    if (msg.src === "ch" && msg.text) add("تعديل", async () => { const v = prompt("تعديل الرسالة", msg.text); if (!v || !v.trim() || v.trim() === msg.text) return;
-      if (!RipplNet.guard("يلزم اتصال بالإنترنت للتعديل")) return; const { error } = await c.from("messages").update({ content: v.trim() }).eq("id", msg.id);
-      if (error) toast("تعذّر التعديل"); else { const k = convKey(it), r = (ROWS[k] || []).find(x => x.id === msg.id); if (r) r.content = v.trim(); persist(k); } reload(); });
-    add("حذف", async () => { if (!confirm("حذف الرسالة؟")) return;
-      if (!RipplNet.guard("يلزم اتصال بالإنترنت للحذف")) return; const { error } = await c.from(msg.src === "ch" ? "messages" : "dm_messages").delete().eq("id", msg.id);
-      if (error) toast("تعذّر الحذف"); else { const k = convKey(it); ROWS[k] = (ROWS[k] || []).filter(x => x.id !== msg.id); persist(k); } reload(); }, 1);
-    add("إلغاء", () => {}); o.onclick = ev => { if (ev.target === o) o.remove(); }; o.append(s); document.body.append(o);
+    if (msg.src === "ch" && msg.text) add("Edit", async () => { const v = prompt("Edit message", msg.text); if (!v || !v.trim() || v.trim() === msg.text) return;
+      if (!RipplNet.guard("An internet connection is required to edit")) return; const { error } = await c.from("messages").update({ content: v.trim() }).eq("id", msg.id);
+      if (error) toast("Couldn’t edit"); else { const k = convKey(it), r = (ROWS[k] || []).find(x => x.id === msg.id); if (r) r.content = v.trim(); persist(k); } reload(); });
+    add("Delete", async () => { if (!confirm("Delete this message?")) return;
+      if (!RipplNet.guard("An internet connection is required to delete")) return; const { error } = await c.from(msg.src === "ch" ? "messages" : "dm_messages").delete().eq("id", msg.id);
+      if (error) toast("Couldn’t delete"); else { const k = convKey(it); ROWS[k] = (ROWS[k] || []).filter(x => x.id !== msg.id); persist(k); } reload(); }, 1);
+    add("Cancel", () => {}); o.onclick = ev => { if (ev.target === o) o.remove(); }; o.append(s); document.body.append(o);
   }
   function pressed(ev) {
     const g = ev.target.closest(".mg.me"); if (!g || !chCur) return;
@@ -309,7 +309,7 @@
   // ----- remove leftover demo users, native status sheet -> saved
   Object.keys(USERS).forEach(k => { if (!/^[0-9a-f-]{36}$/i.test(k)) delete USERS[k]; });
   document.querySelectorAll("#stSheet .scard:not(.scus) .sopt").forEach(o => o.addEventListener("click", async () => {
-    if (!me) return; const { error } = await c.from("profiles").update({ status: o.dataset.s }).eq("id", me); if (error) toast("تعذّر حفظ الحالة"); else sched(); }));
+    if (!me) return; const { error } = await c.from("profiles").update({ status: o.dataset.s }).eq("id", me); if (error) toast("Couldn’t save status"); else sched(); }));
   // ----- photos in chats
   const ex = t => String(t).replace(/[&<>"]/g, x => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[x]));
   const shrink = f => new Promise((res, rej) => { const im = new Image(), u = URL.createObjectURL(f);
@@ -319,12 +319,12 @@
     im.onerror = () => rej(new Error("img")); im.src = u; });
   $("chFile").onchange = async ev => {
     const f = ev.target.files[0]; ev.target.value = ""; const it = chCur; if (!f || !it) return;
-    if (!it.chan && !F[it.k]) return toast("هذه محادثة تجريبية"); if (it.chan && !CHID[it.name]) return;
+    if (!it.chan && !F[it.k]) return toast("Couldn’t send image"); if (it.chan && !CHID[it.name]) return;
     try {
       const blob = await shrink(f);
       await RipplNet.enqueue({ type: it.chan ? "ch_msg" : "dm_msg", key: convKey(it), blob, payload: { content: "", to: it.chan ? CHID[it.name] : it.k } });
       buildConv(it); if (!it.chan) chBump(it, "📷 Photo");
-    } catch (err) { toast("تعذّر إرسال الصورة"); }
+    } catch (err) { toast("Couldn’t send image"); }
   };
   // ----- groups = private servers built from your friends
   window.gRender = function () {
@@ -338,12 +338,12 @@
   $("gSearch").oninput = window.gRender;
   $("gCreate").onclick = async () => {
     const ids = [...gSel].filter(k => F[k]); if (!ids.length) return gToast("Select at least one friend");
-    const def = ids.map(k => USERS[k][0].replace(/\u200b/g, "")).join("، ").slice(0, 60), n = prompt("اسم المجموعة", def); if (n === null) return;
+    const def = ids.map(k => USERS[k][0].replace(/\u200b/g, "")).join(", ").slice(0, 60), n = prompt("Group name", def); if (n === null) return;
     const name = n.trim() || def, id = crypto.randomUUID(); if (name.length < 2) return;
-    let r = await c.from("servers").insert({ id, name, owner_id: me, is_public: false }); if (r.error) return toast("تعذّر إنشاء المجموعة");
+    let r = await c.from("servers").insert({ id, name, owner_id: me, is_public: false }); if (r.error) return toast("Couldn’t create group");
     r = await c.from("server_members").insert(ids.map(k => ({ server_id: id, user_id: k, role: "member" })));
-    if (r.error) toast("أُنشئت المجموعة لكن تعذّرت إضافة بعض الأعضاء");
-    $("grp").classList.remove("on"); show(null); await loadAll(); if (!r.error) toast("تم إنشاء المجموعة ✓");
+    if (r.error) toast("Group created, but some members couldn’t be added");
+    $("grp").classList.remove("on"); show(null); await loadAll(); if (!r.error) toast("Group created ✓");
   };
   // ----- realtime
   function listen() {

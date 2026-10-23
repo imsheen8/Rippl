@@ -1,0 +1,134 @@
+  <!-- Settings -->
+  <div class="screen" id="pset">
+    <div class="pe-head">
+      <button id="psBack" aria-label="Back"><i data-lucide="arrow-left"></i></button>
+      <b id="psTitle">Settings</b>
+    </div>
+    <div class="ps-body" id="psBody">
+
+      <!-- ===== Main ===== -->
+      <div class="ps-page on" data-p="main" data-title="Settings">
+        <label class="ps-search"><i data-lucide="search"></i><input id="psFind" type="search" placeholder="Search settings" autocomplete="off"></label>
+
+        <div class="ps-sec">
+          <div class="ps-lbl">Your account</div>
+          <div class="ps-grp">
+            <div class="ps-row ps-me" id="psEdit" data-go="account" role="button"><div class="av ps-av" data-img="me" data-fb="R"></div><div class="ps-t"><b id="psName">My account</b><small id="psMail">—</small></div></div>
+            <div class="ps-row" id="psStatus" role="button"><div class="ps-t"><b>Online status</b><small id="psStatusVal">Invisible</small></div></div>
+          </div>
+        </div>
+
+        <div class="ps-sec">
+          <div class="ps-lbl">Basics</div>
+          <div class="ps-grp">
+            <div class="ps-row" data-go="privacy" role="button"><div class="ps-t"><b>Privacy and security</b><small>Local data and links</small></div></div>
+            <div class="ps-row" data-go="appearance" role="button"><div class="ps-t"><b>Appearance</b><small id="psAccSub">Theme, bars</small></div></div>
+            <div class="ps-row" data-go="access" role="button"><div class="ps-t"><b>Accessibility</b><small id="psZoomSub">Interface size: 100 %</small></div></div>
+          </div>
+        </div>
+
+        <div class="ps-sec">
+          <div class="ps-lbl">Advanced</div>
+          <div class="ps-grp">
+            <div class="ps-row" data-go="about" role="button"><div class="ps-t"><b>About Rippl</b><small id="psVerSub">Version 1.0.0</small></div></div>
+          </div>
+        </div>
+
+        <div class="ps-sec nolbl">
+          <div class="ps-grp">
+            <div class="ps-row danger" id="psLogout" role="button"><div class="ps-t"><b>Log out</b></div></div>
+          </div>
+        </div>
+        <div class="ps-none" id="psNone" hidden>No results</div>
+      </div>
+
+      <!-- ===== Account (list) ===== -->
+      <div class="ps-page" data-p="account" data-title="Account">
+        <div class="ps-grp">
+          <div class="ps-row" data-go="acc-mail" role="button"><div class="ps-t"><b>Email</b><small id="psAcMail" dir="ltr">—</small></div></div>
+          <div class="ps-row" data-go="acc-pass" role="button"><div class="ps-t"><b>Password</b><small>Change the password you use to sign in</small></div></div>
+        </div>
+      </div>
+
+      <!-- ===== Account › Email ===== -->
+      <div class="ps-page ps-flow" data-p="acc-mail" data-title="Email">
+        <h2 class="ps-h1">Change email</h2>
+        <p class="ps-sub">Current email: <b id="psMailCur" dir="ltr">—</b></p>
+        <label class="ps-in"><input id="psMailOld" type="password" autocomplete="current-password" dir="ltr" placeholder="Current password"><button type="button" class="ps-eye" aria-label="Show password"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/><path class="slash" d="M4 4l16 16"/></svg></button></label>
+        <label class="ps-in"><input id="psNewMail" type="email" autocomplete="email" inputmode="email" dir="ltr" placeholder="New email"></label>
+        <ul class="ps-rules"><li class="ok">We’ll send a confirmation link to the new email</li><li class="ok">Your email changes after you open the link</li></ul>
+        <p class="ps-msg" id="psMailMsg" role="status" aria-live="polite"></p>
+        <div class="ps-bar"><button type="button" class="ps-btn" id="psMailSave" disabled>Continue</button></div>
+      </div>
+
+      <!-- ===== Account › Password ===== -->
+      <div class="ps-page ps-flow" data-p="acc-pass" data-title="Password">
+        <h2 class="ps-h1">Create password</h2>
+        <label class="ps-in"><input id="psOldPass" type="password" autocomplete="current-password" dir="ltr" placeholder="Current password"><button type="button" class="ps-eye" aria-label="Show password"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/><path class="slash" d="M4 4l16 16"/></svg></button></label>
+        <label class="ps-in"><input id="psNewPass" type="password" autocomplete="new-password" dir="ltr" placeholder="Enter new password"><button type="button" class="ps-eye" aria-label="Show password"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/><path class="slash" d="M4 4l16 16"/></svg></button></label>
+        <ul class="ps-rules"><li id="psR1">At least 8 characters</li><li id="psR2">Different from your current password</li></ul>
+        <p class="ps-msg" id="psPassMsg" role="status" aria-live="polite"></p>
+        <div class="ps-bar"><button type="button" class="ps-btn" id="psPassSave" disabled>Continue</button></div>
+      </div>
+
+      <!-- ===== Privacy and security ===== -->
+      <div class="ps-page" data-p="privacy" data-title="Privacy and security">
+        <div class="ps-lbl">Privacy</div>
+        <div class="ps-grp">
+          <div class="ps-row" id="psClear" role="button"><div class="ps-t"><b>Delete local data</b><small>Delete saved chats, posts and cache on this device</small></div></div>
+          <div class="ps-row" data-k="confirmLinks" role="button"><div class="ps-t"><b>Confirm before opening links</b><small>Ask first when a link leaves Rippl</small></div><span class="ps-sw" role="switch" aria-checked="false"></span></div>
+        </div>
+        <p class="ps-note">These options are saved on this device only.</p>
+      </div>
+
+      <!-- ===== Appearance ===== -->
+      <div class="ps-page" data-p="appearance" data-title="Appearance">
+        <div class="ps-grp">
+          <div class="ps-row" id="psTheme" role="button"><div class="ps-t"><b>Theme</b><small id="psThemeVal">Dark</small></div></div>
+          <div class="ps-row" data-k="badge" role="button"><div class="ps-t"><b>Notification badge</b><small>Show the unread count on the bell</small></div><span class="ps-sw" role="switch" aria-checked="true"></span></div>
+          <div class="ps-row" data-k="hideBars" role="button"><div class="ps-t"><b>Hide bar while scrolling</b><small>The bottom bar hides when you scroll down</small></div><span class="ps-sw" role="switch" aria-checked="true"></span></div>
+          <div class="ps-row" data-k="ptr" role="button"><div class="ps-t"><b>Pull to refresh</b><small>Pull down to refresh content</small></div><span class="ps-sw" role="switch" aria-checked="true"></span></div>
+        </div>
+      </div>
+
+      <!-- ===== About ===== -->
+      <div class="ps-page" data-p="about" data-title="About Rippl">
+        <div class="ps-grp">
+          <div class="ps-row" style="cursor:default"><div class="ps-t"><b>Application version</b><small id="psVer">Rippl 1.0.0</small></div></div>
+          <div class="ps-row" style="cursor:default"><div class="ps-t"><b>Operating system</b><small id="psOS">—</small></div></div>
+          <div class="ps-row" style="cursor:default"><div class="ps-t"><b>Developer</b><small>Sheen</small></div></div>
+          <div class="ps-row" style="cursor:default"><div class="ps-t"><b>Company</b><small>Krazos</small></div></div>
+          <div class="ps-row" style="cursor:default"><div class="ps-t"><b>Legal information</b><small id="psLegal">Copyright 2026 Krazos. All rights reserved.</small></div></div>
+        </div>
+      </div>
+
+      <!-- ===== Accessibility ===== -->
+      <div class="ps-page" data-p="access" data-title="Accessibility">
+        <div class="ps-grp">
+          <div class="ps-row ps-zoom">
+            <div class="ps-t"><b>Interface size</b><small>Make text and buttons larger or smaller across Rippl</small>
+              <div class="ps-zval" id="psZoomVal">100 %</div>
+              <div class="ps-zrow"><button type="button" id="psZMinus" aria-label="Smaller"><i data-lucide="minus"></i></button><input id="psZoom" type="range" min="80" max="130" step="10" value="100"><button type="button" id="psZPlus" aria-label="Larger"><i data-lucide="plus"></i></button></div>
+            </div>
+          </div>
+          <div class="ps-row ps-prevrow"><div class="ps-t"><b>Preview</b>
+            <div class="ps-prev" id="psPrev"><div class="ps-pav"><i data-lucide="user"></i></div><h4>Welcome to Rippl</h4><p>Chat with friends, share posts and join servers.</p><p class="s">Press and hold a message to react, reply or copy it.</p></div>
+          </div></div>
+        </div>
+        <div class="ps-grp" style="margin-top:14px">
+          <div class="ps-row" data-k="calm" role="button"><div class="ps-t"><b>Reduce motion</b><small>Turn off transitions and animations</small></div><span class="ps-sw" role="switch" aria-checked="false"></span></div>
+          <div class="ps-row" data-k="contrast" role="button"><div class="ps-t"><b>Higher contrast text</b><small>Make secondary text easier to read</small></div><span class="ps-sw" role="switch" aria-checked="false"></span></div>
+          <div class="ps-row" data-k="underline" role="button"><div class="ps-t"><b>Underline links</b><small>Always underline links in posts and bios</small></div><span class="ps-sw" role="switch" aria-checked="false"></span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- option dialog (theme) -->
+    <div class="ps-dbg" id="psDlg" hidden>
+      <div class="ps-dlg" role="dialog">
+        <h3 id="psDlgT">Theme</h3>
+        <div id="psAccList"></div>
+        <button type="button" class="ps-cancel" id="psAccCancel">Cancel</button>
+      </div>
+    </div>
+  </div>

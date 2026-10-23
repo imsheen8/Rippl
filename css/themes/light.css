@@ -1,0 +1,188 @@
+/* Rippl — الثيم الفاتح (أُعيد بناؤه من الثيم الداكن)
+   المبدأ: نفس طبقات الثيم الداكن بالضبط لكن معكوسة —
+     الداكن: rail < dark < bg < card < (chip / press / line)   كل طبقة أفتح من التي تحتها
+     الفاتح: rail < dark < bg < card(أبيض)                       الأبيض أعلى طبقة، والرمادي للفواصل والأزرار الداخلية
+   يُفعَّل بإضافة الصنف theme-light إلى <html> من الإعدادات.
+   --blue يبقى كما هو (#5865f2) في الثيمين. */
+
+/* ========== 1) المتغيرات ========== */
+html.theme-light{
+  color-scheme:light;
+  /* الطبقات (تقابل --rail/--dark/--bg/--card/--card2 في الداكن) */
+  --rail:#e3e5ea;
+  --dark:#eceef2;   /* خلفية الملف الشخصي والإعدادات (أعمق من --bg) */
+  --bg:#f3f4f7;     /* خلفية اللوحة */
+  --card:#ffffff;   /* البطاقات */
+  --card2:#f8f9fb;
+  /* النصوص */
+  --txt:#17181c;
+  --mut:#626776;
+  /* ألوان مساعدة تقابل الألوان الثابتة في الملفات الداكنة */
+  --l-line:#e2e4ea;      /* الفواصل والحدود الخفيفة   (كان #2a2a2f / #34343b) */
+  --l-line2:#d0d3db;     /* حدود الحقول والأزرار     (كان #3a3a42 / #38383f) */
+  --l-chip:#eceef2;      /* خلفية داخل البطاقة       (كان #2c2c32 / #26262a) */
+  --l-press:#e6e8ed;     /* حالة الضغط               (كان #2a2a30 / #34343b) */
+  --l-field:#f3f4f7;     /* خلفية حقول الإدخال       (كان #1e1e22 / #141417) */
+  --l-acc:#4651c9;       /* نص بلون التمييز          (كان #8f9bff) */
+  --l-link:#1a5fd1;      /* الروابط                  (كان #4a8dff) */
+  --l-ok:#16803f;        /* أخضر للنص                (كان var(--green) كنص) */
+  --l-warn:#9a6200;      /* أصفر/برتقالي للنص        (كان var(--yellow) كنص) */
+  --l-danger:#d6282d;    /* أحمر للنص                (كان #ed4245 كنص) */
+  --l-shadow:0 6px 22px rgba(24,28,48,.14);
+  --l-shadow-sm:0 2px 10px rgba(24,28,48,.10);
+}
+html.theme-light.hi-contrast{--mut:#3d414d}
+
+html.theme-light,html.theme-light body{background:var(--rail)}
+
+/* ========== 2) شاشة الدخول: تبقى بتصميمها البنفسجي الداكن (الشعار أبيض) ========== */
+html.theme-light #ripplAuthGate{--txt:#f2f3f5;--mut:#9a9aa3;--card:#26262b;--bg:#1a1a1e;--dark:#111114;color-scheme:dark}
+
+/* ========== 3) الأساس والقصص والبحث (base.css) ========== */
+html.theme-light .story .sug{background:var(--l-chip);color:var(--txt)}
+html.theme-light .story .sug.done{background:var(--blue);color:#fff}
+html.theme-light .story.seen .ring{background:#cfd2da}
+html.theme-light .plus:active{background:var(--l-press)}
+html.theme-light .srch,html.theme-light .tsbox label,html.theme-light .ps-search{box-shadow:inset 0 0 0 1px var(--l-line)}
+
+/* ========== 4) الصور الرمزية والصفوف وشريط الحساب (avatars.css) ========== */
+html.theme-light .av:not(.grpav){background:#d6d9e4;color:#4a5066}
+html.theme-light .sq .snd{color:var(--txt);box-shadow:0 0 0 1px var(--l-line)}
+html.theme-light .row.hl{border:1px solid var(--l-line)}
+html.theme-light .tag{background:var(--l-chip)}
+html.theme-light .me:not(.mg){border:1px solid var(--l-line);box-shadow:var(--l-shadow)}
+html.theme-light .mt:active{background:var(--l-press)}
+
+/* ========== 5) الشاشات والقوائم (screens.css) ========== */
+html.theme-light .nmmenu{background:var(--card);border:1px solid var(--l-line);box-shadow:var(--l-shadow)}
+html.theme-light .nmi:active{background:var(--l-press)}
+html.theme-light #nmPlus.on{background:var(--l-press)}
+
+/* ========== 6) المنشورات (feed.css / posts-composer.css) ========== */
+html.theme-light .fpost,html.theme-light .fcomp{box-shadow:0 0 0 1px var(--l-line)}
+html.theme-light .fpill{background:var(--l-field);border:1px solid var(--l-line)}
+html.theme-light .fcomp button{color:#1f9d4f}
+html.theme-light .fimg{background:#dfe2e9}
+html.theme-light .fa{border-top:1px solid var(--l-line)}
+html.theme-light .fa button:active{background:var(--l-press)}
+html.theme-light .fa .fl.on{color:#2563eb}
+html.theme-light .fa .fl.on svg{fill:#2563eb}
+html.theme-light .fcmt{border-top:1px solid var(--l-line)}
+html.theme-light .fcmt input{border:1px solid var(--l-line2);background:var(--l-field)}
+html.theme-light .fm .fd{color:var(--l-acc)}
+html.theme-light .cmlist .cmt{border-top:1px solid var(--l-line)}
+/* الوسوم فوق الصورة تبقى زجاجية داكنة (تقرأ على أي صورة)، وخارج الصورة تصير شارة فاتحة */
+html.theme-light .ftags.in .ftag{background:var(--l-chip);color:var(--txt);border:1px solid var(--l-line2);backdrop-filter:none}
+html.theme-light .cpt{border:1px solid var(--l-line2);background:var(--card)}
+html.theme-light .cptool{box-shadow:inset 0 0 0 1px var(--l-line)}
+
+/* ========== 7) المحادثة (chat.css) ========== */
+html.theme-light .chh{border-bottom:1px solid var(--l-line)}
+html.theme-light .chh>button:active{background:var(--l-press)}
+html.theme-light .cht small.on{color:var(--l-ok)}
+html.theme-light .chdate{background:#e4e6ec}
+html.theme-light .mg.th .bb{background:var(--card);box-shadow:0 0 0 1px var(--l-line)}
+html.theme-light .cfield{border:1px solid var(--l-line2);box-shadow:var(--l-shadow)}
+html.theme-light .cb:active{background:var(--l-press)}
+html.theme-light .cb.cpl{background:var(--l-chip);color:var(--txt)}
+html.theme-light .emo{border:1px solid var(--l-line);box-shadow:var(--l-shadow)}
+html.theme-light .emo button:active{background:var(--l-press)}
+
+/* ========== 8) Inbox والرسالة الجديدة والمجموعات ========== */
+html.theme-light .fab{box-shadow:0 6px 18px rgba(88,101,242,.38)}
+html.theme-light .nmart{background:radial-gradient(circle at 35% 30%,#e4e8ff,#c5ccff);color:var(--l-acc)}
+html.theme-light .chk{border:2px solid #b4b8c4}
+html.theme-light .gi.sel .chk{border-color:var(--blue)}
+html.theme-light .gbar{border-top:1px solid var(--l-line)}
+html.theme-light .to{border:1px solid var(--l-line2);background:var(--card)}
+html.theme-light .grp{box-shadow:0 0 0 1px var(--l-line)}
+html.theme-light .act+.act:before,html.theme-light .fi+.fi:before{background:var(--l-line)}
+html.theme-light .fi .gb{background:var(--l-chip)}
+html.theme-light .sgc{border-bottom:1px solid var(--l-line)}
+html.theme-light .sgc .th div{background:#e1e4ea center/cover}
+html.theme-light .btn{box-shadow:inset 0 0 0 1px var(--l-line)}
+html.theme-light .btn.pr{box-shadow:none}
+/* .toast يبقى داكنًا بنص أبيض (مثل Snackbar) */
+
+/* ========== 9) الإشعارات ========== */
+html.theme-light .nh{background:var(--card);border-bottom:1px solid var(--l-line)}
+html.theme-light .ni .q{border-inline-start:3px solid #cfd2da}
+html.theme-light .ni .q.m{color:var(--l-acc)}
+html.theme-light .ni.new{background:rgba(88,101,242,.09)}
+html.theme-light .ni .nact button{background:var(--l-chip)}
+html.theme-light .ni .nact button.ok{background:var(--blue);color:#fff}
+html.theme-light .ndd{background:var(--card);box-shadow:0 12px 30px rgba(24,28,48,.18)}
+html.theme-light .ndim{background:rgba(20,22,35,.35)}
+html.theme-light .bell .nbadge{box-shadow:0 0 0 2px var(--card)}
+
+/* ========== 10) ورقة الحالة (status-sheet.css) ========== */
+html.theme-light .sheetbg{background:rgba(20,22,35,.42)}
+html.theme-light .sheet{background:var(--card);box-shadow:0 -8px 30px rgba(24,28,48,.18)}
+html.theme-light .sgrab{background:#cdd0d8}
+html.theme-light .scard{background:var(--l-chip)}
+html.theme-light .sopt+.sopt:before{background:var(--l-line2)}
+html.theme-light .sdot.big{background:#dfe2e9;color:#3a3d4a}
+html.theme-light .rad{border:2px solid #9a9fae}
+html.theme-light .sopt.on .rad{border-color:var(--blue)}
+html.theme-light #stLogout b,html.theme-light #stLogout .sdot i{color:var(--l-danger)}
+
+/* ========== 11) الملف الشخصي (profile*.css / user-profile.css) ========== */
+html.theme-light .dav{background:var(--dark)}
+html.theme-light .dst{background:var(--dark)}
+html.theme-light .dbub .b1,html.theme-light .dbub .b2{background:var(--card);box-shadow:0 0 0 1px var(--l-line)}
+html.theme-light .dpill,html.theme-light .bub{background:var(--card);border:1px solid var(--l-line);color:var(--txt);box-shadow:var(--l-shadow-sm)}
+html.theme-light .dpill u,html.theme-light .bub u{background:var(--l-chip);color:var(--txt)}
+html.theme-light .dbadge{background:var(--l-chip);color:var(--l-acc)}
+html.theme-light .badge{background:var(--l-chip);color:var(--l-warn)}
+html.theme-light .pav{background:#d6d9e4}
+html.theme-light .pbtn:active{background:var(--l-press)}
+html.theme-light .pnote{background:var(--card);color:var(--mut);box-shadow:var(--l-shadow-sm)}
+html.theme-light .pbio a,html.theme-light .val a{color:var(--l-link)}
+html.theme-light .ptabs,html.theme-light .tabs{border-bottom:1px solid var(--l-line2)}
+html.theme-light .tabs div.on{color:var(--l-acc)}
+html.theme-light .box{box-shadow:0 0 0 1px var(--l-line)}
+html.theme-light .orb{background:var(--l-chip)}
+html.theme-light .orb svg{color:var(--l-acc)}
+html.theme-light .nav{background:var(--card);border:1px solid var(--l-line);box-shadow:var(--l-shadow)}
+html.theme-light .pban{background:#dde0e8}
+html.theme-light .pban:after{background:linear-gradient(to bottom,rgba(236,238,242,.1) 0%,rgba(236,238,242,.45) 45%,var(--dark) 100%)}
+html.theme-light #uprof .dban:after{background:linear-gradient(to bottom,rgba(236,238,242,0) 0%,rgba(236,238,242,.2) 50%,var(--dark) 100%)}
+html.theme-light .pname,html.theme-light .phandle{text-shadow:none}
+html.theme-light .pg{background:#dfe2e9}
+
+/* ========== 12) تعديل الملف الشخصي ========== */
+html.theme-light .pe-av{background:#d6d9e4}
+html.theme-light .pe-card{box-shadow:0 0 0 1px var(--l-line)}
+html.theme-light .pe-row+.pe-row{border-top:1px solid var(--l-line)}
+html.theme-light .pe-banner{background-color:#dfe2e9!important}
+html.theme-light .pe-msg{color:var(--l-warn)}
+html.theme-light .pe-msg.good{color:var(--l-ok)}
+
+/* ========== 13) الإعدادات (settings.css) ========== */
+html.theme-light .ps-row{box-shadow:0 0 0 1px var(--l-line)}
+html.theme-light .ps-row:active{background:var(--l-press)}
+html.theme-light .ps-row.danger b{color:var(--l-danger)}
+html.theme-light .ps-sw{border:2px solid #8e93a3}
+html.theme-light .ps-sw:after{background:#8e93a3}
+html.theme-light .ps-sw[aria-checked=true]{border-color:var(--blue)}
+html.theme-light .ps-sw[aria-checked=true]:after{background:#fff}
+html.theme-light .ps-zrow button:active{background:var(--l-press)}
+html.theme-light .ps-pav{background:#d6d9e4;color:#5a6073}
+html.theme-light .ps-dbg{background:rgba(20,22,35,.42)}
+html.theme-light .ps-dlg{background:var(--card);box-shadow:var(--l-shadow)}
+html.theme-light .ps-opt:active{background:var(--l-press)}
+html.theme-light .ps-opt .rad{border:2px solid #9a9fae}
+html.theme-light .ps-opt.on .rad{border-color:var(--blue)}
+
+html.theme-light .ps-in{box-shadow:inset 0 0 0 1px var(--l-line)}
+html.theme-light .ps-in:focus-within{border-color:var(--blue)}
+html.theme-light .ps-eye:active{background:var(--l-press)}
+html.theme-light .ps-rules li.ok::before{background:var(--l-ok)}
+html.theme-light .ps-msg{color:var(--l-warn)}
+html.theme-light .ps-msg.good{color:var(--l-ok)}
+html.theme-light .ps-row[data-go]::after{border-color:#8e93a3}
+
+/* ========== 14) السحب للتحديث ========== */
+html.theme-light #ripplPtr{background:var(--card);border:1px solid var(--l-line);box-shadow:var(--l-shadow-sm)}
+html.theme-light #ripplPtr i{border:2.5px solid rgba(0,0,0,.12);border-top-color:var(--blue)}
+html.theme-light #newPostsPill{box-shadow:0 6px 18px rgba(88,101,242,.4)}

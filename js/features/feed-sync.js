@@ -17,7 +17,7 @@
     if (o.id) h = h.replace('class="fpost"', 'class="fpost" data-pid="' + o.id + '"');
     h = h.replace(/data-n="\d+"/, 'data-n="' + Math.max(0, (o.likes || 0) - (o.liked ? 1 : 0)) + '"');
     if (o.liked) h = h.replace('<button class="fl">', '<button class="fl on">');
-    if (o.k === "me") h = h.replace(">شين</b>", ">" + e(MYNAME || "شين") + "</b>");
+    if (o.k === "me") h = h.replace(">Rippl</b>", ">" + e(MYNAME || "Rippl") + "</b>");
     if (o.comments && o.comments.length) h = h.replace('<div class="cmlist"></div>', '<div class="cmlist">' + o.comments.map(x => '<div class="cmt" dir="auto"><b>' + e(x.n) + "</b>" + e(x.t) + "</div>").join("") + "</div>");
     return h;
   };
@@ -27,7 +27,7 @@
   const FPAGE = 15; let feedMore = false, feedBusy = false, feedPainted = false; const BU = {};
   const realPosts = () => POSTS.filter(p => !p.pending);
   async function pendingPosts() {
-    return (await RipplNet.pending(p => p.type === "post")).map(p => ({ pending: true, k: "me", t: "⏳ بانتظار الإرسال", text: p.payload.content,
+    return (await RipplNet.pending(p => p.type === "post")).map(p => ({ pending: true, k: "me", t: "⏳ Waiting to send", text: p.payload.content,
       img: p.blob ? (BU[p.id] = BU[p.id] || URL.createObjectURL(p.blob)) : "", likes: 0, cm: 0, sh: 0, comments: [] }));
   }
   async function setFeed(list) {
@@ -78,7 +78,7 @@
   async function loadMoreFeed() {
     if (feedBusy || !feedMore || !me || !RipplNet.online) return;
     const last = [...realPosts()].reverse().find(p => p.ts); if (!last) return;
-    feedBusy = true; const ld = document.querySelector("#feed .feedload"); if (ld) ld.textContent = "جارٍ التحميل…";
+    feedBusy = true; const ld = document.querySelector("#feed .feedload"); if (ld) ld.textContent = "Loading…";
     try {
       const { data: ps, error } = await c.from("posts").select("*").lt("created_at", last.ts).order("created_at", { ascending: false }).limit(FPAGE);
       if (error || !ps) return;
@@ -90,7 +90,7 @@
   const rf = window.renderFeed;
   window.renderFeed = function () {
     rf(); const f = $("feed");
-    if (feedMore) { const d = document.createElement("div"); d.className = "feedload"; d.textContent = "تحميل المزيد…"; f.append(d);
+    if (feedMore) { const d = document.createElement("div"); d.className = "feedload"; d.textContent = "Load more…"; f.append(d);
       setTimeout(() => { if (f.clientHeight > 0 && f.scrollHeight <= f.clientHeight + 120) loadMoreFeed(); }, 0); }
   };
   $("feed").addEventListener("scroll", () => { const f = $("feed"); if (f.scrollHeight - f.scrollTop - f.clientHeight < 700) loadMoreFeed(); }, { passive: true });
@@ -110,7 +110,7 @@
     : c.from("post_likes").delete().eq("post_id", it.payload.post_id).eq("user_id", me));
   RipplNet.register("comment", it => !me ? notReady : c.from("post_comments").insert({ id: it.id, post_id: it.payload.post_id, author_id: me, content: it.payload.content, created_at: it.created_at }));
   RipplNet.on("sent", it => { if (it.type === "post") { if (BU[it.id]) { URL.revokeObjectURL(BU[it.id]); delete BU[it.id]; } loadFeed(); } });
-  RipplNet.on("failed", it => { if (it.type === "post") { toast("تعذّر النشر"); setFeed(realPosts()); } else if (it.type === "comment") toast("تعذّر إرسال التعليق"); else if (it.type === "like") toast("تعذّر تنفيذ الإعجاب"); });
+  RipplNet.on("failed", it => { if (it.type === "post") { toast("Couldn’t post"); setFeed(realPosts()); } else if (it.type === "comment") toast("Couldn’t send comment"); else if (it.type === "like") toast("Couldn’t like post"); });
   window.addEventListener("rippl-reconnect", () => { if (me) loadFeed(); });
   function shrink(f) {
     return new Promise((res, rej) => { const im = new Image(), u = URL.createObjectURL(f);
@@ -128,8 +128,8 @@
       const blob = cpImg && file ? await shrink(file) : null;
       await RipplNet.enqueue({ type: "post", blob, payload: { content: text } });
       cpImg = null; file = null; await setFeed(realPosts()); hide(); setTab("home"); $("feed").scrollTo({ top: 0 });
-      toast(RipplNet.online ? "Posted" : "سيُنشر عند عودة الاتصال");
-    } catch (err) { toast("تعذّر النشر"); } finally { busy = false; cpUpd(); }
+      toast(RipplNet.online ? "Posted" : "Will post when you’re back online");
+    } catch (err) { toast("Couldn’t post"); } finally { busy = false; cpUpd(); }
   };
   ["feed", "upScroll", "myPosts"].forEach(id => $(id).addEventListener("click", async ev => {
     const b = ev.target.closest(".fl");
@@ -143,16 +143,16 @@
     }
     const x = ev.target.closest(".fx"); if (!x) return;
     const post = x.closest(".fpost"), pid = post && post.dataset.pid, o = POSTS.find(p => p.id === pid);
-    if (!o || o.k !== "me" || !confirm("حذف المنشور؟")) return;
-    if (!RipplNet.guard("يلزم اتصال بالإنترنت للحذف")) return;
-    const { error } = await c.from("posts").delete().eq("id", pid); if (error) return toast("تعذّر الحذف");
+    if (!o || o.k !== "me" || !confirm("Delete this post?")) return;
+    if (!RipplNet.guard("An internet connection is required to delete")) return;
+    const { error } = await c.from("posts").delete().eq("id", pid); if (error) return toast("Couldn’t delete");
     [POSTS, MYPOSTS].forEach(a => { const i = a.indexOf(o); if (i > -1) a.splice(i, 1); }); renderFeed(); renderMy(); saveFeed();
   }));
   ["feed", "upScroll", "myPosts"].forEach(id => $(id).addEventListener("click", async ev => {
     const b = ev.target.closest(".fsh"); if (!b) return;
     const post = b.closest(".fpost"), txt = (post.querySelector(".ft") || {}).textContent || "", t = (txt ? txt + "\n" : "") + "— Rippl";
-    try { if (navigator.share) await navigator.share({ text: t }); else { await navigator.clipboard.writeText(t); toast("تم نسخ المنشور"); } }
-    catch (err) { if (err && err.name !== "AbortError") { try { await navigator.clipboard.writeText(t); toast("تم نسخ المنشور"); } catch (_) { toast("تعذّر المشاركة"); } } }
+    try { if (navigator.share) await navigator.share({ text: t }); else { await navigator.clipboard.writeText(t); toast("Post copied"); } }
+    catch (err) { if (err && err.name !== "AbortError") { try { await navigator.clipboard.writeText(t); toast("Post copied"); } catch (_) { toast("Couldn’t share"); } } }
   }));
   document.addEventListener("keydown", async ev => {
     if (ev.key !== "Enter" || ev.isComposing) return;

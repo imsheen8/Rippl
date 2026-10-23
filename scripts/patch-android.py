@@ -18,6 +18,61 @@ if styles.exists():
                    r'\1\n        <item name="windowSplashScreenBackground">%s</item>' % BG, s, count=1)
     styles.write_text(s, encoding='utf-8')
 
+
+# 1b) native plugin "RipplBars": changes status bar + navigation bar colour and icon style when the theme changes
+pkg_dir = main / 'java/com/kr/rippl'
+pkg_dir.mkdir(parents=True, exist_ok=True)
+(pkg_dir / 'RipplBarsPlugin.java').write_text('''package com.kr.rippl;
+
+import android.graphics.Color;
+import android.view.Window;
+import androidx.core.view.WindowCompat;
+import androidx.core.view.WindowInsetsControllerCompat;
+import com.getcapacitor.Plugin;
+import com.getcapacitor.PluginCall;
+import com.getcapacitor.PluginMethod;
+import com.getcapacitor.annotation.CapacitorPlugin;
+
+@CapacitorPlugin(name = "RipplBars")
+public class RipplBarsPlugin extends Plugin {
+    @PluginMethod
+    public void set(final PluginCall call) {
+        final String color = call.getString("color", "#1a1a1e");
+        final boolean light = Boolean.TRUE.equals(call.getBoolean("light", false));
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Window w = getActivity().getWindow();
+                    int c = Color.parseColor(color);
+                    w.setStatusBarColor(c);
+                    w.setNavigationBarColor(c);
+                    WindowInsetsControllerCompat ic = WindowCompat.getInsetsController(w, w.getDecorView());
+                    ic.setAppearanceLightStatusBars(light);
+                    ic.setAppearanceLightNavigationBars(light);
+                    call.resolve();
+                } catch (Exception e) {
+                    call.reject(e.getMessage());
+                }
+            }
+        });
+    }
+}
+''', encoding='utf-8')
+(pkg_dir / 'MainActivity.java').write_text('''package com.kr.rippl;
+
+import android.os.Bundle;
+import com.getcapacitor.BridgeActivity;
+
+public class MainActivity extends BridgeActivity {
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        registerPlugin(RipplBarsPlugin.class);
+        super.onCreate(savedInstanceState);
+    }
+}
+''', encoding='utf-8')
+
 # 2) manifest: permissions + keyboard pushes the chat input up instead of covering it
 manifest = main / 'AndroidManifest.xml'
 m = manifest.read_text(encoding='utf-8')

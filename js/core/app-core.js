@@ -1,8 +1,7 @@
 /* Rippl — النواة: دوال مساعدة، التنقل بين الشاشات */
 const $=id=>document.getElementById(id);
-/* image sources: pravatar.cc (people photos) + picsum.photos (server images) */
-const P=n=>`https://i.pravatar.cc/160?img=${n}`, S_=s=>`https://picsum.photos/seed/${s}/160`;
-const IMG={me:P(3)};
+/* image sources: real avatars only (filled from profiles); "data:," = no image -> letter fallback */
+const IMG={me:"data:,"};
 function hydrate(root){
   (root||document).querySelectorAll('[data-img]:not([data-ok])').forEach(el=>{
     el.dataset.ok=1;
@@ -12,7 +11,7 @@ function hydrate(root){
     el.prepend(im);
   });
 }
-const show=id=>{if($('nmMenu')){$('nmMenu').classList.remove('on');$('nmPlus').classList.remove('on')}if(id==='newmsg'&&typeof rSGN==='function')rSGN();['notif','prof','newmsg','compose','chat','srv','pedit'].forEach(s=>$(s).classList.toggle('on',s===id));syncBar()};
+const show=id=>{if($('nmMenu')){$('nmMenu').classList.remove('on');$('nmPlus').classList.remove('on')}if(id==='newmsg'&&typeof rSGN==='function')rSGN();['notif','prof','newmsg','compose','chat','srv','pedit','pset'].forEach(s=>$(s).classList.toggle('on',s===id));syncBar()};
 const hide=()=>show(null);
 const anyScr=()=>!!document.querySelector('.screen.on');
 function closeAll(){['grp','uprof'].forEach(k=>$(k).classList.remove('on'));show(null)}

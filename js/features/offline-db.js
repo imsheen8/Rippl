@@ -1,4 +1,4 @@
-/* Rippl — قاعدة محلية SQLite (أندرويد) مع IndexedDB احتياطيًا للويب + طابور الإرسال + شريط الاتصال */
+/* Rippl — قاعدة محلية SQLite (أندرويد) مع IndexedDB احتياطيًا للويب + طابور الإرسال  */
 (() => {
   /* ---------- local database: key/value cache + outbox. Engine 1: SQLite (Android app). Engine 2: IndexedDB (web / fallback). Last resort: memory ---------- */
   let dbp = null, uid = "", memSeq = 1; const memKV = new Map(), memOut = [];
@@ -171,13 +171,8 @@
   const dropWhere = async f => { for (const it of await Store.outAll()) if (f(it)) await Store.outDel(it.seq); emit("queue"); };
 
   /* ---------- connectivity banner + wake-up triggers ---------- */
-  const bar = document.createElement("div"); bar.id = "ripplNet"; bar.setAttribute("role", "status"); document.body.append(bar);
-  async function paintBar() {
-    const n = uid ? (await Store.outAll()).length : 0;
-    if (!net()) { bar.className = "on"; bar.textContent = "لا يوجد اتصال — تعرض ما هو محفوظ على جهازك" + (n ? " · " + n + " بانتظار الإرسال" : ""); }
-    else if (n) { bar.className = "on sync"; bar.textContent = "جارٍ إرسال " + n + " عنصر…"; }
-    else bar.className = "";
-  }
+  /* no on-screen banner: offline / pending-send state stays silent (queue still flushes automatically) */
+  const paintBar = () => {};
   (subs.queue = subs.queue || []).push(paintBar);
   let hiddenAt = 0, lastWake = 0;
   const wake = async force => {

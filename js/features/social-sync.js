@@ -37,14 +37,14 @@
   $("flist").addEventListener("click", async ev => {
     const b = ev.target.closest(".fbk"); if (!b || !b.classList.contains("pr")) return;
     const i = [...$("flist").querySelectorAll(".fr")].indexOf(b.closest(".fr")), f = FO[i]; if (!f) return;
-    const { error } = await c.from("follows").insert({ follower_id: me, followee_id: f[5] }); if (!error) { FING.add(f[5]); f[4] = 1; loadSocial(); } else toast("تعذّر المتابعة");
+    const { error } = await c.from("follows").insert({ follower_id: me, followee_id: f[5] }); if (!error) { FING.add(f[5]); f[4] = 1; loadSocial(); } else toast("Couldn’t follow");
   }, true);
   // "Add friend" in People you may know -> real friend request
   $("sglist").addEventListener("click", async ev => {
     const b = ev.target.closest(".sgf"); if (!b) return;
     const g = SG[+b.closest("[data-i]").dataset.i]; if (!g || !g[4]) return;
     const { error } = await c.from("friendships").insert({ requester_id: me, addressee_id: g[4] });
-    if (error && !/duplicate|unique/i.test(error.message)) toast("تعذّر إرسال الطلب");
+    if (error && !/duplicate|unique/i.test(error.message)) toast("Couldn’t send request");
   });
   const ou = window.openUser;
   window.openUser = async function (k) {
@@ -64,13 +64,13 @@
     fb.onclick = async () => {
       const was = FING.has(k);
       const { error } = was ? await c.from("follows").delete().eq("follower_id", me).eq("followee_id", k) : await c.from("follows").insert({ follower_id: me, followee_id: k });
-      if (error) return toast("تعذّر تنفيذ العملية");
+      if (error) return toast("Action failed");
       was ? FING.delete(k) : FING.add(k); paint(!was);
       const bs = document.querySelectorAll("#upScroll .pstats b"); if (bs[1]) bs[1].textContent = Math.max(0, (parseInt(String(bs[1].textContent).replace(/,/g, "")) || 0) + (was ? -1 : 1));
     };
     const af = document.querySelector("#upScroll .addf");
     if (af) af.onclick = async () => { const { error } = await c.from("friendships").insert({ requester_id: me, addressee_id: k });
-      toast(error ? (/duplicate|unique/i.test(error.message) ? "الطلب أو الصداقة موجودة" : "تعذّر إرسال الطلب") : "تم إرسال طلب الصداقة ✓"); };
+      toast(error ? (/duplicate|unique/i.test(error.message) ? "Request already sent or already friends" : "Couldn’t send request") : "Friend request sent ✓"); };
   };
   let sch = null, socT = null;
   const socSched = () => { clearTimeout(socT); socT = setTimeout(loadSocial, 800); };

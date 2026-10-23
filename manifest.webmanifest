@@ -1,8 +1,8 @@
 {
   "name": "Rippl",
   "short_name": "Rippl",
-  "lang": "ar",
-  "dir": "rtl",
+  "lang": "en",
+  "dir": "ltr",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",

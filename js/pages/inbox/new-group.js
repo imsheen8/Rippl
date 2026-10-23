@@ -22,7 +22,7 @@ $('gBody').addEventListener('click',e=>{
 },true);
 $('gCreate').onclick=()=>{
   if(!gSel.size)return gToast('Select at least one friend');
-  const names=[...gSel].map(k=>USERS[k][0]).join('، ');
+  const names=[...gSel].map(k=>USERS[k][0]).join(', ');
   const row=document.createElement('div');row.className='row hl';
   row.innerHTML='<div class="av grpav"><i data-lucide="users"></i></div><div class="t" dir="auto"><div class="n"></div><div class="m">You created a group</div></div><time>now</time>';
   row.querySelector('.n').textContent=names;

@@ -79,8 +79,8 @@
     const bt = ev.target.closest("button[data-a]");
     if (bt) { ev.stopPropagation(); bt.disabled = true;
       const r = bt.dataset.a === "acc" ? await c.from("friendships").update({ status: "accepted" }).eq("id", bt.dataset.f) : await c.from("friendships").delete().eq("id", bt.dataset.f);
-      if (r.error) { bt.disabled = false; return toast("تعذّر تنفيذ العملية"); }
-      toast(bt.dataset.a === "acc" ? "تمت إضافة الصديق ✓" : "تم الرفض"); load(); return; }
+      if (r.error) { bt.disabled = false; return toast("Action failed"); }
+      toast(bt.dataset.a === "acc" ? "Friend added ✓" : "Request declined"); load(); return; }
     const it = ev.target.closest(".ni"); if (it && it.dataset.k && USERS[it.dataset.k]) openUser(it.dataset.k);
   });
   $("notif").addEventListener("click", ev => { const s = ev.target.closest(".nstories .story"); if (s && s.dataset.k && USERS[s.dataset.k]) openUser(s.dataset.k); });

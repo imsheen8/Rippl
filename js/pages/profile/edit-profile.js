@@ -32,15 +32,15 @@
     const b = document.querySelector("#prof .dban"); if (!b) return;
     if (url) { b.style.backgroundImage = 'url("' + url + '")'; b.style.backgroundSize = "cover"; b.style.backgroundPosition = "center"; }
     else b.style.backgroundImage = "";
-    b.style.backgroundColor = "#2a2a30";
+    b.style.backgroundColor = "var(--card)";
   }
   function applyProfile(p) {
     const name = (p.display_name || "").trim(), user = (p.username || "").trim();
     const pn = document.querySelector("#prof .pname"), un = document.querySelector("#prof .dun");
-    setFirstText(pn, (name || "أضف اسمك") + " "); pn.classList.toggle("pmuted", !name);
-    setFirstText(un, (user ? "@" + user : "أضف اسم مستخدم") + " "); un.classList.toggle("pmuted", !user);
-    setFirstText(document.querySelector("#meBtn b"), (name || "حسابي") + " ");
-    const cpa = document.querySelector(".cpa b"); if (cpa) cpa.textContent = name || "أنت";
+    setFirstText(pn, (name || "Add your name") + " "); pn.classList.toggle("pmuted", !name);
+    setFirstText(un, (user ? "@" + user : "Add a username") + " "); un.classList.toggle("pmuted", !user);
+    setFirstText(document.querySelector("#meBtn b"), (name || "My account") + " ");
+    const cpa = document.querySelector(".cpa b"); if (cpa) cpa.textContent = name || "You";
     const pb = document.querySelector("#prof .pbio");
     pb.innerHTML = p.bio ? bioHtml(p.bio) : ""; pb.hidden = !p.bio;
     document.querySelectorAll("#prof .pstats b").forEach(b => { b.textContent = "0"; }); // real counts come with the follow system
@@ -96,14 +96,14 @@
   async function pick(input, kind) {
     const f = input.files && input.files[0]; input.value = "";
     if (!f) return;
-    if (!f.type.startsWith("image/")) return msg("اختر ملف صورة.");
+    if (!f.type.startsWith("image/")) return msg("Choose an image file.");
     try {
       const blob = kind === "av" ? await cropToBlob(f, 512, 512) : await cropToBlob(f, 1200, 400);
       files[kind] = blob;
       const u = URL.createObjectURL(blob);
       if (kind === "av") $("peAvImg").src = u; else $("peBanner").style.backgroundImage = 'url("' + u + '")';
       msg("");
-    } catch (e) { msg("تعذّر قراءة الصورة."); }
+    } catch (e) { msg("Couldn’t read the image."); }
   }
 
   async function openEdit() {
@@ -123,11 +123,11 @@
 
   function friendly(e) {
     const m = ((e && e.message) || "").toLowerCase();
-    if (e && e.code === "23505") return "اسم المستخدم مستخدم. اختر اسمًا آخر.";
+    if (e && e.code === "23505") return "That username is taken. Choose another.";
     if (m.includes("bucket") || m.includes("banner_url") || m.includes("column") || m.includes("row-level") || m.includes("violates"))
-      return "تعذّر الحفظ. تأكد من تشغيل ملف schema-v2.sql في Supabase.";
-    if (m.includes("fetch") || m.includes("network")) return "تعذّر الاتصال. تحقق من الإنترنت.";
-    return "تعذّر الحفظ. حاول مرة أخرى.";
+      return "Couldn’t save. Make sure schema-v2.sql has been run in Supabase.";
+    if (m.includes("fetch") || m.includes("network")) return "Connection failed. Check your internet.";
+    return "Couldn’t save. Try again.";
   }
   async function upload(kind, blob, id) {
     const c = client(), path = id + "/" + kind + "-" + Date.now() + ".jpg";
@@ -138,14 +138,14 @@
   async function save() {
     if (busy) return;
     const c = client(), ses = await session();
-    if (!c || !ses) return msg("سجّل الدخول أولًا لحفظ التعديلات.");
+    if (!c || !ses) return msg("Sign in first to save changes.");
     const id = ses.user.id;
     const name = $("peName").value.trim();
     const user = $("peUser").value.trim().replace(/^@/, "").toLowerCase();
     const bio = $("peBio").value.trim();
-    if (!name) return msg("اكتب اسمك.");
-    if (!/^[a-z0-9_]{3,20}$/.test(user)) return msg("اسم المستخدم: من 3 إلى 20 حرفًا إنجليزيًا أو أرقامًا أو _ فقط.");
-    busy = true; $("peSave").disabled = true; msg("جارٍ الحفظ...");
+    if (!name) return msg("Enter your name.");
+    if (!/^[a-z0-9_]{3,20}$/.test(user)) return msg("Username: 3–20 letters, numbers or _ only.");
+    busy = true; $("peSave").disabled = true; msg("Saving...");
     try {
       const upd = { display_name: name, username: user, bio };
       if (files.av) upd.avatar_url = await upload("avatar", files.av, id);

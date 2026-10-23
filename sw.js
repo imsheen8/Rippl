@@ -1,6 +1,6 @@
 /* Rippl service worker (web install only). App files: network first, cache when offline.
    The two CDN libraries are cached too, so the web app can start without internet after the first visit. */
-const CACHE = "rippl-shell-v3";
+const CACHE = "rippl-shell-v18";
 const SHELL = [
   "./",
   "index.html",
@@ -26,9 +26,14 @@ const SHELL = [
   "css/pages/chat/chat.css",
   "css/pages/servers/servers.css",
   "css/pages/gate/auth-gate.css",
-  "css/features/net-banner.css",
+  "css/pages/profile/settings.css",
+  "css/features/pull-refresh.css",
+  "js/features/pull-refresh.js",
+  "css/features/scroll-hide.css",
+  "js/features/scroll-hide.js",
   "css/features/notif-badge.css",
   "css/features/new-posts-pill.css",
+  "css/themes/light.css",
   "components/home.html",
   "components/server.html",
   "components/new-message.html",
@@ -39,6 +44,7 @@ const SHELL = [
   "components/chat.html",
   "components/user-profile.html",
   "components/edit-profile.html",
+  "components/settings.html",
   "components/me-bar.html",
   "components/status-sheet.html",
   "components/auth-gate.html",
@@ -58,6 +64,7 @@ const SHELL = [
   "js/core/auth-gate-preshow.js",
   "js/features/auth.js",
   "js/pages/profile/edit-profile.js",
+  "js/pages/profile/settings.js",
   "js/features/offline-db.js",
   "js/features/chats-sync.js",
   "js/features/feed-sync.js",

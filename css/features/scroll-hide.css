@@ -1,0 +1,9 @@
+/* Rippl — إخفاء الرأس والشريط السفلي عند التمرير للأسفل وإظهارهما عند التمرير للأعلى (مثل يوتيوب) */
+.me:not(.mg){transition:transform .28s cubic-bezier(.2,.8,.2,1)}
+.panel.home .top{transition:margin-top .28s cubic-bezier(.2,.8,.2,1),opacity .2s ease}
+#newPostsPill{transition:top .28s cubic-bezier(.2,.8,.2,1)}
+body.bars-hidden .me:not(.mg){transform:translateY(calc(100% + 48px))}
+body.bars-hidden .panel.home .top{margin-top:calc(var(--topH,64px) * -1);opacity:0;pointer-events:none}
+body.bars-hidden .fab{transform:translateY(120px) scale(.8);opacity:0;pointer-events:none}
+body.bars-hidden #newPostsPill{top:14px}
+@media (prefers-reduced-motion:reduce){.me:not(.mg),.panel.home .top,#newPostsPill{transition:none}}

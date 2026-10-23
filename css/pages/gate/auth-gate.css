@@ -15,19 +15,17 @@
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 .sa-field{position:relative;display:flex;align-items:center;height:56px;margin-bottom:12px;border-radius:20px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.08);transition:border-color .15s,background .15s}
 .sa-field:focus-within{border-color:rgba(141,148,255,.7);background:rgba(255,255,255,.1)}
-.sa-field .ic{flex:none;width:21px;height:21px;margin:0 16px 0 2px;stroke:rgba(255,255,255,.85);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-#ripplAuthCard .sa-field input{flex:1;min-width:0;height:100%;border:0;outline:0;background:transparent;color:var(--txt);font:inherit;font-size:15.5px;padding:0 0 0 12px;text-align:right}
-#ripplAuthCard .sa-field input:not(:placeholder-shown){direction:ltr;text-align:left}
+.sa-field .ic{flex:none;width:21px;height:21px;margin:0 12px 0 18px;stroke:rgba(255,255,255,.85);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+#ripplAuthCard .sa-field input{flex:1;min-width:0;height:100%;border:0;outline:0;background:transparent;color:var(--txt);font:inherit;font-size:15.5px;padding:0 8px 0 0;text-align:left}
 #ripplAuthCard .sa-field input::placeholder{color:rgba(255,255,255,.45)}
 #ripplAuthCard .sa-field input:-webkit-autofill{-webkit-text-fill-color:var(--txt);transition:background-color 9999s}
-.sa-ok{display:none;flex:none;width:24px;height:24px;margin:0 0 0 14px;border-radius:50%;background:var(--green);place-items:center}
+.sa-ok{display:none;flex:none;width:24px;height:24px;margin:0 14px 0 0;border-radius:50%;background:var(--green);place-items:center}
 .sa-ok.on{display:grid}
 .sa-ok svg{width:15px;height:15px;stroke:#fff;fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
 #ripplPassToggle{flex:none;width:40px;height:40px;margin:0 6px 0 4px;border:0;background:transparent;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center}
 #ripplPassToggle svg{width:21px;height:21px;stroke:rgba(255,255,255,.7);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 #ripplPassToggle.show .slash{display:none}
-.sa-terms{display:none;align-items:flex-start;gap:10px;margin:4px 2px 18px;text-align:right;font-size:13px;line-height:1.7;color:rgba(255,255,255,.62);cursor:pointer}
-.sa-terms.on{display:flex}
+.sa-terms{display:flex;align-items:flex-start;gap:10px;margin:4px 2px 18px;text-align:left;font-size:13px;line-height:1.7;color:rgba(255,255,255,.62);cursor:pointer}
 .sa-terms input{position:absolute;opacity:0;pointer-events:none}
 .sa-terms .bx{flex:none;width:20px;height:20px;margin-top:2px;border-radius:6px;border:1.5px solid rgba(255,255,255,.35);display:grid;place-items:center;transition:background .15s,border-color .15s}
 .sa-terms .bx svg{width:13px;height:13px;stroke:#fff;fill:none;stroke-width:3.2;stroke-linecap:round;stroke-linejoin:round;opacity:0}
@@ -36,7 +34,7 @@
 .sa-terms b{color:#fff;font-weight:600}
 #ripplAuthSubmit{width:100%;height:56px;margin-top:10px;border:0;border-radius:28px;color:#fff;font:inherit;font-size:16.5px;font-weight:700;cursor:pointer;
   background:linear-gradient(180deg,#6169ff 0%,#4a52dc 100%);box-shadow:inset 0 -12px 18px -10px var(--gb),0 10px 28px -8px rgba(91,99,255,.55);transition:transform .1s,opacity .15s}
-.sa-terms.on+#ripplAuthSubmit{margin-top:0}
+.sa-terms:not([hidden])+#ripplAuthSubmit{margin-top:0}
 #ripplAuthSubmit:active{transform:scale(.985);opacity:.92}
 #ripplAuthSubmit:disabled{opacity:.6}
 #ripplAuthStatus{font-size:13px;line-height:1.6;min-height:20px;margin-top:12px;color:var(--yellow)}
@@ -78,3 +76,24 @@
 .pe-setup{margin-top:14px;border:0;border-radius:18px;background:var(--blue);color:#fff;font:inherit;font-size:14px;font-weight:700;padding:9px 18px;cursor:pointer}
 #prof .dx{background:rgba(0,0,0,.45)}
 .pe-banner{background-color:#2a2a30!important}
+
+/* ---- v2: English / LTR, steps, forgot password ---- */
+#ripplAuthCard{position:relative}
+#ripplAuthCard [hidden]{display:none!important}
+.sa-back{position:absolute;top:0;left:0;width:42px;height:42px;border:0;border-radius:50%;background:rgba(255,255,255,.08);display:grid;place-items:center;cursor:pointer}
+.sa-back svg{width:22px;height:22px;stroke:#fff;fill:none;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+.sa-forgot{display:flex;justify-content:flex-end;margin:-2px 4px 14px}
+.sa-forgot button{border:0;background:none;color:rgba(255,255,255,.75);font:inherit;font-size:13.5px;font-weight:600;cursor:pointer;padding:4px 2px}
+.sa-forgot button:active{color:#fff}
+.sa-avwrap{display:flex;flex-direction:column;align-items:center;margin:-6px 0 18px}
+.sa-av{position:relative;width:104px;height:104px;border-radius:50%;border:0;padding:0;cursor:pointer;background:rgba(255,255,255,.08);box-shadow:0 0 0 2px rgba(141,148,255,.55);color:rgba(255,255,255,.5);overflow:visible}
+.sa-av img{width:100%;height:100%;border-radius:50%;object-fit:cover;display:block}
+.sa-av-ph{width:100%;height:100%;border-radius:50%;display:block}
+.sa-av img:not([hidden])+.sa-av-ph{display:none}
+.sa-av-cam{position:absolute;right:-2px;bottom:-2px;width:34px;height:34px;border-radius:50%;background:linear-gradient(180deg,#6169ff,#4a52dc);border:3px solid #17171c;display:grid;place-items:center}
+.sa-av-cam svg{width:17px;height:17px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.sa-av-link{border:0;background:none;color:#aab0ff;font:inherit;font-size:14px;font-weight:700;cursor:pointer;margin-top:10px;padding:2px 6px}
+.sa-av-link.rm{color:rgba(255,255,255,.55);font-weight:600;font-size:13px;margin-top:0}
+.sa-hint{font-size:12.5px;line-height:1.5;text-align:left;margin:-2px 6px 6px;color:rgba(255,255,255,.5)}
+.sa-hint.bad{color:var(--yellow)}
+.sa-hint.good{color:var(--green)}
