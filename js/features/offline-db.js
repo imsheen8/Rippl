@@ -190,6 +190,8 @@
   try { const A = window.Capacitor && Capacitor.Plugins && Capacitor.Plugins.App; if (A && A.addListener) A.addListener("resume", () => wake(true)); } catch (e) {}
   setInterval(() => { if (net() && uid) Store.outAll().then(l => { if (l.length) flush(); }); }, 20000);
 
+  // realtime gap repair: when a channel re-connects after a drop, ask every module to catch up once (the server pushes everything else)
+  const liveSeen = {}; let liveT = null;
   window.SheenStore = Store;
   window.SheenNet = {
     get online() { return net(); },
@@ -198,7 +200,8 @@
     register: (type, fn) => { H[type] = fn; },
     on: (ev, fn) => { (subs[ev] = subs[ev] || []).push(fn); },
     start(id) { Store.setUser(id); paintBar(); flush(); },
-    stop() { Store.setUser(""); paintBar(); },
+    stop() { Store.setUser(""); Object.keys(liveSeen).forEach(k => delete liveSeen[k]); paintBar(); },
+    live(name) { return st => { if (st !== "SUBSCRIBED") return; if (liveSeen[name]) { clearTimeout(liveT); liveT = setTimeout(() => window.dispatchEvent(new Event("sheen-reconnect")), 600); } liveSeen[name] = true; }; },
     guard(msg) { if (net()) return true; try { aToast(msg); } catch (e) { alert(msg); } return false; }
   };
   paintBar();

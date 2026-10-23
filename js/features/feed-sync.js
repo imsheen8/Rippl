@@ -172,7 +172,6 @@
       if (u && u.id !== me) { me = u.id; SheenStore.setUser(me); feedPainted = false; await loadFeed(); const p = PR[me]; IMG.me = (p && p.avatar_url) || "data:,"; document.querySelectorAll('[data-img="me"] img').forEach(i => i.src = IMG.me); }
       if (!u && me) { me = null; feedMore = false; POSTS.length = 0; MYPOSTS.length = 0; renderFeed(); renderMy(); } };
     watch(); c.auth.onAuthStateChange(() => setTimeout(watch, 0));
-    setInterval(() => { const a = document.activeElement; if (!me || document.hidden || (a && a.tagName === "INPUT") || $("compose").classList.contains("on")) return; loadFeed(); }, 60000);
   }
   init();
 })();

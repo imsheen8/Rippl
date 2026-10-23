@@ -72,13 +72,25 @@
     if (af) af.onclick = async () => { const { error } = await c.from("friendships").insert({ requester_id: me, addressee_id: k });
       toast(error ? (/duplicate|unique/i.test(error.message) ? "الطلب أو الصداقة موجودة" : "تعذّر إرسال الطلب") : "تم إرسال طلب الصداقة ✓"); };
   };
+  let sch = null, socT = null;
+  const socSched = () => { clearTimeout(socT); socT = setTimeout(loadSocial, 800); };
+  function listenSocial() {
+    if (sch) return;
+    try {
+      sch = c.channel("sheen-social-" + me)
+        .on("postgres_changes", { event: "*", schema: "public", table: "follows" }, ({ new: n, old: o }) => { const r = (n && n.follower_id ? n : o) || {}; if (!r.follower_id || r.follower_id === me || r.followee_id === me) socSched(); })
+        .on("postgres_changes", { event: "INSERT", schema: "public", table: "profiles" }, socSched)
+        .subscribe(SheenNet.live("social"));
+    } catch (_) {}
+  }
+  window.addEventListener("sheen-reconnect", () => { if (me) loadSocial(); });
   async function init() {
     c = window.sheenClient; if (!c) return setTimeout(init, 400);
     FO.length = 0; SG.length = 0; rFO(); rSG();
     const watch = async () => { const u = await window.sheenUser();
-      if (u && u.id !== me) { me = u.id; loadSocial(); } if (!u && me) { me = null; FO.length = 0; SG.length = 0; rFO(); rSG(); } };
+      if (u && u.id !== me) { me = u.id; if (sch) { try { c.removeChannel(sch); } catch (_) {} sch = null; } loadSocial(); listenSocial(); }
+      if (!u && me) { me = null; if (sch) { try { c.removeChannel(sch); } catch (_) {} sch = null; } FO.length = 0; SG.length = 0; rFO(); rSG(); } };
     watch(); c.auth.onAuthStateChange(() => setTimeout(watch, 0));
-    setInterval(() => { if (me && !document.hidden) loadSocial(); }, 90000);
   }
   init();
 })();

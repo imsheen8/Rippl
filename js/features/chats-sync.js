@@ -358,7 +358,10 @@
         if (m.author_id === me) return;
         addRow("ch:" + m.channel_id, m).then(() => { if (chCur && chCur.chan && CHID[chCur.name] === m.channel_id) buildConv(chCur); }); })
       .on("postgres_changes", { event: "*", schema: "public", table: "friendships" }, sched)
-      .subscribe();
+      .on("postgres_changes", { event: "*", schema: "public", table: "server_members" }, sched)
+      .on("postgres_changes", { event: "*", schema: "public", table: "servers" }, sched)
+      .on("postgres_changes", { event: "*", schema: "public", table: "channels" }, sched)
+      .subscribe(SheenNet.live("chats"));
   }
   async function init() {
     c = window.sheenClient; if (!c) return setTimeout(init, 400);

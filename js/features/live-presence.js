@@ -82,7 +82,7 @@
         const L = CH[chCur.name] || [], at = L.findIndex(x => x.id === m.id), upto = at < 0 ? L.length - 1 : at;
         L.forEach((x, i) => { if (x.me && i <= upto) x.read = true; });
         if ($("chat").classList.contains("on")) chRender(); })
-      .subscribe();
+      .subscribe(SheenNet.live("feed"));
   }
   function stop() { [ch, fch].forEach(x => { try { x && c.removeChannel(x); } catch (_) {} }); ch = fch = null; present = new Map(); window.__present = undefined; }
   async function init() {
@@ -91,7 +91,7 @@
       if (u && u.id !== me) { stop(); me = u.id; openPresence(); openFeed(); }
       if (!u && me) { me = null; stop(); } };
     watch(); c.auth.onAuthStateChange(() => setTimeout(watch, 0));
-    document.addEventListener("visibilitychange", () => { if (!me) return; if (!document.hidden) { track(); reload(); if (window.sheenSched) window.sheenSched(); } });
+    document.addEventListener("visibilitychange", () => { if (!me) return; if (!document.hidden) track(); });
     setInterval(() => { applyPresence(); }, 4000);
   }
   init();

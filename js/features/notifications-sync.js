@@ -95,7 +95,7 @@
     try {
       const ch = c.channel("sheen-notif-" + me), f = () => sched();
       ["post_likes", "post_comments", "follows", "friendships", "messages"].forEach(t => ch.on("postgres_changes", { event: "*", schema: "public", table: t }, f));
-      ch.subscribe();
+      ch.subscribe(SheenNet.live("notif"));
     } catch (_) {}
   }
   async function init() {
@@ -106,8 +106,7 @@
         seen = s ? +s : Date.now(); if (!s) { try { localStorage.setItem(KEY(), seen); } catch (_) {} } viewSeen = seen; listen(); load(); }
       if (!u && me) { me = null; ITEMS = []; badge(); rNA(); } };
     watch(); c.auth.onAuthStateChange(() => setTimeout(watch, 0));
-    setInterval(() => { if (me && !document.hidden) load(); }, 30000);
-    document.addEventListener("visibilitychange", () => { if (!document.hidden && me) load(); });
+    window.addEventListener("sheen-reconnect", () => { if (me) load(); });
   }
   ITEMS = []; rNA(); init();
 })();
