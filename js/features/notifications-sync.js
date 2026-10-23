@@ -1,4 +1,4 @@
-/* Sheen — الإشعارات من Supabase */
+/* Rippl — الإشعارات من Supabase */
 (() => {
   const $ = id => document.getElementById(id);
   let c, me = null, ITEMS = [], seen = 0, viewSeen = 0, loading = false, again = false, tmr = null; const PR = {};
@@ -8,7 +8,7 @@
   const ago = d => { const s = (Date.now() - new Date(d)) / 1000; return s < 60 ? "now" : s < 3600 ? Math.floor(s / 60) + "m" : s < 86400 ? Math.floor(s / 3600) + "h" : Math.floor(s / 86400) + "d"; };
   const like = v => "%" + String(v).replace(/[\\%_]/g, "\\$&") + "%";
   const cut = (t, n) => { t = String(t || "").replace(/\s+/g, " ").trim(); return t.length > n ? t.slice(0, n) + "…" : t; };
-  const KEY = () => "sheen-nseen-" + me;
+  const KEY = () => "rippl-nseen-" + me;
   async function profs(ids) {
     const need = [...new Set(ids)].filter(i => i && !PR[i]);
     if (need.length) ((await c.from("profiles").select("id,username,display_name,avatar_url,bio").in("id", need)).data || []).forEach(p => PR[p.id] = p);
@@ -93,20 +93,20 @@
   }).observe($("notif"), { attributes: true, attributeFilter: ["class"] });
   function listen() {
     try {
-      const ch = c.channel("sheen-notif-" + me), f = () => sched();
+      const ch = c.channel("rippl-notif-" + me), f = () => sched();
       ["post_likes", "post_comments", "follows", "friendships", "messages"].forEach(t => ch.on("postgres_changes", { event: "*", schema: "public", table: t }, f));
-      ch.subscribe(SheenNet.live("notif"));
+      ch.subscribe(RipplNet.live("notif"));
     } catch (_) {}
   }
   async function init() {
-    c = window.sheenClient; if (!c) return setTimeout(init, 400);
+    c = window.ripplClient; if (!c) return setTimeout(init, 400);
     let on = null;
-    const watch = async () => { const u = await window.sheenUser();
+    const watch = async () => { const u = await window.ripplUser();
       if (u && u.id !== me) { me = u.id; let s = null; try { s = localStorage.getItem(KEY()); } catch (_) {}
         seen = s ? +s : Date.now(); if (!s) { try { localStorage.setItem(KEY(), seen); } catch (_) {} } viewSeen = seen; listen(); load(); }
       if (!u && me) { me = null; ITEMS = []; badge(); rNA(); } };
     watch(); c.auth.onAuthStateChange(() => setTimeout(watch, 0));
-    window.addEventListener("sheen-reconnect", () => { if (me) load(); });
+    window.addEventListener("rippl-reconnect", () => { if (me) load(); });
   }
   ITEMS = []; rNA(); init();
 })();

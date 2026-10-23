@@ -1,4 +1,4 @@
--- Sheen schema v11: REALTIME (run this once in the Supabase SQL editor).
+-- Rippl schema v11: REALTIME (run this once in the Supabase SQL editor).
 -- Makes posts, likes, comments, follows, friend requests and profile changes arrive instantly.
 -- Safe to re-run.
 do $$

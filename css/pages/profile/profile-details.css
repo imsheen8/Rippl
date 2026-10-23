@@ -1,4 +1,4 @@
-/* Sheen — تفاصيل ملف المستخدم الآخر */
+/* Rippl — تفاصيل ملف المستخدم الآخر */
 .dtop{position:relative;height:150px;flex:none}
 .dban{position:absolute;top:0;left:0;right:0;height:96px;background:#b03530}
 .dx{position:absolute;top:14px;left:12px;width:36px;height:36px;border-radius:10px;border:0;background:#5a1d1b;color:#fff;font-size:18px;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:2}

@@ -33,8 +33,8 @@ jobs:
           KK: ${{ secrets.KEY_PASSWORD }}
         run: |
           if [ -n "$KS" ] && [ -n "$KP" ] && [ -n "$KA" ] && [ -n "$KK" ]; then
-            echo "$KS" | base64 -d > "$RUNNER_TEMP/sheen.keystore"
-            echo "KEYSTORE_PATH=$RUNNER_TEMP/sheen.keystore" >> "$GITHUB_ENV"
+            echo "$KS" | base64 -d > "$RUNNER_TEMP/rippl.keystore"
+            echo "KEYSTORE_PATH=$RUNNER_TEMP/rippl.keystore" >> "$GITHUB_ENV"
             echo "KEYSTORE_PASSWORD=$KP" >> "$GITHUB_ENV"
             echo "KEY_ALIAS=$KA" >> "$GITHUB_ENV"
             echo "KEY_PASSWORD=$KK" >> "$GITHUB_ENV"
@@ -93,7 +93,7 @@ jobs:
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
-          name: sheen-apk
+          name: rippl-apk
           path: |
             android/app/build/outputs/apk/release/app-release.apk
             android/app/build/outputs/apk/debug/app-debug.apk

@@ -1,4 +1,4 @@
-/* Sheen — شاشة المحادثة */
+/* Rippl — شاشة المحادثة */
 /* ---------- chat ---------- */
 const CH={};let chCur=null,chFrom=null;
 const SEED={};

@@ -1,4 +1,4 @@
-/* Sheen — الصفحة الرئيسية وبطاقات المنشورات */
+/* Rippl — الصفحة الرئيسية وبطاقات المنشورات */
 /* ---------- home feed + tab switching ---------- */
 const POSTS_START=1;
 const fmtN=n=>n>=1000?(n/1000).toFixed(1).replace('.0','')+'K':String(n);

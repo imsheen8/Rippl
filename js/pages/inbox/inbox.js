@@ -1,4 +1,4 @@
-/* Sheen — Inbox والبحث وقائمة الرسالة الجديدة */
+/* Rippl — Inbox والبحث وقائمة الرسالة الجديدة */
 $('nmBack').onclick=hide;
 document.querySelectorAll('.story:not(.mine)').forEach(x=>x.onclick=()=>x.classList.add('seen'));
 (function(){const inp=$('mainSearch'),clr=$('spClear'),lbl=$('spLbl');

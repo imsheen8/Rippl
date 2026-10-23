@@ -1,31 +1,31 @@
-/* Sheen — شاشة تسجيل الدخول/الحساب */
-#sheenAuthGate{position:fixed;inset:0;z-index:99999;display:none;align-items:center;justify-content:center;padding:20px;overflow:auto;background:var(--bg);color:var(--txt);font-family:inherit}
-#sheenAuthGate.on{display:flex}
-#sheenAuthGate .sa-bg,.sa-logo,.sa-foot{display:none}
-#sheenAuthCard{width:min(100%,400px);margin:auto}
+/* Rippl — شاشة تسجيل الدخول/الحساب */
+#ripplAuthGate{position:fixed;inset:0;z-index:99999;display:none;align-items:center;justify-content:center;padding:20px;overflow:auto;background:var(--bg);color:var(--txt);font-family:inherit}
+#ripplAuthGate.on{display:flex}
+#ripplAuthGate .sa-bg,.sa-logo,.sa-foot{display:none}
+#ripplAuthCard{width:min(100%,400px);margin:auto}
 .sa-brand{text-align:center;font-size:40px;font-weight:800;letter-spacing:.5px;margin:0 0 22px;color:var(--txt)}
 .sa-or{display:flex;align-items:center;gap:12px;margin:18px 0 14px;color:var(--mut);font-size:13px}
 .sa-or:before,.sa-or:after{content:"";flex:1;height:1px;background:#3a3a42}
-#sheenSwitchMode{width:100%;height:48px;border:1.5px solid var(--blue);border-radius:24px;background:transparent;color:var(--blue);font:inherit;font-size:15px;font-weight:700;cursor:pointer}
-#sheenSwitchMode:active{background:#5865f222}
-#sheenAuthCard h2{text-align:center;font-size:26px;font-weight:700;margin:0 0 6px}
-#sheenAuthCard p{text-align:center;color:var(--mut);font-size:14px;line-height:1.6;margin:0 0 18px}
-#sheenAuthCard label{display:block;font-size:13px;color:var(--mut);margin:14px 4px 6px}
+#ripplSwitchMode{width:100%;height:48px;border:1.5px solid var(--blue);border-radius:24px;background:transparent;color:var(--blue);font:inherit;font-size:15px;font-weight:700;cursor:pointer}
+#ripplSwitchMode:active{background:#5865f222}
+#ripplAuthCard h2{text-align:center;font-size:26px;font-weight:700;margin:0 0 6px}
+#ripplAuthCard p{text-align:center;color:var(--mut);font-size:14px;line-height:1.6;margin:0 0 18px}
+#ripplAuthCard label{display:block;font-size:13px;color:var(--mut);margin:14px 4px 6px}
 .sa-field{position:relative;display:flex;align-items:center}
 .sa-field>svg{display:none}
-#sheenAuthCard input{width:100%;height:48px;border:0;border-radius:24px;background:var(--card);color:var(--txt);padding:0 18px;font:inherit;font-size:15px;outline:none}
-#sheenAuthCard input::placeholder{color:var(--mut)}
-#sheenAuthCard input[type=email],#sheenAuthCard input[type=password].ltr{direction:ltr;text-align:left}
-#sheenPassToggle{position:absolute;left:6px;width:36px;height:36px;border:0;background:transparent;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center}
-#sheenPassToggle svg{width:19px;height:19px;stroke:var(--mut);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-#sheenAuthCard input.ltr{padding-left:46px}
-#sheenNameWrap{display:none}
-#sheenNameWrap.on{display:block}
-#sheenAuthSubmit{width:100%;height:48px;margin-top:20px;border:0;border-radius:24px;background:var(--blue);color:#fff;font:inherit;font-size:15px;font-weight:700;cursor:pointer}
-#sheenAuthSubmit:active{opacity:.85}
-#sheenAuthSubmit:disabled{opacity:.6}
-#sheenAuthStatus{text-align:center;font-size:13px;line-height:1.6;min-height:20px;margin-top:12px;color:var(--yellow)}
-#sheenAuthStatus.good{color:var(--green)}
+#ripplAuthCard input{width:100%;height:48px;border:0;border-radius:24px;background:var(--card);color:var(--txt);padding:0 18px;font:inherit;font-size:15px;outline:none}
+#ripplAuthCard input::placeholder{color:var(--mut)}
+#ripplAuthCard input[type=email],#ripplAuthCard input[type=password].ltr{direction:ltr;text-align:left}
+#ripplPassToggle{position:absolute;left:6px;width:36px;height:36px;border:0;background:transparent;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center}
+#ripplPassToggle svg{width:19px;height:19px;stroke:var(--mut);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+#ripplAuthCard input.ltr{padding-left:46px}
+#ripplNameWrap{display:none}
+#ripplNameWrap.on{display:block}
+#ripplAuthSubmit{width:100%;height:48px;margin-top:20px;border:0;border-radius:24px;background:var(--blue);color:#fff;font:inherit;font-size:15px;font-weight:700;cursor:pointer}
+#ripplAuthSubmit:active{opacity:.85}
+#ripplAuthSubmit:disabled{opacity:.6}
+#ripplAuthStatus{text-align:center;font-size:13px;line-height:1.6;min-height:20px;margin-top:12px;color:var(--yellow)}
+#ripplAuthStatus.good{color:var(--green)}
 #stLogout b{color:#ed4245}
 #stLogout .sdot i{color:#ed4245}
 

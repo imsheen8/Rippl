@@ -1,4 +1,4 @@
-/* Sheen — المحادثات والأصدقاء والخوادم من Supabase (مع التخزين المحلي) */
+/* Rippl — المحادثات والأصدقاء والخوادم من Supabase (مع التخزين المحلي) */
 (() => {
   const $ = id => document.getElementById(id);
   const ZW = "\u200b", NOIMG = "data:,";
@@ -56,8 +56,8 @@
   }
   async function loadAll() {
     if (!me) return;
-    if (!painted) paintHome(await SheenStore.get("home"));
-    if (!SheenNet.online) return;
+    if (!painted) paintHome(await RipplStore.get("home"));
+    if (!RipplNet.online) return;
     const [r1, r2, r3] = await Promise.all([
       c.from("friendships").select("*"),
       c.from("server_members").select("server_id,role").eq("user_id", me),
@@ -77,11 +77,11 @@
       if (a.error || b.error) return; sv = a.data || []; chs = b.data || [];
     }
     const snap = { FR, mem, mine, ps, last, unread, sv, chs };
-    SheenStore.set("home", snap); paintHome(snap);
+    RipplStore.set("home", snap); paintHome(snap);
   }
   const sched = () => { clearTimeout(tmr); tmr = setTimeout(loadAll, 300); };
   async function names(ids) {
-    const need = ids.filter(i => i && !PROF[i]); if (!need.length || !SheenNet.online) return;
+    const need = ids.filter(i => i && !PROF[i]); if (!need.length || !RipplNet.online) return;
     const { data } = await c.from("profiles").select("id,username,display_name").in("id", need); (data || []).forEach(p => PROF[p.id] = p);
   }
 
@@ -93,11 +93,11 @@
   const byTime = (a, b) => +new Date(a.created_at) - +new Date(b.created_at);
   function persist(key) {
     const rows = ROWS[key] || [], cut = rows.length > KEEP;
-    SheenStore.set(key, { rows: rows.slice(-KEEP), more: !!MORE[key] || cut });
+    RipplStore.set(key, { rows: rows.slice(-KEEP), more: !!MORE[key] || cut });
   }
   async function hydrateConv(key) {
     if (ROWS[key]) return;
-    const cs = await SheenStore.get(key);
+    const cs = await RipplStore.get(key);
     if (cs && cs.rows) { ROWS[key] = cs.rows; MORE[key] = cs.more; }
   }
   async function addRow(key, m) { // one new row from realtime or from the outbox
@@ -110,7 +110,7 @@
     : { id: m.id, src: "ch", img: m.image_url || "", me: m.author_id === me, pending: !!m.pending, t: tm(m.created_at), text: (m.author_id === me || !m.content ? "" : nm(PROF[m.author_id]) + ": ") + m.content };
   async function buildConv(it) {
     const key = convKey(it), src = it.chan ? "ch" : "dm", base = ROWS[key] || [], have = new Set(base.map(r => r.id));
-    const pend = (await SheenNet.pending(p => p.key === key && !have.has(p.id))).map(p => ({ id: p.id, created_at: p.created_at, sender_id: me, author_id: me,
+    const pend = (await RipplNet.pending(p => p.key === key && !have.has(p.id))).map(p => ({ id: p.id, created_at: p.created_at, sender_id: me, author_id: me,
       content: p.payload.content || "", image_url: p.blob ? blobUrl(p) : (p.payload.image_url || ""), pending: true }));
     const rows = base.concat(pend);
     if (src === "ch") await names([...new Set(rows.map(r => r.author_id))]);
@@ -127,7 +127,7 @@
   async function loadConv(it) {
     if (it.chan && !CHID[it.name]) return;
     const key = convKey(it); await hydrateConv(key); await buildConv(it); // instant, from the phone
-    if (!SheenNet.online) return;
+    if (!RipplNet.online) return;
     const { data, error } = await page(it); if (error || !data) return; // keep what we have
     const fresh = data.slice().reverse(), old = ROWS[key] || [];
     ROWS[key] = data.length < PAGE ? fresh : old.filter(r => +new Date(r.created_at) < +new Date(fresh[0].created_at)).concat(fresh);
@@ -141,7 +141,7 @@
   async function loadOlder(it) {
     const key = convKey(it); if (LOADING[key] || !MORE[key]) return;
     const rows = ROWS[key] || []; if (!rows.length) return;
-    if (!SheenNet.online) return SheenNet.guard("لا يوجد اتصال — الرسائل الأقدم غير محفوظة على الجهاز");
+    if (!RipplNet.online) return RipplNet.guard("لا يوجد اتصال — الرسائل الأقدم غير محفوظة على الجهاز");
     LOADING[key] = 1; paintLoader(it);
     try {
       const { data, error } = await page(it, rows[0].created_at);
@@ -173,13 +173,13 @@
     if (up.error && !/exist|duplicate/i.test(String(up.error.message || "")) && Number(up.error.statusCode || up.error.status) !== 409) return { error: up.error };
     it.payload.image_url = c.storage.from("chat-images").getPublicUrl(path).data.publicUrl; return {};
   };
-  SheenNet.register("dm_msg", async it => { if (!me) return { error: { message: "not ready" } }; const u = await sendImg(it); if (u.error) return u;
+  RipplNet.register("dm_msg", async it => { if (!me) return { error: { message: "not ready" } }; const u = await sendImg(it); if (u.error) return u;
     const row = { id: it.id, sender_id: me, recipient_id: it.payload.to, content: it.payload.content || "", created_at: it.created_at };
     if (it.payload.image_url) row.image_url = it.payload.image_url; return c.from("dm_messages").insert(row); });
-  SheenNet.register("ch_msg", async it => { if (!me) return { error: { message: "not ready" } }; const u = await sendImg(it); if (u.error) return u;
+  RipplNet.register("ch_msg", async it => { if (!me) return { error: { message: "not ready" } }; const u = await sendImg(it); if (u.error) return u;
     const row = { id: it.id, channel_id: it.payload.to, author_id: me, content: it.payload.content || "", created_at: it.created_at };
     if (it.payload.image_url) row.image_url = it.payload.image_url; return c.from("messages").insert(row); });
-  SheenNet.on("sent", it => {
+  RipplNet.on("sent", it => {
     if (it.type !== "dm_msg" && it.type !== "ch_msg") return;
     const base = { id: it.id, content: it.payload.content || "", image_url: it.payload.image_url || null, created_at: it.created_at };
     addRow(it.key, it.type === "dm_msg" ? { ...base, sender_id: me, recipient_id: it.payload.to, read_at: null } : { ...base, channel_id: it.payload.to, author_id: me })
@@ -187,10 +187,10 @@
     if (BURL[it.id]) { URL.revokeObjectURL(BURL[it.id]); delete BURL[it.id]; }
     sched();
   });
-  SheenNet.on("failed", it => { if (it.type !== "dm_msg" && it.type !== "ch_msg") return; toast("تعذّر إرسال رسالة");
+  RipplNet.on("failed", it => { if (it.type !== "dm_msg" && it.type !== "ch_msg") return; toast("تعذّر إرسال رسالة");
     if (chCur && convKey(chCur) === it.key) buildConv(chCur); });
-  window.addEventListener("sheen-reconnect", () => { if (!me) return; loadAll(); if (chCur && (chCur.chan ? CHID[chCur.name] : F[chCur.k])) loadConv(chCur); });
-  window.sheenMarkRead = (peer, id) => { // the other person read my messages up to `id`
+  window.addEventListener("rippl-reconnect", () => { if (!me) return; loadAll(); if (chCur && (chCur.chan ? CHID[chCur.name] : F[chCur.k])) loadConv(chCur); });
+  window.ripplMarkRead = (peer, id) => { // the other person read my messages up to `id`
     const key = "dm:" + peer, R = ROWS[key]; if (!R) return;
     const at = R.findIndex(x => x.id === id), upto = at < 0 ? R.length - 1 : at, now = new Date().toISOString();
     R.forEach((x, i) => { if (x.sender_id === me && i <= upto && !x.read_at) x.read_at = now; }); persist(key);
@@ -203,7 +203,7 @@
     if (!it.chan && !F[it.k]) { osd(); return toast("هذه محادثة تجريبية"); }
     if (it.chan && !CHID[it.name]) { osd(); return toast("تعذّر الإرسال"); }
     inp.value = ""; $("chSend").classList.add("off");
-    SheenNet.enqueue({ type: it.chan ? "ch_msg" : "dm_msg", key: convKey(it), payload: { content: v, to: it.chan ? CHID[it.name] : it.k } })
+    RipplNet.enqueue({ type: it.chan ? "ch_msg" : "dm_msg", key: convKey(it), payload: { content: v, to: it.chan ? CHID[it.name] : it.k } })
       .then(() => { buildConv(it); if (!it.chan) chBump(it, v); });
     inp.focus();
   };
@@ -247,7 +247,7 @@
       const { data } = await c.from("profiles").select("id,username,display_name,avatar_url").or(`username.ilike.%${q}%,display_name.ilike.%${q}%`).neq("id", me).limit(8);
       const rs = (data || []).filter(p => !F[p.id]); if (!rs.length) return;
       const box = document.createElement("div"); box.id = "liveRes";
-      const h = document.createElement("div"); h.className = "gsec"; h.textContent = "أشخاص في Sheen"; box.append(h);
+      const h = document.createElement("div"); h.className = "gsec"; h.textContent = "أشخاص في Rippl"; box.append(h);
       rs.forEach(p => { PROF[p.id] = p; IMG[p.id] = p.avatar_url || NOIMG; const d = document.createElement("div");
         d.style.cssText = "display:flex;align-items:center;gap:10px;padding:8px 16px";
         d.innerHTML = '<div class="av"></div><div style="flex:1"><b dir="auto"></b><br><small style="color:var(--mut)"></small></div><button class="sgf2 pr" style="width:auto"></button>';
@@ -288,13 +288,13 @@
       b.style.cssText = "display:block;width:100%;padding:14px;background:none;border:0;font:inherit;font-size:16px;color:" + (red ? "#f23f43" : "var(--txt)");
       b.onclick = async () => { o.remove(); await f(); }; s.append(b); };
     const reload = () => it.chan ? loadChannel(it) : loadDM(it);
-    if (msg.pending) { add("إلغاء الإرسال", async () => { await SheenNet.cancel(msg.id); buildConv(it); }, 1); add("إغلاق", () => {});
+    if (msg.pending) { add("إلغاء الإرسال", async () => { await RipplNet.cancel(msg.id); buildConv(it); }, 1); add("إغلاق", () => {});
       o.onclick = ev => { if (ev.target === o) o.remove(); }; o.append(s); document.body.append(o); return; }
     if (msg.src === "ch" && msg.text) add("تعديل", async () => { const v = prompt("تعديل الرسالة", msg.text); if (!v || !v.trim() || v.trim() === msg.text) return;
-      if (!SheenNet.guard("يلزم اتصال بالإنترنت للتعديل")) return; const { error } = await c.from("messages").update({ content: v.trim() }).eq("id", msg.id);
+      if (!RipplNet.guard("يلزم اتصال بالإنترنت للتعديل")) return; const { error } = await c.from("messages").update({ content: v.trim() }).eq("id", msg.id);
       if (error) toast("تعذّر التعديل"); else { const k = convKey(it), r = (ROWS[k] || []).find(x => x.id === msg.id); if (r) r.content = v.trim(); persist(k); } reload(); });
     add("حذف", async () => { if (!confirm("حذف الرسالة؟")) return;
-      if (!SheenNet.guard("يلزم اتصال بالإنترنت للحذف")) return; const { error } = await c.from(msg.src === "ch" ? "messages" : "dm_messages").delete().eq("id", msg.id);
+      if (!RipplNet.guard("يلزم اتصال بالإنترنت للحذف")) return; const { error } = await c.from(msg.src === "ch" ? "messages" : "dm_messages").delete().eq("id", msg.id);
       if (error) toast("تعذّر الحذف"); else { const k = convKey(it); ROWS[k] = (ROWS[k] || []).filter(x => x.id !== msg.id); persist(k); } reload(); }, 1);
     add("إلغاء", () => {}); o.onclick = ev => { if (ev.target === o) o.remove(); }; o.append(s); document.body.append(o);
   }
@@ -322,7 +322,7 @@
     if (!it.chan && !F[it.k]) return toast("هذه محادثة تجريبية"); if (it.chan && !CHID[it.name]) return;
     try {
       const blob = await shrink(f);
-      await SheenNet.enqueue({ type: it.chan ? "ch_msg" : "dm_msg", key: convKey(it), blob, payload: { content: "", to: it.chan ? CHID[it.name] : it.k } });
+      await RipplNet.enqueue({ type: it.chan ? "ch_msg" : "dm_msg", key: convKey(it), blob, payload: { content: "", to: it.chan ? CHID[it.name] : it.k } });
       buildConv(it); if (!it.chan) chBump(it, "📷 Photo");
     } catch (err) { toast("تعذّر إرسال الصورة"); }
   };
@@ -361,13 +361,13 @@
       .on("postgres_changes", { event: "*", schema: "public", table: "server_members" }, sched)
       .on("postgres_changes", { event: "*", schema: "public", table: "servers" }, sched)
       .on("postgres_changes", { event: "*", schema: "public", table: "channels" }, sched)
-      .subscribe(SheenNet.live("chats"));
+      .subscribe(RipplNet.live("chats"));
   }
   async function init() {
-    c = window.sheenClient; if (!c) return setTimeout(init, 400);
-    const watch = async () => { const u = await window.sheenUser();
-      window.sheenSched = sched; if (u && u.id !== me) { me = u.id; SheenNet.start(me); await loadAll(); listen(); }
-      if (!u && me) { me = null; painted = false; SheenNet.stop(); [ROWS, MORE, LOADING].forEach(o => Object.keys(o).forEach(k => delete o[k])); if (chan) c.removeChannel(chan); chan = null; chatList.querySelectorAll(".row").forEach(r => r.remove()); } };
+    c = window.ripplClient; if (!c) return setTimeout(init, 400);
+    const watch = async () => { const u = await window.ripplUser();
+      window.ripplSched = sched; if (u && u.id !== me) { me = u.id; RipplNet.start(me); await loadAll(); listen(); }
+      if (!u && me) { me = null; painted = false; RipplNet.stop(); [ROWS, MORE, LOADING].forEach(o => Object.keys(o).forEach(k => delete o[k])); if (chan) c.removeChannel(chan); chan = null; chatList.querySelectorAll(".row").forEach(r => r.remove()); } };
     watch(); c.auth.onAuthStateChange(() => setTimeout(watch, 0));
   }
   init();

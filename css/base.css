@@ -1,6 +1,6 @@
-/* Sheen — الأساس: المتغيرات والتخطيط العام والشريط العلوي والقصص */
+/* Rippl — الأساس: المتغيرات والتخطيط العام والشريط العلوي والقصص */
 :root{--bg:#1a1a1e;--rail:#121214;--card:#26262b;--txt:#f2f3f5;--mut:#9a9aa3;--blue:#5865f2;--green:#23a55a;--yellow:#f0b232;--dark:#111114;--card2:#1e1e21}
-*{box-sizing:border-box;margin:0}
+*{box-sizing:border-box;margin:0;-webkit-tap-highlight-color:transparent}
 html,body{height:100%;background:#0e0e10;color:var(--txt);font-family:system-ui,-apple-system,"Segoe UI",Tahoma,sans-serif}
 button{font-family:inherit}
 i[data-lucide],svg.lucide{width:1.15em;height:1.15em;stroke-width:1.9;flex:none;vertical-align:-.2em}
@@ -48,3 +48,10 @@ h1{font-size:23px;font-weight:700;padding:18px 16px 12px}
 .nc{background:var(--card);border-radius:22px;padding:16px;display:flex;align-items:center;gap:12px;min-width:240px}
 .nc.sm{min-width:110px;justify-content:center}
 .nc b{display:block;font-size:17px;font-weight:500}.nc span{font-size:13px}
+
+/* ===== منع تحديد/نسخ النصوص (مثل QUARK AI) وإزالة المربع الأزرق عند الضغط ===== */
+html,body{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+/* حقول الكتابة تبقى قابلة للتحديد والكتابة */
+input,textarea,[contenteditable="true"]{-webkit-user-select:text;user-select:text}
+button,a,label,[role="button"],[onclick]{outline:none;-webkit-tap-highlight-color:transparent}
+img{-webkit-user-drag:none;user-drag:none}

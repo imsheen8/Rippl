@@ -1,4 +1,4 @@
-/* Sheen — شاشة الإشعارات والقائمة المنسدلة */
+/* Rippl — شاشة الإشعارات والقائمة المنسدلة */
 #notif{background:var(--bg)}
 #notif .nstories{flex:none;padding:14px 14px 12px}
 .nh{display:flex;align-items:center;gap:26px;padding:22px 20px 16px;border-bottom:1px solid #2a2a2f;position:sticky;top:0;background:#1d1d21;z-index:2}

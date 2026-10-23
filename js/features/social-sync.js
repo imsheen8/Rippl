@@ -1,4 +1,4 @@
-/* Sheen — المتابعة والأصدقاء وملفات المستخدمين */
+/* Rippl — المتابعة والأصدقاء وملفات المستخدمين */
 (() => {
   const $ = id => document.getElementById(id);
   let c, me = null, FING = new Set(); const PR = {};
@@ -77,17 +77,17 @@
   function listenSocial() {
     if (sch) return;
     try {
-      sch = c.channel("sheen-social-" + me)
+      sch = c.channel("rippl-social-" + me)
         .on("postgres_changes", { event: "*", schema: "public", table: "follows" }, ({ new: n, old: o }) => { const r = (n && n.follower_id ? n : o) || {}; if (!r.follower_id || r.follower_id === me || r.followee_id === me) socSched(); })
         .on("postgres_changes", { event: "INSERT", schema: "public", table: "profiles" }, socSched)
-        .subscribe(SheenNet.live("social"));
+        .subscribe(RipplNet.live("social"));
     } catch (_) {}
   }
-  window.addEventListener("sheen-reconnect", () => { if (me) loadSocial(); });
+  window.addEventListener("rippl-reconnect", () => { if (me) loadSocial(); });
   async function init() {
-    c = window.sheenClient; if (!c) return setTimeout(init, 400);
+    c = window.ripplClient; if (!c) return setTimeout(init, 400);
     FO.length = 0; SG.length = 0; rFO(); rSG();
-    const watch = async () => { const u = await window.sheenUser();
+    const watch = async () => { const u = await window.ripplUser();
       if (u && u.id !== me) { me = u.id; if (sch) { try { c.removeChannel(sch); } catch (_) {} sch = null; } loadSocial(); listenSocial(); }
       if (!u && me) { me = null; if (sch) { try { c.removeChannel(sch); } catch (_) {} sch = null; } FO.length = 0; SG.length = 0; rFO(); rSG(); } };
     watch(); c.auth.onAuthStateChange(() => setTimeout(watch, 0));

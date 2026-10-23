@@ -1,4 +1,4 @@
--- Sheen MVP schema for Supabase (PostgreSQL)
+-- Rippl MVP schema for Supabase (PostgreSQL)
 -- Run this whole file in Supabase Dashboard > SQL Editor > New query.
 -- Security note: RLS is enabled. Never put the service_role key in index.html.
 
@@ -7,7 +7,7 @@ create extension if not exists pgcrypto;
 create table if not exists public.profiles (
   id uuid primary key references auth.users(id) on delete cascade,
   username text unique,
-  display_name text not null default 'Sheen User',
+  display_name text not null default 'Rippl User',
   avatar_url text,
   bio text not null default '',
   created_at timestamptz not null default now()
@@ -24,7 +24,7 @@ begin
   values (
     new.id,
     'user_' || substr(replace(new.id::text, '-', ''), 1, 12),
-    coalesce(nullif(new.raw_user_meta_data->>'display_name', ''), 'Sheen User')
+    coalesce(nullif(new.raw_user_meta_data->>'display_name', ''), 'Rippl User')
   )
   on conflict (id) do nothing;
   return new;

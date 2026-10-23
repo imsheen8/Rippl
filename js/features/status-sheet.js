@@ -1,4 +1,4 @@
-/* Sheen — ورقة حالة الاتصال */
+/* Rippl — ورقة حالة الاتصال */
 /* ---------- online status sheet ---------- */
 const ST={online:['Online','#23a55a'],idle:['Idle','#f0b232'],dnd:['Do Not Disturb','#ed4245'],invisible:['Invisible','#80848e']};
 let curSt='invisible';

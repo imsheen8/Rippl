@@ -1,4 +1,4 @@
-/* Sheen — صفحة الملف الشخصي الخاص */
+/* Rippl — صفحة الملف الشخصي الخاص */
 #prof{background:var(--dark);overflow:hidden}
 .pscroll{position:absolute;inset:0;overflow-y:auto;display:flex;flex-direction:column;-webkit-overflow-scrolling:touch}
 .ban{height:96px;background:#b03530;flex:none;position:relative}

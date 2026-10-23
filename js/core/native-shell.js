@@ -1,4 +1,4 @@
-/* Sheen — زر الرجوع في أندرويد + تسجيل service worker */
+/* Rippl — زر الرجوع في أندرويد + تسجيل service worker */
 (() => {
   const C = window.Capacitor, native = !!(C && C.isNativePlatform && C.isNativePlatform());
   if (native) {

@@ -1,20 +1,20 @@
-/* Sheen — Supabase: تسجيل الدخول وإنشاء الحساب */
+/* Rippl — Supabase: تسجيل الدخول وإنشاء الحساب */
 (() => {
   // Only the publishable/anon key belongs in browser code. NEVER use service_role here.
   const SUPABASE_URL = "https://hrihyingiwxyquopeceg.supabase.co";
   const SUPABASE_ANON_KEY = "sb_publishable_9raVGCStrTW4gxxK8I4aqw_0Btlhtfs";
   const $ = id => document.getElementById(id);
-  const gate = $("sheenAuthGate"), status = $("sheenAuthStatus");
-  const emailInput = $("sheenAuthEmailInput"), passwordInput = $("sheenAuthPasswordInput");
-  const submit = $("sheenAuthSubmit"), title = $("sheenAuthTitle"), description = $("sheenAuthDescription");
-  const switchBtn = $("sheenSwitchMode"), passToggle = $("sheenPassToggle");
+  const gate = $("ripplAuthGate"), status = $("ripplAuthStatus");
+  const emailInput = $("ripplAuthEmailInput"), passwordInput = $("ripplAuthPasswordInput");
+  const submit = $("ripplAuthSubmit"), title = $("ripplAuthTitle"), description = $("ripplAuthDescription");
+  const switchBtn = $("ripplSwitchMode"), passToggle = $("ripplPassToggle");
   let isSignUp = false, supabase = null;
-  const LASTU = "sheen_last_user";
+  const LASTU = "rippl_last_user";
   const cachedUser = () => { try { const u = JSON.parse(localStorage.getItem(LASTU) || "null"); return u && u.id ? u : null; } catch (e) { return null; } };
   const remember = u => { try { if (u && u.id) localStorage.setItem(LASTU, JSON.stringify({ id: u.id })); } catch (e) {} };
   const netErr = e => !!e && (e.name === "AuthRetryableFetchError" || /fetch|network|offline/i.test(String(e.message || "")));
   // offline-safe identity: the live session, or (only while the network is down) the last signed-in user so saved data stays usable
-  window.sheenUser = async () => {
+  window.ripplUser = async () => {
     let err = null;
     try { const { data, error } = await supabase.auth.getSession(); if (data && data.session) return data.session.user; err = error; } catch (e) { err = e; }
     return (navigator.onLine === false || netErr(err)) ? cachedUser() : null;
@@ -55,7 +55,7 @@
     isSignUp = signUp;
     switchBtn.textContent = signUp ? "لدي حساب بالفعل" : "إنشاء حساب جديد";
     title.textContent = signUp ? "إنشاء حساب" : "تسجيل الدخول";
-    description.textContent = signUp ? "أنشئ حسابك للانضمام إلى Sheen." : "أهلًا بك في Sheen.";
+    description.textContent = signUp ? "أنشئ حسابك للانضمام إلى Rippl." : "أهلًا بك في Rippl.";
     submit.textContent = signUp ? "إنشاء الحساب" : "تسجيل الدخول";
     passwordInput.autocomplete = signUp ? "new-password" : "current-password";
     setStatus("");
@@ -97,8 +97,8 @@
   const logout = $("stLogout");
   if (logout) logout.addEventListener("click", async () => {
     if (!supabase) return;
-    try { const n = (await SheenNet.pending()).length; if (n && !confirm("لديك " + n + " عنصر لم يُرسل بعد وسيُحذف عند تسجيل الخروج. متابعة؟")) return; } catch (e) {}
-    try { localStorage.removeItem(LASTU); SheenNet.stop(); await SheenStore.wipe(); } catch (e) {}
+    try { const n = (await RipplNet.pending()).length; if (n && !confirm("لديك " + n + " عنصر لم يُرسل بعد وسيُحذف عند تسجيل الخروج. متابعة؟")) return; } catch (e) {}
+    try { localStorage.removeItem(LASTU); RipplNet.stop(); await RipplStore.wipe(); } catch (e) {}
     await supabase.auth.signOut(navigator.onLine === false ? { scope: "local" } : undefined);
     const bg = $("stBg"), sheet = $("stSheet");
     if (bg) bg.classList.remove("on");
@@ -109,21 +109,21 @@
 
   if (!configReady() || !window.supabase?.createClient) {
     if (configReady() && cachedUser()) { // offline first launch without the library: open from the saved data
-      supabase = window.sheenClient = offlineClient(); hideGate(); window.dispatchEvent(new Event("sheen-auth")); return;
+      supabase = window.ripplClient = offlineClient(); hideGate(); window.dispatchEvent(new Event("rippl-auth")); return;
     }
     showGate("الخدمة غير متاحة حاليًا. تحقق من الاتصال ثم أعد التحميل.");
     return;
   }
   supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-  window.sheenClient = supabase;
+  window.ripplClient = supabase;
   supabase.auth.getSession().then(({ data, error }) => {
-    if (data && data.session) { remember(data.session.user); hideGate(); window.dispatchEvent(new Event("sheen-auth")); }
-    else if (cachedUser() && (navigator.onLine === false || netErr(error))) { hideGate(); window.dispatchEvent(new Event("sheen-auth")); } // offline start: stay signed in
+    if (data && data.session) { remember(data.session.user); hideGate(); window.dispatchEvent(new Event("rippl-auth")); }
+    else if (cachedUser() && (navigator.onLine === false || netErr(error))) { hideGate(); window.dispatchEvent(new Event("rippl-auth")); } // offline start: stay signed in
     else showGate();
   });
   supabase.auth.onAuthStateChange((event, session) => {
-    if (session) { remember(session.user); hideGate(); if (event === "SIGNED_IN") window.dispatchEvent(new Event("sheen-auth")); }
+    if (session) { remember(session.user); hideGate(); if (event === "SIGNED_IN") window.dispatchEvent(new Event("rippl-auth")); }
     else if (event !== "SIGNED_OUT" && cachedUser() && navigator.onLine === false) { /* offline: keep showing saved data */ }
-    else { try { localStorage.removeItem(LASTU); } catch (e) {} showGate(); window.dispatchEvent(new Event("sheen-logout")); }
+    else { try { localStorage.removeItem(LASTU); } catch (e) {} showGate(); window.dispatchEvent(new Event("rippl-logout")); }
   });
 })();

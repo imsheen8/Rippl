@@ -1,4 +1,4 @@
-/* Sheen — المنشورات والتعليقات من Supabase */
+/* Rippl — المنشورات والتعليقات من Supabase */
 (() => {
   const $ = id => document.getElementById(id);
   let c, me = null, MYNAME = "", file = null, busy = false; const PR = {};
@@ -27,7 +27,7 @@
   const FPAGE = 15; let feedMore = false, feedBusy = false, feedPainted = false; const BU = {};
   const realPosts = () => POSTS.filter(p => !p.pending);
   async function pendingPosts() {
-    return (await SheenNet.pending(p => p.type === "post")).map(p => ({ pending: true, k: "me", t: "⏳ بانتظار الإرسال", text: p.payload.content,
+    return (await RipplNet.pending(p => p.type === "post")).map(p => ({ pending: true, k: "me", t: "⏳ بانتظار الإرسال", text: p.payload.content,
       img: p.blob ? (BU[p.id] = BU[p.id] || URL.createObjectURL(p.blob)) : "", likes: 0, cm: 0, sh: 0, comments: [] }));
   }
   async function setFeed(list) {
@@ -38,7 +38,7 @@
   function saveFeed() {
     const posts = realPosts().slice(0, 60), pf = {};
     [me, ...posts.map(p => p.k === "me" ? me : p.k)].forEach(i => { if (PR[i]) pf[i] = PR[i]; });
-    SheenStore.set("feed", { posts, profs: pf, more: feedMore || posts.length >= FPAGE });
+    RipplStore.set("feed", { posts, profs: pf, more: feedMore || posts.length >= FPAGE });
   }
   const mapPosts = (ps, lk, cm) => ps.map(p => { const L = lk.filter(x => x.post_id === p.id), C = cm.filter(x => x.post_id === p.id);
     return { id: p.id, ts: p.created_at, k: p.author_id === me ? "me" : p.author_id, t: ago(p.created_at), text: p.content, img: p.image_url || "", likes: L.length, cm: C.length, sh: 0,
@@ -55,11 +55,11 @@
   async function loadFeed() {
     if (!me) return;
     if (!feedPainted) {
-      const cs = await SheenStore.get("feed");
+      const cs = await RipplStore.get("feed");
       if (cs && cs.posts && me) { Object.assign(PR, cs.profs || {}); await profs([me, ...cs.posts.map(p => p.k === "me" ? me : p.k)]); MYNAME = nmOf(me);
         feedMore = !!cs.more; feedPainted = true; await setFeed(cs.posts.map(p => ({ ...p, t: ago(p.ts) }))); }
     }
-    if (!SheenNet.online) return;
+    if (!RipplNet.online) return;
     const { data: ps, error } = await c.from("posts").select("*").order("created_at", { ascending: false }).limit(FPAGE);
     if (error || !ps) return;
     const ex = await extras(ps); if (!ex) return; const { lk, cm } = ex;
@@ -76,7 +76,7 @@
     try { rNA(); } catch (_) {}
   }
   async function loadMoreFeed() {
-    if (feedBusy || !feedMore || !me || !SheenNet.online) return;
+    if (feedBusy || !feedMore || !me || !RipplNet.online) return;
     const last = [...realPosts()].reverse().find(p => p.ts); if (!last) return;
     feedBusy = true; const ld = document.querySelector("#feed .feedload"); if (ld) ld.textContent = "جارٍ التحميل…";
     try {
@@ -97,7 +97,7 @@
   $("feed").addEventListener("click", ev => { if (ev.target.closest(".feedload")) loadMoreFeed(); });
   // queued actions (sent immediately when online, kept and retried when not)
   const notReady = { error: { message: "not ready" } };
-  SheenNet.register("post", async it => {
+  RipplNet.register("post", async it => {
     if (!me) return notReady;
     if (it.blob && !it.payload.image_url) {
       const path = me + "/" + it.id + ".jpg", up = await c.storage.from("post-images").upload(path, it.blob, { contentType: "image/jpeg" });
@@ -106,12 +106,12 @@
     }
     return c.from("posts").insert({ id: it.id, author_id: me, content: it.payload.content, image_url: it.payload.image_url || null, created_at: it.created_at });
   });
-  SheenNet.register("like", it => !me ? notReady : it.payload.on ? c.from("post_likes").insert({ post_id: it.payload.post_id, user_id: me })
+  RipplNet.register("like", it => !me ? notReady : it.payload.on ? c.from("post_likes").insert({ post_id: it.payload.post_id, user_id: me })
     : c.from("post_likes").delete().eq("post_id", it.payload.post_id).eq("user_id", me));
-  SheenNet.register("comment", it => !me ? notReady : c.from("post_comments").insert({ id: it.id, post_id: it.payload.post_id, author_id: me, content: it.payload.content, created_at: it.created_at }));
-  SheenNet.on("sent", it => { if (it.type === "post") { if (BU[it.id]) { URL.revokeObjectURL(BU[it.id]); delete BU[it.id]; } loadFeed(); } });
-  SheenNet.on("failed", it => { if (it.type === "post") { toast("تعذّر النشر"); setFeed(realPosts()); } else if (it.type === "comment") toast("تعذّر إرسال التعليق"); else if (it.type === "like") toast("تعذّر تنفيذ الإعجاب"); });
-  window.addEventListener("sheen-reconnect", () => { if (me) loadFeed(); });
+  RipplNet.register("comment", it => !me ? notReady : c.from("post_comments").insert({ id: it.id, post_id: it.payload.post_id, author_id: me, content: it.payload.content, created_at: it.created_at }));
+  RipplNet.on("sent", it => { if (it.type === "post") { if (BU[it.id]) { URL.revokeObjectURL(BU[it.id]); delete BU[it.id]; } loadFeed(); } });
+  RipplNet.on("failed", it => { if (it.type === "post") { toast("تعذّر النشر"); setFeed(realPosts()); } else if (it.type === "comment") toast("تعذّر إرسال التعليق"); else if (it.type === "like") toast("تعذّر تنفيذ الإعجاب"); });
+  window.addEventListener("rippl-reconnect", () => { if (me) loadFeed(); });
   function shrink(f) {
     return new Promise((res, rej) => { const im = new Image(), u = URL.createObjectURL(f);
       im.onload = () => { const k = Math.min(1, 1280 / Math.max(im.width, im.height)), cv = document.createElement("canvas");
@@ -126,9 +126,9 @@
     if (busy || !me) return; busy = true; $("cpPost").classList.add("off");
     try {
       const blob = cpImg && file ? await shrink(file) : null;
-      await SheenNet.enqueue({ type: "post", blob, payload: { content: text } });
+      await RipplNet.enqueue({ type: "post", blob, payload: { content: text } });
       cpImg = null; file = null; await setFeed(realPosts()); hide(); setTab("home"); $("feed").scrollTo({ top: 0 });
-      toast(SheenNet.online ? "Posted" : "سيُنشر عند عودة الاتصال");
+      toast(RipplNet.online ? "Posted" : "سيُنشر عند عودة الاتصال");
     } catch (err) { toast("تعذّر النشر"); } finally { busy = false; cpUpd(); }
   };
   ["feed", "upScroll", "myPosts"].forEach(id => $(id).addEventListener("click", async ev => {
@@ -136,21 +136,21 @@
     if (b) {
       const post = b.closest(".fpost"), pid = post && post.dataset.pid; if (!pid || !me) return;
       const on = b.classList.contains("on");
-      await SheenNet.dropWhere(x => x.type === "like" && x.payload.post_id === pid);
-      await SheenNet.enqueue({ type: "like", payload: { post_id: pid, on } });
+      await RipplNet.dropWhere(x => x.type === "like" && x.payload.post_id === pid);
+      await RipplNet.enqueue({ type: "like", payload: { post_id: pid, on } });
       const o = POSTS.find(p => p.id === pid); if (o && o.liked !== on) { o.liked = on; o.likes += on ? 1 : -1; saveFeed(); }
       return;
     }
     const x = ev.target.closest(".fx"); if (!x) return;
     const post = x.closest(".fpost"), pid = post && post.dataset.pid, o = POSTS.find(p => p.id === pid);
     if (!o || o.k !== "me" || !confirm("حذف المنشور؟")) return;
-    if (!SheenNet.guard("يلزم اتصال بالإنترنت للحذف")) return;
+    if (!RipplNet.guard("يلزم اتصال بالإنترنت للحذف")) return;
     const { error } = await c.from("posts").delete().eq("id", pid); if (error) return toast("تعذّر الحذف");
     [POSTS, MYPOSTS].forEach(a => { const i = a.indexOf(o); if (i > -1) a.splice(i, 1); }); renderFeed(); renderMy(); saveFeed();
   }));
   ["feed", "upScroll", "myPosts"].forEach(id => $(id).addEventListener("click", async ev => {
     const b = ev.target.closest(".fsh"); if (!b) return;
-    const post = b.closest(".fpost"), txt = (post.querySelector(".ft") || {}).textContent || "", t = (txt ? txt + "\n" : "") + "— Sheen";
+    const post = b.closest(".fpost"), txt = (post.querySelector(".ft") || {}).textContent || "", t = (txt ? txt + "\n" : "") + "— Rippl";
     try { if (navigator.share) await navigator.share({ text: t }); else { await navigator.clipboard.writeText(t); toast("تم نسخ المنشور"); } }
     catch (err) { if (err && err.name !== "AbortError") { try { await navigator.clipboard.writeText(t); toast("تم نسخ المنشور"); } catch (_) { toast("تعذّر المشاركة"); } } }
   }));
@@ -159,17 +159,17 @@
     const i = ev.target.closest && ev.target.closest(".fcmt input"); if (!i) return;
     const post = i.closest(".fpost"), pid = post && post.dataset.pid; if (!pid || !me) return;
     ev.stopImmediatePropagation(); const v = i.value.trim(); if (!v) return; i.value = "";
-    await SheenNet.enqueue({ type: "comment", payload: { post_id: pid, content: v } });
+    await RipplNet.enqueue({ type: "comment", payload: { post_id: pid, content: v } });
     const po = POSTS.find(p => p.id === pid); if (po) { po.cm = (po.cm || 0) + 1; po.comments = (po.comments || []).concat({ n: MYNAME || "Me", t: v }).slice(-3); saveFeed(); }
     const d = document.createElement("div"); d.className = "cmt"; d.dir = "auto"; const b = document.createElement("b"); b.textContent = MYNAME || "Me"; d.append(b, v);
     post.querySelector(".cmlist").append(d); const cc = post.querySelector(".cc"); cc.textContent = (+cc.textContent || 0) + 1;
   }, true);
   async function init() {
-    c = window.sheenClient; if (!c) return setTimeout(init, 400);
+    c = window.ripplClient; if (!c) return setTimeout(init, 400);
     POSTS.length = 0; MYPOSTS.length = 0; renderFeed(); renderMy();
-    window.sheenReloadFeed = loadFeed;
-    const watch = async () => { const u = await window.sheenUser();
-      if (u && u.id !== me) { me = u.id; SheenStore.setUser(me); feedPainted = false; await loadFeed(); const p = PR[me]; IMG.me = (p && p.avatar_url) || "data:,"; document.querySelectorAll('[data-img="me"] img').forEach(i => i.src = IMG.me); }
+    window.ripplReloadFeed = loadFeed;
+    const watch = async () => { const u = await window.ripplUser();
+      if (u && u.id !== me) { me = u.id; RipplStore.setUser(me); feedPainted = false; await loadFeed(); const p = PR[me]; IMG.me = (p && p.avatar_url) || "data:,"; document.querySelectorAll('[data-img="me"] img').forEach(i => i.src = IMG.me); }
       if (!u && me) { me = null; feedMore = false; POSTS.length = 0; MYPOSTS.length = 0; renderFeed(); renderMy(); } };
     watch(); c.auth.onAuthStateChange(() => setTimeout(watch, 0));
   }

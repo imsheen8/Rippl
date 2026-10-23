@@ -1,9 +1,9 @@
-/* Sheen — تعديل الملف الشخصي (صورة، بانر، اسم...) */
+/* Rippl — تعديل الملف الشخصي (صورة، بانر، اسم...) */
 (() => {
   const $ = id => document.getElementById(id);
-  const CACHE = "sheen_profile";
+  const CACHE = "rippl_profile";
   let prof = null, files = { av: null, bn: null }, busy = false;
-  const client = () => window.sheenClient || null;
+  const client = () => window.ripplClient || null;
   async function session() {
     const c = client(); if (!c) return null;
     const { data } = await c.auth.getSession();
@@ -62,8 +62,8 @@
     const p = await fetchProfile();
     if (p) { prof = p; applyProfile(p); remember(p); }
   }
-  window.addEventListener("sheen-auth", refresh);
-  window.addEventListener("sheen-logout", () => { prof = null; try { localStorage.removeItem(CACHE); } catch (e) {} });
+  window.addEventListener("rippl-auth", refresh);
+  window.addEventListener("rippl-logout", () => { prof = null; try { localStorage.removeItem(CACHE); } catch (e) {} });
   // show the last known profile instantly, then refresh from the server
   try {
     const hasSession = Object.keys(localStorage).some(k => /^sb-.*-auth-token$/.test(k));

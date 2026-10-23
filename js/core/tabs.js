@@ -1,4 +1,4 @@
-/* Sheen — تبديل التبويبات الرئيسية */
+/* Rippl — تبديل التبويبات الرئيسية */
 function setTab(t){
   const home=t==='home';
   panelEl.classList.toggle('home',home);

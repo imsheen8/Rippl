@@ -1,6 +1,6 @@
-/* Sheen service worker (web install only). App files: network first, cache when offline.
+/* Rippl service worker (web install only). App files: network first, cache when offline.
    The two CDN libraries are cached too, so the web app can start without internet after the first visit. */
-const CACHE = "sheen-shell-v3";
+const CACHE = "rippl-shell-v3";
 const SHELL = [
   "./",
   "index.html",

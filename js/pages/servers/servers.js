@@ -1,4 +1,4 @@
-/* Sheen — الخوادم والقنوات */
+/* Rippl — الخوادم والقنوات */
 /* ---------- servers (Discord-style rail + channel list) ---------- */
 const mk=(n,m,t,extra)=>({n,m,t,boost:'0/14',cats:[['INFO',[['r','📜','rules','القوانين'],['h','📢','announcements','الإعلانات']]],['COMMUNITY',[['h','💬','chat','الدردشة'],['h','📸','media','الوسائط']]]].concat(extra||[])});
 const SRVS={};

@@ -1,4 +1,4 @@
-/* Sheen — الملف الشخصي الخاص */
+/* Rippl — الملف الشخصي الخاص */
 /* own profile */
 const PT=[['images','Share your first post','Create post'],['lock','Only you can see your private posts','Add private post'],['repeat-2','Posts you reposted will appear here','Browse posts'],['bookmark','Save posts to find them later','Browse posts'],['heart','Posts you liked will appear here','Browse posts']];
 let pTab=0;

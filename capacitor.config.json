@@ -1,6 +1,6 @@
 {
-  "appId": "com.sheen.app",
-  "appName": "Sheen",
+  "appId": "com.kr.rippl",
+  "appName": "Rippl",
   "webDir": "www",
   "server": {
     "androidScheme": "https"

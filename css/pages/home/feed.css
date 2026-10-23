@@ -1,4 +1,4 @@
-/* Sheen — الصفحة الرئيسية: المنشورات */
+/* Rippl — الصفحة الرئيسية: المنشورات */
 /* ---------- home feed ---------- */
 .panel.home #chatList,.panel:not(.home) #feed{display:none}
 .panel.home .fab,.panel.home .tb{display:none}

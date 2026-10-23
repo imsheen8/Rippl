@@ -1,4 +1,4 @@
-/* Sheen — الإشعارات والمتابعون والاقتراحات */
+/* Rippl — الإشعارات والمتابعون والاقتراحات */
 const N=[];
 const typ=n=>/replied/.test(n[2])?'r':/mentioned/.test(n[2])?'m':'x';
 const nRow=n=>`<div class="ni" data-ty="${typ(n)}"><div class="av" data-img="${n[0]}" data-fb="${n[1]}"></div><div class="b">${n[2]}<div class="q ${n[5]?'m':''}" dir="auto">${n[3]}</div></div><time>${n[4]}</time></div>`;

@@ -1,4 +1,4 @@
--- Sheen schema v10: chat images + groups (private servers you build from friends). Run AFTER schema.sql + schema-v2.sql. Safe to re-run.
+-- Rippl schema v10: chat images + groups (private servers you build from friends). Run AFTER schema.sql + schema-v2.sql. Safe to re-run.
 
 -- 1) Images in direct messages and channel messages
 alter table public.dm_messages add column if not exists image_url text;

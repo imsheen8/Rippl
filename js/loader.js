@@ -1,4 +1,4 @@
-/* Sheen — المحمّل: يجلب مقاطع HTML ثم يشغّل ملفات JS بالترتيب */
+/* Rippl — المحمّل: يجلب مقاطع HTML ثم يشغّل ملفات JS بالترتيب */
 (async () => {
   const showError = (e) => {
     const d = document.createElement('div');
@@ -9,7 +9,7 @@
       '<p dir="ltr" style="background:#222;border-radius:10px;padding:10px;font-family:monospace">python -m http.server 8000<br>http://localhost:8000</p>' +
       '<p style="opacity:.6;font-size:13px" dir="ltr">' + String(e && e.message || e) + '</p></div>';
     document.body.appendChild(d);
-    console.error('Sheen loader:', e);
+    console.error('Rippl loader:', e);
   };
 
   try {
@@ -23,7 +23,7 @@
     slots.forEach((el, i) => { el.outerHTML = parts[i]; });
 
     // 2) JS: تُحمَّل بالتوازي وتُنفَّذ بالترتيب (async=false)
-    const list = (window.SHEEN_MANIFEST || {}).scripts || [];
+    const list = (window.RIPPL_MANIFEST || {}).scripts || [];
     await Promise.all(list.map((src) => new Promise((ok, fail) => {
       const s = document.createElement('script');
       s.src = src; s.async = false;

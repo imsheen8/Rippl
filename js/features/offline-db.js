@@ -1,10 +1,10 @@
-/* Sheen — قاعدة محلية SQLite (أندرويد) مع IndexedDB احتياطيًا للويب + طابور الإرسال + شريط الاتصال */
+/* Rippl — قاعدة محلية SQLite (أندرويد) مع IndexedDB احتياطيًا للويب + طابور الإرسال + شريط الاتصال */
 (() => {
   /* ---------- local database: key/value cache + outbox. Engine 1: SQLite (Android app). Engine 2: IndexedDB (web / fallback). Last resort: memory ---------- */
   let dbp = null, uid = "", memSeq = 1; const memKV = new Map(), memOut = [];
   const openDB = () => dbp || (dbp = new Promise(res => {
     try {
-      const r = indexedDB.open("sheen-local", 1);
+      const r = indexedDB.open("rippl-local", 1);
       r.onupgradeneeded = () => { r.result.createObjectStore("kv"); r.result.createObjectStore("outbox", { keyPath: "seq", autoIncrement: true }); };
       r.onsuccess = () => res(r.result); r.onerror = () => res(null); r.onblocked = () => res(null);
     } catch (e) { res(null); }
@@ -38,7 +38,7 @@
     const C = window.Capacitor; let P = null;
     try { if (C && C.isNativePlatform && C.isNativePlatform()) P = (C.Plugins && C.Plugins.CapacitorSQLite) || (C.registerPlugin && C.registerPlugin("CapacitorSQLite")); } catch (e) { P = null; }
     if (!P) return null;
-    const DB = "sheen", MEM = 1e9; // MEM: ids of outbox items kept in memory only if a SQLite write fails
+    const DB = "rippl", MEM = 1e9; // MEM: ids of outbox items kept in memory only if a SQLite write fails
     const DDL = "CREATE TABLE IF NOT EXISTS kv (k TEXT PRIMARY KEY NOT NULL, v TEXT NOT NULL);" +
       "CREATE TABLE IF NOT EXISTS outbox (seq INTEGER PRIMARY KEY AUTOINCREMENT, uid TEXT NOT NULL, data TEXT NOT NULL, blob_b64 TEXT, blob_type TEXT);" +
       "CREATE INDEX IF NOT EXISTS outbox_uid ON outbox (uid, seq);";
@@ -59,17 +59,17 @@
 
     // one-time move of the old IndexedDB data (cache + unsent items) into SQLite
     async function migrate() {
-      try { if (localStorage.getItem("sheen_sql_mig") === "1") return; } catch (e) {}
+      try { if (localStorage.getItem("rippl_sql_mig") === "1") return; } catch (e) {}
       let d = null; try { d = await openDB(); } catch (e) {}
       if (d) {
         const kv = await new Promise(res => { const out = []; try { const rq = d.transaction("kv", "readonly").objectStore("kv").openCursor(); rq.onsuccess = () => { const c = rq.result; if (c) { out.push([c.key, c.value]); c.continue(); } else res(out); }; rq.onerror = () => res(out); } catch (e) { res(out); } });
         const ob = ((await run("outbox", "readonly", s => s.getAll())) || []).sort((a, b) => a.seq - b.seq);
         for (const [k, v] of kv) await putKV(k, v);
         for (const it of ob) await insertOut(it); // a repeated item is harmless: the server answers 23505 and the item is dropped
-        try { d.close(); indexedDB.deleteDatabase("sheen-local"); } catch (e) {}
+        try { d.close(); indexedDB.deleteDatabase("rippl-local"); } catch (e) {}
         dbp = null;
       }
-      try { localStorage.setItem("sheen_sql_mig", "1"); } catch (e) {}
+      try { localStorage.setItem("rippl_sql_mig", "1"); } catch (e) {}
     }
 
     let opening = null;
@@ -148,7 +148,7 @@
     if (flushing) { again = true; return; }
     if (!uid) return; flushing = true; let sent = 0;
     try {
-      if (net() && window.sheenClient) { try { await window.sheenClient.auth.getSession(); } catch (e) {} } // refreshes an expired token first
+      if (net() && window.ripplClient) { try { await window.ripplClient.auth.getSession(); } catch (e) {} } // refreshes an expired token first
       for (;;) {
         if (!net()) break;
         const list = await Store.outAll(); if (!list.length) break;
@@ -171,7 +171,7 @@
   const dropWhere = async f => { for (const it of await Store.outAll()) if (f(it)) await Store.outDel(it.seq); emit("queue"); };
 
   /* ---------- connectivity banner + wake-up triggers ---------- */
-  const bar = document.createElement("div"); bar.id = "sheenNet"; bar.setAttribute("role", "status"); document.body.append(bar);
+  const bar = document.createElement("div"); bar.id = "ripplNet"; bar.setAttribute("role", "status"); document.body.append(bar);
   async function paintBar() {
     const n = uid ? (await Store.outAll()).length : 0;
     if (!net()) { bar.className = "on"; bar.textContent = "لا يوجد اتصال — تعرض ما هو محفوظ على جهازك" + (n ? " · " + n + " بانتظار الإرسال" : ""); }
@@ -182,7 +182,7 @@
   let hiddenAt = 0, lastWake = 0;
   const wake = async force => {
     if (Date.now() - lastWake < 2000) return; lastWake = Date.now();
-    await flush(); if (force) window.dispatchEvent(new Event("sheen-reconnect"));
+    await flush(); if (force) window.dispatchEvent(new Event("rippl-reconnect"));
   };
   window.addEventListener("online", () => { paintBar(); wake(true); });
   window.addEventListener("offline", paintBar);
@@ -192,8 +192,8 @@
 
   // realtime gap repair: when a channel re-connects after a drop, ask every module to catch up once (the server pushes everything else)
   const liveSeen = {}; let liveT = null;
-  window.SheenStore = Store;
-  window.SheenNet = {
+  window.RipplStore = Store;
+  window.RipplNet = {
     get online() { return net(); },
     enqueue, flush, pending, dropWhere,
     cancel: id => dropWhere(it => it.id === id),
@@ -201,7 +201,7 @@
     on: (ev, fn) => { (subs[ev] = subs[ev] || []).push(fn); },
     start(id) { Store.setUser(id); paintBar(); flush(); },
     stop() { Store.setUser(""); Object.keys(liveSeen).forEach(k => delete liveSeen[k]); paintBar(); },
-    live(name) { return st => { if (st !== "SUBSCRIBED") return; if (liveSeen[name]) { clearTimeout(liveT); liveT = setTimeout(() => window.dispatchEvent(new Event("sheen-reconnect")), 600); } liveSeen[name] = true; }; },
+    live(name) { return st => { if (st !== "SUBSCRIBED") return; if (liveSeen[name]) { clearTimeout(liveT); liveT = setTimeout(() => window.dispatchEvent(new Event("rippl-reconnect")), 600); } liveSeen[name] = true; }; },
     guard(msg) { if (net()) return true; try { aToast(msg); } catch (e) { alert(msg); } return false; }
   };
   paintBar();

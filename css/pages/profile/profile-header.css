@@ -1,4 +1,4 @@
-/* Sheen — رأس الملف الشخصي والتبويبات */
+/* Rippl — رأس الملف الشخصي والتبويبات */
 .ptop{display:flex;align-items:center;justify-content:space-between;padding:14px 12px 4px}
 .pright{display:flex;gap:2px}
 .pbtn{width:42px;height:42px;border-radius:50%;border:0;background:none;color:var(--txt);font-size:22px;display:flex;align-items:center;justify-content:center;cursor:pointer}

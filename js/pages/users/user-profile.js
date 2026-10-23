@@ -1,4 +1,4 @@
-/* Sheen — ملفات المستخدمين الآخرين */
+/* Rippl — ملفات المستخدمين الآخرين */
 /* ---------- other users' profiles ---------- */
 const USERS={};
 const BAN={}; /* optional banner color per user, e.g. BAN.saif='#2b5d9b' (default: red) */

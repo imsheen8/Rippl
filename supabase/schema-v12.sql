@@ -1,4 +1,4 @@
--- Sheen schema v12: new accounts start as "Online" (instead of "Invisible").
+-- Rippl schema v12: new accounts start as "Online" (instead of "Invisible").
 -- Run once in the Supabase SQL editor. Safe to re-run.
 alter table public.profiles alter column status set default 'online';
 

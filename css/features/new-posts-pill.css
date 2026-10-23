@@ -1,4 +1,4 @@
-/* Sheen — زر «منشورات جديدة» */
+/* Rippl — زر «منشورات جديدة» */
 #newPostsPill{position:absolute;top:70px;left:50%;transform:translateX(-50%);z-index:30;background:var(--blue);color:#fff;border:0;border-radius:20px;padding:9px 18px;font:inherit;font-size:14px;font-weight:700;box-shadow:0 6px 18px rgba(0,0,0,.45);display:none;cursor:pointer}
 #newPostsPill.on{display:block}
 #chSt.typing{color:var(--blue)}

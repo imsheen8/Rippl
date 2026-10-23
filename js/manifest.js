@@ -1,6 +1,6 @@
-/* Sheen — قائمة ملفات JS بالترتيب الدقيق لتشغيلها.
+/* Rippl — قائمة ملفات JS بالترتيب الدقيق لتشغيلها.
    الملفات تتشارك نطاقًا واحدًا (مثل الملف الأصلي)، فلا تغيّر الترتيب. */
-window.SHEEN_MANIFEST = {
+window.RIPPL_MANIFEST = {
   scripts: [
     'js/core/app-core.js',
     'js/pages/users/user-profile.js',

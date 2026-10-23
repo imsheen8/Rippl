@@ -1,4 +1,4 @@
-/* Sheen — صفوف الاقتراحات والأشخاص والأزرار */
+/* Rippl — صفوف الاقتراحات والأشخاص والأزرار */
 .sgh{font-size:16px;font-weight:700;padding:16px 16px 6px;display:flex;align-items:center;gap:8px}.sgh svg{width:14px;height:14px;color:var(--mut)}
 .sgr{display:flex;align-items:center;gap:12px;padding:8px 16px}
 .sgr .av{width:44px;height:44px}

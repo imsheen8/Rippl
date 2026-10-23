@@ -1,4 +1,4 @@
-/* Sheen — شاشة المحادثة */
+/* Rippl — شاشة المحادثة */
 /* ---------- chat screen ---------- */
 div#chat.screen:not(#prof):not(#uprof){padding-bottom:0;overflow:hidden;background:var(--bg)}
 .app:has(#chat.on) .me:not(.mg){display:none}

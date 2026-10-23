@@ -1,4 +1,4 @@
--- Sheen schema v3 (patch): new accounts start with an EMPTY profile.
+-- Rippl schema v3 (patch): new accounts start with an EMPTY profile.
 -- Run AFTER schema.sql and schema-v2.sql. Safe to run more than once.
 
 -- 1) New accounts get no auto-generated name or username.
@@ -19,5 +19,5 @@ $$;
 
 -- 2) Clear values that were generated automatically for existing accounts.
 --    (Names/usernames you chose yourself are not touched.)
-update public.profiles set display_name = '' where display_name = 'Sheen User';
+update public.profiles set display_name = '' where display_name in ('Rippl User','Sheen User');
 update public.profiles set username = null where username ~ '^user_[0-9a-f]{12}$';

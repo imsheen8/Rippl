@@ -1,4 +1,4 @@
-/* Sheen — كتابة منشور */
+/* Rippl — كتابة منشور */
 /* composer */
 const DESTS=[{id:'me'}];
 let cpDest='me',cpImg=null;

@@ -1,4 +1,4 @@
-/* Sheen — الشاشات المنزلقة، البحث، قائمة الرسالة الجديدة */
+/* Rippl — الشاشات المنزلقة، البحث، قائمة الرسالة الجديدة */
 /* overlay screens */
 .screen{position:absolute;inset:0;display:none;flex-direction:column;overflow-y:auto;z-index:5}
 .screen.on{display:flex}

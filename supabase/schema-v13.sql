@@ -1,4 +1,4 @@
--- Sheen schema v13: PUSH EVERYTHING (run once in the Supabase SQL editor). Safe to re-run.
+-- Rippl schema v13: PUSH EVERYTHING (run once in the Supabase SQL editor). Safe to re-run.
 -- The app no longer asks the server "is there anything new?" on a timer. The server pushes every change.
 -- v11 already pushes posts, likes, comments, follows, friend requests, profiles and messages.
 -- This adds the rest: servers/groups, who is a member, and channels.

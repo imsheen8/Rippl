@@ -1,4 +1,4 @@
-/* Sheen — إنشاء مجموعة */
+/* Rippl — إنشاء مجموعة */
 /* ---------- create group chat ---------- */
 const gSel=new Set();
 const gToast=t=>{const e=$('gtoast');e.textContent=t;e.style.display='block';clearTimeout(e._t);e._t=setTimeout(()=>e.style.display='none',1800)};

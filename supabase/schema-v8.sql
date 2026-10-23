@@ -1,4 +1,4 @@
--- Sheen schema v8: posts, likes, comments, post images. Run AFTER schema.sql + schema-v2.sql. Safe to re-run.
+-- Rippl schema v8: posts, likes, comments, post images. Run AFTER schema.sql + schema-v2.sql. Safe to re-run.
 
 create table if not exists public.posts (
   id uuid primary key default gen_random_uuid(),

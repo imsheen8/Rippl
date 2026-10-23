@@ -1,4 +1,4 @@
-/* Sheen — الرسالة الجديدة (Inbox) */
+/* Rippl — الرسالة الجديدة (Inbox) */
 /* new message */
 #newmsg{background:var(--bg);padding-bottom:30px}
 .nmh{display:flex;align-items:center;gap:14px;padding:14px 12px 8px;position:sticky;top:0;background:var(--bg);z-index:2}

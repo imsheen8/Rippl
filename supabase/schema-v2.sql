@@ -1,4 +1,4 @@
--- Sheen schema v2 (patch). Run AFTER schema.sql, in Supabase SQL Editor.
+-- Rippl schema v2 (patch). Run AFTER schema.sql, in Supabase SQL Editor.
 -- Safe to run more than once.
 
 -- =====================================================

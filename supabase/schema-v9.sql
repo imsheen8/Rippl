@@ -1,4 +1,4 @@
--- Sheen schema v9: follows. Run AFTER schema.sql + schema-v2.sql. Safe to re-run.
+-- Rippl schema v9: follows. Run AFTER schema.sql + schema-v2.sql. Safe to re-run.
 create table if not exists public.follows (
   follower_id uuid not null references auth.users(id) on delete cascade,
   followee_id uuid not null references auth.users(id) on delete cascade,

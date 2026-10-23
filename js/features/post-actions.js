@@ -1,4 +1,4 @@
-/* Sheen — إجراءات المنشورات (إعجاب، تعليق...) */
+/* Rippl — إجراءات المنشورات (إعجاب، تعليق...) */
 /* post actions (feed + profiles) */
 const aToast=t=>{const e=$('aToast');e.textContent=t;e.style.display='block';clearTimeout(e._t);e._t=setTimeout(()=>e.style.display='none',1800)};
 function postClick(e){

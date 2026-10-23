@@ -1,4 +1,4 @@
-/* Sheen — النواة: دوال مساعدة، التنقل بين الشاشات */
+/* Rippl — النواة: دوال مساعدة، التنقل بين الشاشات */
 const $=id=>document.getElementById(id);
 /* image sources: pravatar.cc (people photos) + picsum.photos (server images) */
 const P=n=>`https://i.pravatar.cc/160?img=${n}`, S_=s=>`https://picsum.photos/seed/${s}/160`;

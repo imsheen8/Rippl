@@ -1,6 +1,6 @@
-/* Sheen — شريط حالة الاتصال */
-#sheenNet{position:fixed;top:0;left:0;right:0;z-index:99990;display:none;padding:calc(env(safe-area-inset-top) + 4px) 12px 5px;font-size:12px;text-align:center;color:#fff;background:#4e5058;pointer-events:none}
-#sheenNet.on{display:block}
-#sheenNet.sync{background:#5865f2}
+/* Rippl — شريط حالة الاتصال */
+#ripplNet{position:fixed;top:0;left:0;right:0;z-index:99990;display:none;padding:calc(env(safe-area-inset-top) + 4px) 12px 5px;font-size:12px;text-align:center;color:#fff;background:#4e5058;pointer-events:none}
+#ripplNet.on{display:block}
+#ripplNet.sync{background:#5865f2}
 .chload{display:block;margin:6px auto 12px;padding:7px 16px;border-radius:14px;background:var(--card);color:var(--mut);border:0;font-size:12px;cursor:pointer}
 .feedload{text-align:center;color:var(--mut);padding:18px 12px 28px;font-size:13px;cursor:pointer}

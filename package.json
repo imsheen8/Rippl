@@ -1,8 +1,8 @@
 {
-  "name": "sheen",
+  "name": "rippl",
   "version": "1.0.0",
   "private": true,
-  "description": "Sheen",
+  "description": "Rippl",
   "dependencies": {
     "@capacitor-community/sqlite": "^6.0.0",
     "@capacitor/android": "^6.1.0",
