@@ -5,6 +5,7 @@ const SHELL = [
   "./",
   "index.html",
   "manifest.webmanifest",
+  "icons/logo-mark.png",
   "js/manifest.js",
   "js/loader.js",
   "css/base.css",

@@ -1,20 +1,29 @@
-<!-- Rippl account login / registration: first backend integration step -->
+<!-- Rippl account login / registration -->
 <div id="ripplAuthGate" dir="rtl" role="dialog" aria-modal="true" aria-labelledby="ripplAuthTitle">
   <div class="sa-bg"><i class="o1"></i><i class="o2"></i></div>
   <div id="ripplAuthCard">
-    <div class="sa-logo">S</div>
-    <div class="sa-brand">Rippl</div>
+    <div class="sa-mark"><i class="r1"></i><i class="r2"></i><img src="icons/logo-mark.png" alt="Rippl" draggable="false"></div>
     <h2 id="ripplAuthTitle">تسجيل الدخول</h2>
-    <p id="ripplAuthDescription">أهلًا بك في Rippl.</p>
-    
-    <label for="ripplAuthEmailInput">البريد الإلكتروني</label>
-    <div class="sa-field"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="m4 7 8 6 8-6"/></svg><input id="ripplAuthEmailInput" type="email" autocomplete="email" inputmode="email" placeholder="you@example.com"></div>
-    <label for="ripplAuthPasswordInput">كلمة المرور</label>
-    <div class="sa-field"><svg viewBox="0 0 24 24"><rect x="4" y="11" width="16" height="10" rx="3"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg><input id="ripplAuthPasswordInput" class="ltr" type="password" autocomplete="current-password" minlength="8" placeholder="8 أحرف على الأقل"><button id="ripplPassToggle" type="button" aria-label="إظهار كلمة المرور"><svg viewBox="0 0 24 24"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg></button></div>
+    <p id="ripplAuthDescription">أهلًا بعودتك إلى Rippl</p>
+
+    <label class="sr" for="ripplAuthEmailInput">البريد الإلكتروني</label>
+    <div class="sa-field">
+      <svg class="ic" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="m4 7 8 6 8-6"/></svg>
+      <input id="ripplAuthEmailInput" type="email" autocomplete="email" inputmode="email" placeholder="البريد الإلكتروني">
+      <span class="sa-ok" id="ripplEmailOk" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m6 12.5 4 4 8-9"/></svg></span>
+    </div>
+
+    <label class="sr" for="ripplAuthPasswordInput">كلمة المرور</label>
+    <div class="sa-field">
+      <svg class="ic" viewBox="0 0 24 24"><rect x="4" y="11" width="16" height="10" rx="3"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>
+      <input id="ripplAuthPasswordInput" type="password" autocomplete="current-password" minlength="8" placeholder="كلمة المرور (8 أحرف على الأقل)">
+      <button id="ripplPassToggle" type="button" aria-label="إظهار كلمة المرور"><svg viewBox="0 0 24 24"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/><path class="slash" d="M4 4l16 16"/></svg></button>
+    </div>
+
+    <label class="sa-terms" id="ripplTermsRow"><input id="ripplTerms" type="checkbox" checked><i class="bx"><svg viewBox="0 0 24 24"><path d="m6 12.5 4 4 8-9"/></svg></i><span>بالضغط هنا توافق على <b>الشروط والأحكام</b> و<b>سياسة الخصوصية</b></span></label>
+
     <button id="ripplAuthSubmit" type="button">تسجيل الدخول</button>
     <div id="ripplAuthStatus" role="status" aria-live="polite"></div>
-    <div class="sa-or"><span>أو</span></div>
-    <button id="ripplSwitchMode" type="button">إنشاء حساب جديد</button>
-    <div class="sa-foot">Rippl · مجتمعك في مكان واحد</div>
+    <div class="sa-switch"><span id="ripplSwitchText">ليس لديك حساب؟</span> <button id="ripplSwitchMode" type="button">إنشاء حساب</button></div>
   </div>
 </div>

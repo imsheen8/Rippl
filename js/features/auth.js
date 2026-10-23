@@ -51,19 +51,26 @@
     return SUPABASE_URL.startsWith("https://") && !SUPABASE_URL.includes("YOUR_SUPABASE") &&
       SUPABASE_ANON_KEY.length > 20 && !SUPABASE_ANON_KEY.includes("YOUR_SUPABASE");
   }
+  const switchText = $("ripplSwitchText"), termsRow = $("ripplTermsRow"), termsBox = $("ripplTerms"), emailOk = $("ripplEmailOk");
   function setMode(signUp) {
     isSignUp = signUp;
-    switchBtn.textContent = signUp ? "لدي حساب بالفعل" : "إنشاء حساب جديد";
+    switchText.textContent = signUp ? "لديك حساب بالفعل؟" : "ليس لديك حساب؟";
+    switchBtn.textContent = signUp ? "تسجيل الدخول" : "إنشاء حساب";
     title.textContent = signUp ? "إنشاء حساب" : "تسجيل الدخول";
-    description.textContent = signUp ? "أنشئ حسابك للانضمام إلى Rippl." : "أهلًا بك في Rippl.";
+    description.textContent = signUp ? "لنُنشئ حسابك في Rippl" : "أهلًا بعودتك إلى Rippl";
     submit.textContent = signUp ? "إنشاء الحساب" : "تسجيل الدخول";
+    termsRow.classList.toggle("on", signUp);
     passwordInput.autocomplete = signUp ? "new-password" : "current-password";
     setStatus("");
   }
   switchBtn.addEventListener("click", () => setMode(!isSignUp));
   passToggle.addEventListener("click", () => {
-    passwordInput.type = passwordInput.type === "password" ? "text" : "password";
+    const show = passwordInput.type === "password";
+    passwordInput.type = show ? "text" : "password";
+    passToggle.classList.toggle("show", show);
   });
+  const syncEmailOk = () => emailOk.classList.toggle("on", /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(emailInput.value.trim()));
+  emailInput.addEventListener("input", syncEmailOk);
   [emailInput, passwordInput].forEach(el =>
     el.addEventListener("keydown", e => { if (e.key === "Enter") submit.click(); }));
 
@@ -73,6 +80,7 @@
     const password = passwordInput.value;
     if (!email || !password) return setStatus("أدخل البريد الإلكتروني وكلمة المرور.");
     if (password.length < 8) return setStatus("استخدم كلمة مرور من 8 أحرف على الأقل.");
+    if (isSignUp && !termsBox.checked) return setStatus("يجب الموافقة على الشروط وسياسة الخصوصية.");
     submit.disabled = true;
     setStatus(isSignUp ? "جارٍ إنشاء الحساب..." : "جارٍ تسجيل الدخول...");
     try {

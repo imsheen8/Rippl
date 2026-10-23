@@ -1,31 +1,48 @@
-/* Rippl — شاشة تسجيل الدخول/الحساب */
-#ripplAuthGate{position:fixed;inset:0;z-index:99999;display:none;align-items:center;justify-content:center;padding:20px;overflow:auto;background:var(--bg);color:var(--txt);font-family:inherit}
+/* Rippl — شاشة تسجيل الدخول/الحساب (تصميم متدرّج بنفسجي-أزرق) */
+#ripplAuthGate{--ga:#5b63ff;--gb:#8d94ff;position:fixed;inset:0;z-index:99999;display:none;align-items:center;justify-content:center;padding:max(20px,env(safe-area-inset-top)) 22px max(20px,env(safe-area-inset-bottom));overflow:auto;color:var(--txt);font-family:inherit;
+  background:radial-gradient(130% 62% at 50% -6%,#5560f2 0%,#3a3fae 34%,rgba(26,26,30,0) 72%),linear-gradient(180deg,#22234f 0%,#17171c 58%,#111114 100%)}
 #ripplAuthGate.on{display:flex}
-#ripplAuthGate .sa-bg,.sa-logo,.sa-foot{display:none}
-#ripplAuthCard{width:min(100%,400px);margin:auto}
-.sa-brand{text-align:center;font-size:40px;font-weight:800;letter-spacing:.5px;margin:0 0 22px;color:var(--txt)}
-.sa-or{display:flex;align-items:center;gap:12px;margin:18px 0 14px;color:var(--mut);font-size:13px}
-.sa-or:before,.sa-or:after{content:"";flex:1;height:1px;background:#3a3a42}
-#ripplSwitchMode{width:100%;height:48px;border:1.5px solid var(--blue);border-radius:24px;background:transparent;color:var(--blue);font:inherit;font-size:15px;font-weight:700;cursor:pointer}
-#ripplSwitchMode:active{background:#5865f222}
-#ripplAuthCard h2{text-align:center;font-size:26px;font-weight:700;margin:0 0 6px}
-#ripplAuthCard p{text-align:center;color:var(--mut);font-size:14px;line-height:1.6;margin:0 0 18px}
-#ripplAuthCard label{display:block;font-size:13px;color:var(--mut);margin:14px 4px 6px}
-.sa-field{position:relative;display:flex;align-items:center}
-.sa-field>svg{display:none}
-#ripplAuthCard input{width:100%;height:48px;border:0;border-radius:24px;background:var(--card);color:var(--txt);padding:0 18px;font:inherit;font-size:15px;outline:none}
-#ripplAuthCard input::placeholder{color:var(--mut)}
-#ripplAuthCard input[type=email],#ripplAuthCard input[type=password].ltr{direction:ltr;text-align:left}
-#ripplPassToggle{position:absolute;left:6px;width:36px;height:36px;border:0;background:transparent;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center}
-#ripplPassToggle svg{width:19px;height:19px;stroke:var(--mut);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-#ripplAuthCard input.ltr{padding-left:46px}
-#ripplNameWrap{display:none}
-#ripplNameWrap.on{display:block}
-#ripplAuthSubmit{width:100%;height:48px;margin-top:20px;border:0;border-radius:24px;background:var(--blue);color:#fff;font:inherit;font-size:15px;font-weight:700;cursor:pointer}
-#ripplAuthSubmit:active{opacity:.85}
+#ripplAuthGate .sa-bg{display:none}
+#ripplAuthCard{width:min(100%,380px);margin:auto;text-align:center}
+.sa-mark{position:relative;width:132px;height:132px;margin:0 auto 14px;display:grid;place-items:center}
+.sa-mark img{position:relative;width:70px;height:auto;filter:drop-shadow(0 6px 18px rgba(120,130,255,.55));pointer-events:none}
+.sa-mark i{position:absolute;inset:0;border-radius:50%;border:1.5px solid rgba(255,255,255,.16);animation:saRing 3.4s ease-out infinite}
+.sa-mark i.r2{animation-delay:1.7s}
+@keyframes saRing{0%{transform:scale(.55);opacity:.9}100%{transform:scale(1.15);opacity:0}}
+@media (prefers-reduced-motion:reduce){.sa-mark i{animation:none;opacity:.35}.sa-mark i.r1{transform:scale(.8)}}
+#ripplAuthCard h2{font-size:30px;font-weight:700;margin:0 0 6px;letter-spacing:.2px}
+#ripplAuthCard p{color:rgba(255,255,255,.62);font-size:14.5px;line-height:1.6;margin:0 0 26px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.sa-field{position:relative;display:flex;align-items:center;height:56px;margin-bottom:12px;border-radius:20px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.08);transition:border-color .15s,background .15s}
+.sa-field:focus-within{border-color:rgba(141,148,255,.7);background:rgba(255,255,255,.1)}
+.sa-field .ic{flex:none;width:21px;height:21px;margin:0 16px 0 2px;stroke:rgba(255,255,255,.85);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+#ripplAuthCard .sa-field input{flex:1;min-width:0;height:100%;border:0;outline:0;background:transparent;color:var(--txt);font:inherit;font-size:15.5px;padding:0 0 0 12px;text-align:right}
+#ripplAuthCard .sa-field input:not(:placeholder-shown){direction:ltr;text-align:left}
+#ripplAuthCard .sa-field input::placeholder{color:rgba(255,255,255,.45)}
+#ripplAuthCard .sa-field input:-webkit-autofill{-webkit-text-fill-color:var(--txt);transition:background-color 9999s}
+.sa-ok{display:none;flex:none;width:24px;height:24px;margin:0 0 0 14px;border-radius:50%;background:var(--green);place-items:center}
+.sa-ok.on{display:grid}
+.sa-ok svg{width:15px;height:15px;stroke:#fff;fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+#ripplPassToggle{flex:none;width:40px;height:40px;margin:0 6px 0 4px;border:0;background:transparent;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center}
+#ripplPassToggle svg{width:21px;height:21px;stroke:rgba(255,255,255,.7);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+#ripplPassToggle.show .slash{display:none}
+.sa-terms{display:none;align-items:flex-start;gap:10px;margin:4px 2px 18px;text-align:right;font-size:13px;line-height:1.7;color:rgba(255,255,255,.62);cursor:pointer}
+.sa-terms.on{display:flex}
+.sa-terms input{position:absolute;opacity:0;pointer-events:none}
+.sa-terms .bx{flex:none;width:20px;height:20px;margin-top:2px;border-radius:6px;border:1.5px solid rgba(255,255,255,.35);display:grid;place-items:center;transition:background .15s,border-color .15s}
+.sa-terms .bx svg{width:13px;height:13px;stroke:#fff;fill:none;stroke-width:3.2;stroke-linecap:round;stroke-linejoin:round;opacity:0}
+.sa-terms input:checked+.bx{background:var(--ga);border-color:var(--ga)}
+.sa-terms input:checked+.bx svg{opacity:1}
+.sa-terms b{color:#fff;font-weight:600}
+#ripplAuthSubmit{width:100%;height:56px;margin-top:10px;border:0;border-radius:28px;color:#fff;font:inherit;font-size:16.5px;font-weight:700;cursor:pointer;
+  background:linear-gradient(180deg,#6169ff 0%,#4a52dc 100%);box-shadow:inset 0 -12px 18px -10px var(--gb),0 10px 28px -8px rgba(91,99,255,.55);transition:transform .1s,opacity .15s}
+.sa-terms.on+#ripplAuthSubmit{margin-top:0}
+#ripplAuthSubmit:active{transform:scale(.985);opacity:.92}
 #ripplAuthSubmit:disabled{opacity:.6}
-#ripplAuthStatus{text-align:center;font-size:13px;line-height:1.6;min-height:20px;margin-top:12px;color:var(--yellow)}
+#ripplAuthStatus{font-size:13px;line-height:1.6;min-height:20px;margin-top:12px;color:var(--yellow)}
 #ripplAuthStatus.good{color:var(--green)}
+.sa-switch{margin-top:20px;font-size:14.5px;color:rgba(255,255,255,.65)}
+#ripplSwitchMode{border:0;background:none;color:#fff;font:inherit;font-weight:700;font-size:14.5px;cursor:pointer;padding:6px 4px}
 #stLogout b{color:#ed4245}
 #stLogout .sdot i{color:#ed4245}
 
