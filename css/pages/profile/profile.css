@@ -1,0 +1,30 @@
+/* Sheen — صفحة الملف الشخصي الخاص */
+#prof{background:var(--dark);overflow:hidden}
+.pscroll{position:absolute;inset:0;overflow-y:auto;display:flex;flex-direction:column;-webkit-overflow-scrolling:touch}
+.ban{height:96px;background:#b03530;flex:none;position:relative}
+.x{position:absolute;top:14px;left:12px;width:36px;height:36px;border-radius:10px;background:#5a1d1b;color:#fff;border:0;font-size:18px;cursor:pointer}
+.pav{position:absolute;top:62px;left:14px;width:84px;height:84px;border-radius:50%;border:5px solid var(--dark);background:#400;z-index:2;font-size:30px}
+.pav .st{width:24px;height:24px;border:5px solid var(--dark);bottom:-2px;right:-2px}
+.bub{position:absolute;top:80px;left:108px;background:#232327;border:1px solid #333338;border-radius:18px;padding:8px 14px;font-style:italic;font-size:14px;display:flex;gap:8px;align-items:center;z-index:2}
+.bub u{width:16px;height:16px;border-radius:50%;background:#fff;color:#000;font-style:normal;font-size:14px;display:flex;align-items:center;justify-content:center;text-decoration:none;font-weight:700}
+.pb{padding:56px 16px 110px}
+.nm{font-size:22px;font-weight:600}.nm span{color:var(--mut);font-size:14px}
+.un2{display:flex;align-items:center;gap:8px;font-size:15px;margin-top:2px}
+.badge{background:#26262a;border-radius:8px;padding:4px 7px;font-size:13px;color:#f0b232}
+.edit{margin-top:20px;background:var(--blue);border-radius:12px;height:42px;display:flex;align-items:center;justify-content:center;gap:8px;font-weight:600;font-size:15px;cursor:pointer}
+.tabs{display:flex;margin-top:18px;border-bottom:1px solid #2a2a2f}
+.tabs div{flex:1;text-align:center;padding:10px 0;font-weight:600;font-size:15px;color:var(--mut);cursor:pointer;position:relative}
+.tabs div.on{color:#8f9bff}
+.tabs div.on:after{content:"";position:absolute;left:10%;right:10%;bottom:-1px;height:3px;border-radius:3px 3px 0 0;background:var(--blue)}
+.box{background:var(--card2);border-radius:14px;padding:0 16px;height:54px;display:flex;align-items:center;justify-content:space-between;font-weight:600;font-size:15px;margin-top:14px}
+.orb{background:#2a2a2e;border-radius:10px;padding:6px 11px}
+.orb svg{color:#8f9bff;margin-inline-end:6px}
+.lbl{font-size:15px;margin-top:22px;font-weight:500}
+.val{font-size:15px;line-height:1.6;margin-top:8px}.val a{color:#4a8dff;font-weight:600;text-decoration:none}
+.fr{display:flex;align-items:center}
+.fr .av{width:26px;height:26px;font-size:11px;margin-left:-5px;border:0}
+.fr .chv,.fr svg.chv{margin-left:12px;color:var(--mut);font-size:14px}
+.nav{position:absolute;bottom:20px;left:50%;transform:translateX(-50%);width:80%;background:#1c1c20;border:1px solid #2a2a2f;border-radius:24px;display:flex;justify-content:space-around;padding:10px 6px 8px;z-index:6;font-weight:600;font-size:12px}
+.nav div{text-align:center;position:relative}.nav span{display:block;font-size:20px;margin-bottom:3px}
+.nav .dot{position:absolute;top:-1px;right:4px;width:10px;height:10px;border-radius:50%;background:#ed4245}
+.empty{color:var(--mut);text-align:center;margin-top:40px;font-size:15px}

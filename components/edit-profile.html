@@ -1,0 +1,24 @@
+  <!-- Edit profile -->
+  <div class="screen" id="pedit">
+    <div class="pe-head">
+      <button id="peBack" aria-label="رجوع"><i data-lucide="arrow-left"></i></button>
+      <b>تعديل الملف الشخصي</b>
+      <button id="peSave" class="pe-save" type="button">حفظ</button>
+    </div>
+    <div class="pe-body">
+      <div class="pe-banner" id="peBanner"><button id="peBannerBtn" type="button"><i data-lucide="camera"></i><span>تغيير البانر</span></button></div>
+      <div class="pe-avwrap">
+        <div class="pe-av"><img id="peAvImg" alt=""><button id="peAvBtn" type="button" aria-label="تغيير الصورة"><i data-lucide="camera"></i></button></div>
+        <div class="pe-link" id="peAvLink">تغيير الصورة</div>
+      </div>
+      <div class="pe-card">
+        <label class="pe-row"><span>الاسم</span><input id="peName" maxlength="40" dir="auto" autocomplete="off"></label>
+        <label class="pe-row"><span>اسم المستخدم</span><input id="peUser" maxlength="20" dir="ltr" autocapitalize="none" autocomplete="off" spellcheck="false"></label>
+      </div>
+      <div class="pe-lbl">معلومات أساسية</div>
+      <div class="pe-card"><label class="pe-row top"><span>النبذة</span><textarea id="peBio" maxlength="200" rows="5" dir="auto" placeholder="اكتب وصفًا قصيرًا عنك"></textarea></label></div>
+      <div class="pe-msg" id="peMsg" role="status" aria-live="polite"></div>
+    </div>
+    <input type="file" id="peFileAv" accept="image/*" hidden>
+    <input type="file" id="peFileBn" accept="image/*" hidden>
+  </div>

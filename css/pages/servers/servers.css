@@ -1,0 +1,17 @@
+/* Sheen — قنوات الخادم */
+/* ---------- server channels ---------- */
+.sbody{padding:0 8px 24px}
+.scat{display:flex;align-items:center;gap:6px;padding:16px 10px 6px;font-size:13px;font-weight:700;color:var(--mut);text-transform:uppercase;cursor:pointer;user-select:none}
+.scat svg{width:14px;height:14px;transition:transform .15s}
+.scat.c svg{transform:rotate(-90deg)}
+.scat.c+.scl{display:none}
+.sch{display:flex;align-items:center;gap:10px;height:46px;padding:0 10px;border-radius:14px;color:var(--mut);font-size:16px;cursor:pointer;white-space:nowrap}
+.sch.on{background:var(--card);color:var(--txt)}
+.sch .vci{width:20px;height:20px;flex:none;stroke-width:1.9;opacity:.85}
+.sch .ce{font-size:20px;line-height:1;width:24px;text-align:center;flex:none}
+.sch .vbar{width:1px;height:16px;background:#4a4a52;flex:none}
+.sch bdi{overflow:hidden;text-overflow:ellipsis}
+.vfi{width:20px;height:20px;flex:none;opacity:.85}
+.app:has(#srv.on) #srv~* .nope{display:none}
+div#srv.screen:not(#prof):not(#uprof){background:var(--bg);padding-bottom:84px}
+.app:has(#srv.on) #srv~* .nope{display:none}

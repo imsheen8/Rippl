@@ -1,0 +1,31 @@
+/* Sheen — التعليقات وكتابة منشور */
+/* ---------- posts / composer ---------- */
+.pfeed{position:relative;z-index:1;padding:10px 0 20px}
+.pempty2{text-align:center;color:var(--mut);padding:40px 16px;font-size:15px}
+.ftitle{padding:2px 14px 4px;font-size:17px;font-weight:700;line-height:1.35}
+.ftags{position:absolute;left:10px;bottom:10px;display:flex;gap:6px;flex-wrap:wrap;z-index:1}
+.ftags.in{position:static;padding:0 14px 10px}
+.ftag{font-style:normal;background:rgba(20,20,24,.82);backdrop-filter:blur(4px);border:1px solid #3a3a42;border-radius:14px;padding:5px 12px;font-size:13px;font-weight:600;color:#fff}
+.fm .fd{color:#8f9bff;flex-wrap:wrap}
+.fm .fd svg{width:13px;height:13px}
+.cmlist{padding:0 14px}
+.cmlist .cmt{padding:8px 0;font-size:14px;border-top:1px solid #34343b}
+.cmlist .cmt b{margin-inline-end:6px}
+.hid{display:none!important}
+#compose{background:var(--bg)}
+.nmh .cpost{width:auto;height:36px;padding:0 18px;border-radius:18px;background:var(--blue);color:#fff;font-size:14px;font-weight:700;font-family:inherit}
+.nmh .cpost.off{opacity:.45}
+.cpa{display:flex;align-items:center;gap:12px;padding:8px 16px}
+.cpa .av{width:44px;height:44px}
+.cpa b{font-size:16px}
+.cdest{display:flex;gap:8px;padding:4px 16px 10px;overflow-x:auto;scrollbar-width:none}
+.cdest::-webkit-scrollbar{display:none}
+.cdest .chip{white-space:nowrap;flex:none;display:flex;align-items:center;gap:6px;direction:ltr}
+.cdest .chip svg{width:14px;height:14px}
+.cpt{display:block;width:calc(100% - 32px);margin:0 16px 8px;height:46px;border-radius:12px;border:1px solid #34343b;background:#1e1e22;color:var(--txt);padding:0 14px;font-size:16px;font-family:inherit;outline:0}
+#cpText{display:block;width:100%;min-height:150px;background:none;border:0;outline:0;color:var(--txt);font-size:18px;font-family:inherit;padding:8px 16px;resize:none;line-height:1.5}
+.cpimg{position:relative;margin:4px 16px 10px;border-radius:14px;overflow:hidden}
+.cpimg img{display:block;width:100%;max-height:300px;object-fit:cover}
+.cpimg button{position:absolute;top:8px;right:8px;width:32px;height:32px;border-radius:50%;border:0;background:rgba(0,0,0,.6);color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer}
+.cptools{display:flex;gap:10px;padding:6px 16px}
+.cptool{display:flex;align-items:center;gap:8px;background:var(--card);border-radius:20px;padding:0 16px;height:40px;font-size:14px;font-weight:600;cursor:pointer}

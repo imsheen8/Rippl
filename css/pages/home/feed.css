@@ -1,0 +1,37 @@
+/* Sheen — الصفحة الرئيسية: المنشورات */
+/* ---------- home feed ---------- */
+.panel.home #chatList,.panel:not(.home) #feed{display:none}
+.panel.home .fab,.panel.home .tb{display:none}
+.feed{padding:4px 0 110px}
+.fcomp{display:flex;align-items:center;gap:10px;margin:2px 8px 10px;padding:12px;background:var(--card);border-radius:16px}
+.fcomp .av{width:40px;height:40px;font-size:16px}
+.fpill{flex:1;height:40px;border-radius:20px;background:#1e1e22;border:1px solid #34343b;display:flex;align-items:center;padding:0 14px;color:var(--mut);font-size:15px}
+.fcomp button{background:none;border:0;color:#45bd62;font-size:24px;display:flex;padding:4px;cursor:pointer}
+.fpost{margin:0 8px 10px;background:var(--card);border-radius:16px;overflow:hidden}
+.fh{display:flex;align-items:center;gap:10px;padding:12px 12px 8px}
+.fh .av{width:40px;height:40px;font-size:16px;cursor:pointer}
+.fm{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+.fn{font-size:15px;font-weight:700;cursor:pointer;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.fm span{font-size:12.5px;color:var(--mut);display:flex;align-items:center;gap:4px}
+.fm span svg{width:12px;height:12px}
+.fx{background:none;border:0;color:var(--mut);font-size:20px;display:flex;padding:6px;cursor:pointer}
+.ft{padding:2px 14px 10px;font-size:15.5px;line-height:1.55;white-space:pre-wrap}
+.fimg{position:relative;width:100%;aspect-ratio:3/2;background:#2a2a32;overflow:hidden}
+.fimg img{width:100%;height:100%;object-fit:cover;display:block}
+.fc{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;font-size:13.5px;color:var(--mut)}
+.fr{display:flex;align-items:center}
+.fr u{width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;text-decoration:none;border:2px solid var(--card)}
+.fr u svg{width:11px;height:11px;stroke-width:2.6;fill:#fff}
+.fr .r1{background:#1877f2;z-index:1}
+.fr .r2{background:#f33e58;margin-inline-start:-6px}
+.fr em{font-style:normal;margin-inline-start:6px}
+.fa{display:flex;border-top:1px solid #34343b;padding:2px 4px}
+.fa button{flex:1;height:42px;background:none;border:0;border-radius:10px;color:var(--mut);font-size:14.5px;font-weight:600;display:flex;align-items:center;justify-content:center;gap:7px;cursor:pointer}
+.fa button:active{background:#2f2f36}
+.fa button svg{width:19px;height:19px}
+.fa .fl.on{color:#5b8cff}
+.fa .fl.on svg{fill:#5b8cff}
+.fcmt{display:none;align-items:center;gap:10px;padding:8px 12px 12px;border-top:1px solid #34343b}
+.fcmt.on{display:flex}
+.fcmt .av{width:32px;height:32px;font-size:13px}
+.fcmt input{flex:1;min-width:0;height:36px;border-radius:18px;border:1px solid #34343b;background:#1e1e22;color:var(--txt);padding:0 14px;font-size:14px;font-family:inherit;outline:0}

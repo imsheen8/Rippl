@@ -1,0 +1,16 @@
+  <!-- New Message -->
+  <div class="screen" id="newmsg">
+    <div class="nmh"><button id="nmBack" aria-label="Back"><i data-lucide="arrow-left"></i></button><h2>Inbox</h2><button id="nmPlus" aria-label="New" style="margin-left:auto"><i data-lucide="plus"></i></button><div class="nmmenu" id="nmMenu"><div class="nmi" data-a="group"><span class="ic g1"><i data-lucide="users"></i></span>New Group</div><div class="nmi" data-a="server"><span class="ic g2"><i data-lucide="server"></i></span>New Server</div></div></div>
+    <label class="srch nms"><i data-lucide="search"></i><input id="nmSearch" placeholder="Search friends, groups and servers" autocomplete="off"></label>
+    <div class="grp" id="acts">
+      <div class="act" data-a="group"><span class="ic g1"><i data-lucide="users"></i></span>New Group</div>
+      <div class="act" data-a="server"><span class="ic g2"><i data-lucide="server"></i></span>New Server</div>
+    </div>
+    <div id="nmRes" style="display:none;margin-top:6px"></div>
+    <div id="nmEmpty">
+      <div class="sgh" style="padding-top:8px">Suggestions <i data-lucide="info"></i></div>
+      <div class="chips" id="sgChips"><button class="chip on" data-k="p">Friends</button><button class="chip" data-k="g">Groups</button><button class="chip" data-k="s">Servers</button></div>
+      <div id="sgBody"></div>
+    </div>
+    <div class="toast" id="toast"></div>
+  </div>

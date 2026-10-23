@@ -1,0 +1,34 @@
+/* Sheen — تفاصيل ملف المستخدم الآخر */
+.dtop{position:relative;height:150px;flex:none}
+.dban{position:absolute;top:0;left:0;right:0;height:96px;background:#b03530}
+.dx{position:absolute;top:14px;left:12px;width:36px;height:36px;border-radius:10px;border:0;background:#5a1d1b;color:#fff;font-size:18px;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:2}
+.dav{position:absolute;top:62px;left:14px;width:84px;height:84px;border-radius:50%;background:#1c1c20;padding:5px;z-index:2}
+.dav .av{width:100%;height:100%;font-size:28px}
+.dst{position:absolute;right:-4px;bottom:-4px;width:26px;height:26px;border-radius:50%;background:#1c1c20;display:flex;align-items:center;justify-content:center}
+.dst:before{content:"";width:14px;height:14px;border-radius:50%;box-sizing:border-box}
+.dst[data-st=online]:before{background:#23a55a}
+.dst[data-st=idle]:before{background:#f0b232}
+.dst[data-st=dnd]:before{background:#ed4245}
+.dst[data-st=invisible]:before{border:3.5px solid #80848e}
+.dbub{position:absolute;top:80px;left:104px;z-index:2}
+.dbub .b1,.dbub .b2{position:absolute;border-radius:50%;background:#26262b}
+.dbub .b1{width:9px;height:9px;left:-2px;top:-8px}
+.dbub .b2{width:15px;height:15px;left:12px;top:-2px}
+.dpill{position:relative;display:flex;align-items:center;gap:8px;background:#232327;border:1px solid #333338;border-radius:18px;padding:7px 14px 7px 8px;margin-top:10px;font-style:italic;font-size:14px;color:#e6e6ea;white-space:nowrap}
+.dpill u{width:20px;height:20px;border-radius:50%;background:#fff;color:#111;display:flex;align-items:center;justify-content:center;text-decoration:none;font-size:14px}
+.dpill u svg{stroke-width:3}
+.dinfo{padding:8px 16px 0;position:relative;z-index:1}
+#uprof .dx{left:12px}
+#uprof .dban{overflow:hidden}
+#uprof .dban img{width:100%;height:100%;object-fit:cover;display:block;opacity:.85}
+#uprof .dban:after{content:"";position:absolute;inset:0;background:linear-gradient(to bottom,rgba(17,17,20,.1) 0%,rgba(17,17,20,.25) 45%,var(--dark) 100%)}
+#uprof .pacts{padding-top:16px}
+.dinfo .pname{font-size:22px;font-weight:700;text-shadow:none;gap:8px;direction:ltr!important;text-align:left!important;justify-content:flex-start}
+.dinfo .pname bdi{unicode-bidi:isolate}
+.dinfo .pname svg{width:16px;height:16px;color:var(--mut)}
+.dun{display:flex;align-items:center;gap:8px;font-size:15px;margin-top:4px;color:var(--txt)}
+.dbadge{background:#26262a;border-radius:8px;padding:4px 7px;color:#8f9bff;font-size:14px;display:flex}
+.dinfo .pstats{margin-top:8px;gap:16px;align-items:baseline}
+.dinfo .pstats div{display:flex;align-items:baseline;gap:5px}
+.dinfo .pstats b{display:inline;font-size:15px;font-weight:700}
+.dinfo .pstats span{font-size:15px;color:var(--mut)}

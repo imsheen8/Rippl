@@ -1,0 +1,36 @@
+/* Sheen — زر + والأزرار الصغيرة وصفحة Inbox الفارغة */
+.fab{position:absolute;right:16px;bottom:88px;z-index:4;width:56px;height:56px;border-radius:50%;border:0;background:var(--blue);color:#fff;font-size:26px;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 6px 18px rgba(0,0,0,.5)}
+.fab:active{transform:scale(.94)}
+.nms{margin:6px 14px 14px}
+.act .ic{width:42px;height:42px;border-radius:12px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:22px}
+.act .ic.g1{background:#2f9bf0}.act .ic.g2{background:#35b34a}
+.act{height:62px}
+.chips{display:flex;gap:8px;padding:6px 16px 8px}
+.chip{border:0;border-radius:16px;background:var(--card);color:var(--mut);font-size:13px;font-weight:600;padding:0 14px;height:32px;cursor:pointer;font-family:inherit}
+.chip.on{background:var(--blue);color:#fff}
+.sgr .av.sq{border-radius:12px}
+.nmempty{display:flex;flex-direction:column;align-items:center;text-align:center;padding:70px 30px 40px}
+.nmart{width:130px;height:130px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#3a4a9a,#252a52);display:flex;align-items:center;justify-content:center;color:#b9c2ff;font-size:60px;margin-bottom:22px}
+.nmempty h3{font-size:22px;font-weight:700}
+.nmempty p{color:var(--mut);font-size:15px;line-height:1.5;margin-top:8px}
+.nfb{margin-top:22px;display:flex;align-items:center;gap:10px;padding:13px 30px}
+.nores{color:var(--mut);text-align:center;padding:40px 0;font-size:15px}
+
+.fab{transition:transform .22s,opacity .22s}
+.fab.hide{transform:translateY(90px) scale(.8);opacity:0;pointer-events:none}
+.nms{height:42px;font-size:17px;gap:10px;padding:0 14px;margin:4px 12px 12px}
+.nms input{font-size:15px}
+#newmsg .grp{margin:0 12px;border-radius:14px}
+#newmsg .act{height:54px;font-size:15px;gap:12px;padding:0 12px}
+#newmsg .act .ic{width:36px;height:36px;border-radius:10px;font-size:18px}
+#newmsg .act+.act:before,#newmsg .fi+.fi:before{left:60px}
+#newmsg .fi{height:60px;gap:12px;padding:0 12px}
+#newmsg .fi .av{width:40px;height:40px;font-size:16px}
+#newmsg .fi b{font-size:15px}
+#newmsg .fi small{font-size:12.5px}
+.nmempty{padding:46px 30px 30px}
+.nmart{width:96px;height:96px;font-size:42px;margin-bottom:16px}
+.nmempty h3{font-size:18px}
+.nmempty p{font-size:13px;margin-top:6px}
+.nfb{margin-top:16px;padding:10px 24px;font-size:14px;gap:8px}
+.nores{font-size:14px;padding:30px 0}

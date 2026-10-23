@@ -1,0 +1,27 @@
+/* Sheen — الشاشات المنزلقة، البحث، قائمة الرسالة الجديدة */
+/* overlay screens */
+.screen{position:absolute;inset:0;display:none;flex-direction:column;overflow-y:auto;z-index:5}
+.screen.on{display:flex}
+.screen:not(#prof):not(#uprof){padding-bottom:84px}
+.pscroll{padding-bottom:84px}
+.bell.on{color:var(--txt)}
+.panel.home .sp,.panel.home .spl{display:none}
+.panel:not(.home) .fab{display:none}
+.sp{flex:none;margin:2px 12px 8px}
+.sp input::-webkit-search-cancel-button{display:none}
+.spl{color:var(--mut);font-size:14px;font-weight:600;padding:8px 10px 6px}
+.spe{display:none;text-align:center;color:var(--mut);padding:40px 16px;font-size:16px}
+/* keep names/subtitles anchored left even when the name is Arabic */
+.row .t,.row .t *,.sgr .t,.sgr .t *,.fm .fn,.fm span,.fi>div,.fi>div *,.gi .tx,.gi .tx *{direction:ltr!important;text-align:left!important}
+.row .n,.sgr .t b,.fm .fn,.fi b,.gi .tx b{unicode-bidi:isolate}
+#newmsg .nmh h2{flex:1}
+.nmmenu{display:none;position:absolute;right:12px;top:58px;min-width:190px;background:#2a2a30;border-radius:16px;padding:6px;box-shadow:0 10px 30px rgba(0,0,0,.55);z-index:20}
+.nmmenu.on{display:block}
+.nmi{display:flex;align-items:center;gap:12px;height:48px;padding:0 10px;border-radius:12px;font-size:15px;font-weight:600;cursor:pointer;direction:ltr;text-align:left}
+.nmi:active{background:#35353c}
+.nmi .ic{width:32px;height:32px;border-radius:9px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:16px}
+.nmi .ic.g1{background:#2f9bf0}.nmi .ic.g2{background:#35b34a}
+#nmPlus.on{background:#2a2a30;border-radius:50%}
+#acts{display:none!important}
+#nmEmpty .sgh{display:none}
+.sgr.go{cursor:pointer}

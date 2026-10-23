@@ -1,0 +1,27 @@
+/* Sheen — شاشة الإشعارات والقائمة المنسدلة */
+#notif{background:var(--bg)}
+#notif .nstories{flex:none;padding:14px 14px 12px}
+.nh{display:flex;align-items:center;gap:26px;padding:22px 20px 16px;border-bottom:1px solid #2a2a2f;position:sticky;top:0;background:#1d1d21;z-index:2}
+.nh button{background:none;border:0;color:var(--txt);font-size:22px;cursor:pointer}
+.nh h2{flex:1;font-size:22px;font-weight:600}
+.sec{color:var(--mut);font-size:15px;font-weight:600;padding:22px 20px 10px}
+.ni{display:flex;gap:12px;padding:10px 16px}
+.ni .av{width:44px;height:44px}
+.ni .b{flex:1;min-width:0;font-size:15px;line-height:1.45}
+.ni .q{border-inline-start:3px solid #3a3a40;padding:2px 10px;margin-top:6px;color:var(--mut);font-size:14px}
+.ni .q.m{color:#8f9bff}
+.ni time{color:var(--mut);font-size:12px;margin-top:6px}
+.nh2{display:flex;align-items:center;padding:14px 10px 0 6px;position:sticky;top:0;background:var(--bg);z-index:12}
+.nh2>button{background:none;border:0;color:var(--txt);font-size:22px;cursor:pointer;width:38px;height:38px;display:flex;align-items:center;justify-content:center}
+.ntabs{flex:1;display:flex;justify-content:space-around}
+.nt{padding:6px 4px 8px;font-size:16px;font-weight:700;color:var(--mut);cursor:pointer;border-bottom:3px solid transparent;display:flex;align-items:center;gap:6px}
+.nt.on{color:var(--txt);border-color:var(--txt)}
+.nt .tri{width:10px;height:10px;fill:currentColor;transform:rotate(180deg);transition:transform .2s}
+.nt.open .tri{transform:none}
+.ndd{display:none;position:absolute;left:0;right:0;top:54px;background:#222226;z-index:11;border-radius:0 0 20px 20px;padding:6px 0 10px;box-shadow:0 12px 30px rgba(0,0,0,.5)}
+.ndd.on,.ndim.on{display:block}
+.ndim{display:none;position:absolute;inset:0;background:rgba(0,0,0,.55);z-index:10}
+.ddo{display:flex;align-items:center;gap:14px;padding:12px 18px;font-size:16px;cursor:pointer}
+.ddo b{flex:1;font-weight:600}.ddo .ck{color:var(--blue);opacity:0;width:20px;height:20px}.ddo.on .ck{opacity:1}
+.vall{text-align:center;color:var(--mut);font-weight:600;font-size:14px;padding:10px;cursor:pointer}
+.vall svg{width:14px;height:14px}

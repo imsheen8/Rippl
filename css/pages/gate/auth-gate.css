@@ -1,0 +1,63 @@
+/* Sheen — شاشة تسجيل الدخول/الحساب */
+#sheenAuthGate{position:fixed;inset:0;z-index:99999;display:none;align-items:center;justify-content:center;padding:20px;overflow:auto;background:var(--bg);color:var(--txt);font-family:inherit}
+#sheenAuthGate.on{display:flex}
+#sheenAuthGate .sa-bg,.sa-logo,.sa-foot{display:none}
+#sheenAuthCard{width:min(100%,400px);margin:auto}
+.sa-brand{text-align:center;font-size:40px;font-weight:800;letter-spacing:.5px;margin:0 0 22px;color:var(--txt)}
+.sa-or{display:flex;align-items:center;gap:12px;margin:18px 0 14px;color:var(--mut);font-size:13px}
+.sa-or:before,.sa-or:after{content:"";flex:1;height:1px;background:#3a3a42}
+#sheenSwitchMode{width:100%;height:48px;border:1.5px solid var(--blue);border-radius:24px;background:transparent;color:var(--blue);font:inherit;font-size:15px;font-weight:700;cursor:pointer}
+#sheenSwitchMode:active{background:#5865f222}
+#sheenAuthCard h2{text-align:center;font-size:26px;font-weight:700;margin:0 0 6px}
+#sheenAuthCard p{text-align:center;color:var(--mut);font-size:14px;line-height:1.6;margin:0 0 18px}
+#sheenAuthCard label{display:block;font-size:13px;color:var(--mut);margin:14px 4px 6px}
+.sa-field{position:relative;display:flex;align-items:center}
+.sa-field>svg{display:none}
+#sheenAuthCard input{width:100%;height:48px;border:0;border-radius:24px;background:var(--card);color:var(--txt);padding:0 18px;font:inherit;font-size:15px;outline:none}
+#sheenAuthCard input::placeholder{color:var(--mut)}
+#sheenAuthCard input[type=email],#sheenAuthCard input[type=password].ltr{direction:ltr;text-align:left}
+#sheenPassToggle{position:absolute;left:6px;width:36px;height:36px;border:0;background:transparent;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center}
+#sheenPassToggle svg{width:19px;height:19px;stroke:var(--mut);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+#sheenAuthCard input.ltr{padding-left:46px}
+#sheenNameWrap{display:none}
+#sheenNameWrap.on{display:block}
+#sheenAuthSubmit{width:100%;height:48px;margin-top:20px;border:0;border-radius:24px;background:var(--blue);color:#fff;font:inherit;font-size:15px;font-weight:700;cursor:pointer}
+#sheenAuthSubmit:active{opacity:.85}
+#sheenAuthSubmit:disabled{opacity:.6}
+#sheenAuthStatus{text-align:center;font-size:13px;line-height:1.6;min-height:20px;margin-top:12px;color:var(--yellow)}
+#sheenAuthStatus.good{color:var(--green)}
+#stLogout b{color:#ed4245}
+#stLogout .sdot i{color:#ed4245}
+
+.dedit{left:56px}
+#pedit{background:var(--dark)}
+.pe-head{display:flex;align-items:center;gap:8px;padding:10px 8px;flex:none;position:relative}
+.pe-head b{flex:1;text-align:center;font-size:17px;font-weight:700}
+.pe-head button{border:0;background:none;color:var(--txt);width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;font:inherit}
+.pe-head .pe-save{width:auto;padding:0 12px;color:var(--blue);font-size:15px;font-weight:700}
+.pe-head .pe-save:disabled{opacity:.5}
+.pe-body{overflow-y:auto;flex:1;padding-bottom:30px}
+.pe-banner{position:relative;height:110px;background:#b03530 center/cover no-repeat}
+.pe-banner button{position:absolute;top:12px;right:12px;display:flex;align-items:center;gap:6px;border:0;border-radius:18px;background:rgba(0,0,0,.5);color:#fff;font:inherit;font-size:13px;font-weight:600;padding:8px 14px;cursor:pointer}
+.pe-banner button svg{width:16px;height:16px}
+.pe-avwrap{display:flex;flex-direction:column;align-items:center;margin-top:-44px;position:relative}
+.pe-av{position:relative;width:96px;height:96px;border-radius:50%;border:4px solid var(--dark);background:#3a3a42;overflow:hidden}
+.pe-av img{width:100%;height:100%;object-fit:cover;display:block}
+.pe-av button{position:absolute;inset:0;border:0;background:rgba(0,0,0,.35);color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer}
+.pe-av button svg{width:26px;height:26px}
+.pe-link{color:var(--blue);font-weight:700;font-size:14px;margin:10px 0 18px;cursor:pointer}
+.pe-card{background:var(--card);border-radius:16px;margin:0 14px;overflow:hidden}
+.pe-row{display:flex;align-items:center;gap:12px;padding:0 16px;min-height:54px}
+.pe-row+.pe-row{border-top:1px solid #34343a}
+.pe-row.top{align-items:flex-start;padding-top:14px;padding-bottom:10px}
+.pe-row span{width:96px;flex:none;color:var(--mut);font-size:15px}
+.pe-row input,.pe-row textarea{flex:1;min-width:0;border:0;outline:0;background:transparent;color:var(--txt);font:inherit;font-size:15px;font-weight:600;resize:none;padding:14px 0}
+.pe-row textarea{padding:0;font-weight:500;line-height:1.6}
+.pe-lbl{color:var(--mut);font-size:13px;font-weight:600;margin:20px 20px 8px}
+.pe-msg{margin:14px 20px 0;font-size:13px;line-height:1.6;color:var(--yellow);text-align:center;min-height:20px}
+.pe-msg.good{color:var(--green)}
+
+.pmuted{color:var(--mut)!important;font-weight:600!important}
+.pe-setup{margin-top:14px;border:0;border-radius:18px;background:var(--blue);color:#fff;font:inherit;font-size:14px;font-weight:700;padding:9px 18px;cursor:pointer}
+#prof .dx{background:rgba(0,0,0,.45)}
+.pe-banner{background-color:#2a2a30!important}

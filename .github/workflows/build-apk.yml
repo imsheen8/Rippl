@@ -45,14 +45,25 @@ jobs:
             echo "::warning::No signing secrets - building a debug APK (uninstall the old app before installing a new build)."
           fi
 
-      - name: Prepare web files
-        run: |
-          mkdir -p www
-          cp index.html manifest.webmanifest sw.js www/
-          cp -r icons www/
-
       - name: Install dependencies
         run: npm install
+
+      - name: Prepare web files
+        run: |
+          mkdir -p www/vendor
+          cp index.html manifest.webmanifest sw.js www/
+          cp -r icons css js components www/
+          # Offline first launch: ship the two libraries inside the app instead of loading them from CDNs.
+          SB=node_modules/@supabase/supabase-js/dist/umd/supabase.js
+          LU=node_modules/lucide/dist/umd/lucide.min.js
+          if [ -f "$SB" ] && [ -f "$LU" ]; then
+            cp "$SB" www/vendor/supabase.js
+            cp "$LU" www/vendor/lucide.min.js
+            sed -i 's#https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2#vendor/supabase.js#; s#https://unpkg.com/lucide@0.453.0/dist/umd/lucide.min.js#vendor/lucide.min.js#' www/index.html
+            grep -c "vendor/" www/index.html
+          else
+            echo "::warning::local libraries not found - the app will still work offline after a first online launch only"
+          fi
 
       - name: Add Android platform
         run: npx cap add android

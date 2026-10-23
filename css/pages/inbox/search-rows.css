@@ -1,0 +1,18 @@
+/* Sheen — صفوف الاقتراحات والأشخاص والأزرار */
+.sgh{font-size:16px;font-weight:700;padding:16px 16px 6px;display:flex;align-items:center;gap:8px}.sgh svg{width:14px;height:14px;color:var(--mut)}
+.sgr{display:flex;align-items:center;gap:12px;padding:8px 16px}
+.sgr .av{width:44px;height:44px}
+.sgr .t{flex:1;min-width:0}.sgr .t b{display:block;font-size:15px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.sgr .t span{font-size:13px;color:var(--mut)}
+.sgr .t .lm{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sgr .av .st{width:16px;height:16px;right:-1px;bottom:-1px}
+.btn{border:0;border-radius:10px;background:var(--card);color:var(--txt);font-weight:600;font-size:13px;padding:0 14px;height:32px;cursor:pointer;font-family:inherit}
+.btn.pr{background:var(--blue);color:#fff}.btn.done{background:var(--card);color:var(--mut)}
+.sgx{background:none;border:0;color:var(--mut);width:28px;height:28px;cursor:pointer;font-size:20px;display:flex;align-items:center;justify-content:center;padding:0}
+.fr{display:flex;align-items:center;gap:12px;padding:8px 16px}.fr .av{width:44px;height:44px}
+.fr .t{flex:1;min-width:0;font-size:15px;line-height:1.35}.fr .t b{display:block;font-size:15px}.fr .t small{color:var(--mut);font-size:13px}
+.sgc{padding:12px 16px;border-bottom:1px solid #2a2a2f}
+.sgc .hd{display:flex;gap:14px;align-items:flex-start}.sgc .av{width:44px;height:44px}
+.sgc .th{display:grid;grid-template-columns:repeat(4,1fr);gap:3px;margin:10px 0;border-radius:12px;overflow:hidden}
+.sgc .th div{aspect-ratio:1/1.2;background:#2a2a30 center/cover;position:relative}
+.sgc .th em{position:absolute;left:8px;bottom:6px;font-style:normal;font-size:11px;font-weight:700;color:#fff}
+.sgc .ac{display:flex;gap:10px}.sgc .ac .btn{flex:1;height:36px}

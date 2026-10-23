@@ -1,0 +1,24 @@
+/* Sheen — الرسالة الجديدة (Inbox) */
+/* new message */
+#newmsg{background:var(--bg);padding-bottom:30px}
+.nmh{display:flex;align-items:center;gap:14px;padding:14px 12px 8px;position:sticky;top:0;background:var(--bg);z-index:2}
+.nmh button{background:none;border:0;color:var(--txt);font-size:22px;cursor:pointer;width:42px;height:42px;display:flex;align-items:center;justify-content:center}
+.nmh h2{flex:1;text-align:left;font-size:19px;font-weight:700}
+.to{margin:6px 14px 14px;border:1px solid #3a3a42;background:#141417;border-radius:14px;display:flex;align-items:center;gap:10px;padding:0 14px;height:54px}
+.to span{color:var(--mut);font-size:17px}
+.to input{flex:1;background:none;border:0;outline:0;color:var(--txt);font-size:18px;font-family:inherit}
+.to input::placeholder{color:var(--mut)}
+.grp{background:var(--card);border-radius:18px;margin:0 14px}
+.act,.fi{display:flex;align-items:center;gap:16px;padding:0 16px;cursor:pointer}
+.act{height:72px;font-size:19px}
+.act .ic{width:34px;text-align:center;font-size:24px}
+.act .ch{margin-inline-start:auto;color:var(--mut);font-size:16px}
+.act+.act,.fi+.fi{position:relative}
+.act+.act:before,.fi+.fi:before{content:"";position:absolute;top:0;left:66px;right:0;height:1px;background:#36363d}
+.fi{height:76px}
+.fi b{display:block;font-size:19px;font-weight:600}
+.fi small{color:var(--mut);font-size:15px}
+.fi .gb{background:#2c2c32;border-radius:6px;padding:1px 6px;font-size:12px;font-weight:700;margin-inline-start:8px}
+.letter{color:var(--txt);font-size:22px;padding:26px 16px 10px}
+.stitle{color:var(--mut);font-size:22px;padding:26px 16px 12px}
+.toast{position:absolute;bottom:60px;left:50%;transform:translateX(-50%);background:#313136;color:#fff;padding:12px 20px;border-radius:14px;font-size:15px;z-index:20;display:none}

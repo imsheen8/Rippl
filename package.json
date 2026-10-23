@@ -4,12 +4,15 @@
   "private": true,
   "description": "Sheen",
   "dependencies": {
+    "@capacitor-community/sqlite": "^6.0.0",
     "@capacitor/android": "^6.1.0",
     "@capacitor/app": "^6.0.0",
     "@capacitor/cli": "^6.1.0",
     "@capacitor/core": "^6.1.0",
     "@capacitor/splash-screen": "^6.0.0",
-    "@capacitor/status-bar": "^6.0.0"
+    "@capacitor/status-bar": "^6.0.0",
+    "@supabase/supabase-js": "^2.45.0",
+    "lucide": "0.453.0"
   },
   "devDependencies": {
     "@capacitor/assets": "^3.0.5"

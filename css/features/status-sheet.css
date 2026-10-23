@@ -1,0 +1,24 @@
+/* Sheen — ورقة حالة الاتصال */
+.sheetbg{position:absolute;inset:0;background:rgba(0,0,0,.62);z-index:30;opacity:0;pointer-events:none;transition:opacity .2s}
+.sheetbg.on{opacity:1;pointer-events:auto}
+.sheet{position:absolute;left:0;right:0;bottom:0;z-index:31;background:#212125;border-radius:22px 22px 0 0;padding:8px 14px 22px;transform:translateY(105%);transition:transform .26s ease}
+.sheet.on{transform:none}
+.sgrab{width:38px;height:4px;border-radius:2px;background:#4a4a52;margin:2px auto 12px}
+.sheet h3{text-align:center;font-size:17px;font-weight:700;margin-bottom:14px}
+.slbl{color:var(--mut);font-size:13px;margin:0 2px 8px}
+.scard{background:#2c2c32;border-radius:14px;overflow:hidden}
+.scus{margin-top:14px}
+.sopt{display:flex;align-items:center;gap:14px;height:52px;padding:0 14px;cursor:pointer;position:relative}
+.sopt+.sopt:before{content:"";position:absolute;top:0;left:50px;right:0;height:1px;background:#3a3a42}
+.sopt b{flex:1;font-size:15px;font-weight:500}
+.sdot{width:22px;height:22px;display:flex;align-items:center;justify-content:center;flex:none}
+.sdot svg{width:20px;height:20px}
+.sdot.big{width:32px;height:32px;border-radius:50%;background:#d0d1d6;color:#33343a;margin-left:-4px}
+.sdot.big svg{width:20px;height:20px}
+.d-on:before{content:"";width:18px;height:18px;border-radius:50%;background:#23a55a}
+.d-dnd:before{content:"";width:18px;height:18px;border-radius:50%;background:#ed4245;box-shadow:inset 0 0 0 0 #fff;background-image:linear-gradient(#fff,#fff);background-size:9px 3px;background-position:center;background-repeat:no-repeat;background-color:#ed4245}
+.d-inv:before{content:"";width:18px;height:18px;border-radius:50%;border:4px solid #80848e;box-sizing:border-box}
+.rad{width:24px;height:24px;border-radius:50%;border:2px solid #5a5a64;flex:none;display:flex;align-items:center;justify-content:center}
+.sopt.on .rad{background:var(--blue);border-color:var(--blue)}
+.sopt.on .rad:after{content:"";width:8px;height:8px;border-radius:50%;background:#fff}
+#prof .pname{cursor:pointer}
