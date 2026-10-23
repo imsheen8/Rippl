@@ -8,6 +8,7 @@
       try {
         const dd = document.getElementById("ndd"); if (dd && dd.classList.contains("on")) { closeDD(); return; }
         const emo = document.getElementById("chEmo"); if (emo && emo.classList.contains("on")) { emo.classList.remove("on"); return; }
+        if (window.ripplConnBack && window.ripplConnBack()) return;
         if (typeof anyScr === "function" && anyScr()) { closeAll(); return; }
         if (typeof panelEl !== "undefined" && !panelEl.classList.contains("home")) { setTab("home"); return; }
       } catch (_) {}

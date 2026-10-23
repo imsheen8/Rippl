@@ -9,3 +9,7 @@ www/
 *.keystore
 *.jks
 *.b64
+
+.env
+.env.*
+!.env.example

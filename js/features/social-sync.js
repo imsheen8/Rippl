@@ -10,14 +10,20 @@
   const cnt = async q => (await q).count || 0;
   async function loadSocial() {
     if (!me) return;
+    const apiStats = RipplApi.userStats("me"); // trusted server count (null if the API isn't configured / reachable)
     const [{ data: ing }, { data: ers }, { data: fr }, { data: mp }] = await Promise.all([
       c.from("follows").select("followee_id").eq("follower_id", me),
       c.from("follows").select("follower_id,created_at").eq("followee_id", me).order("created_at", { ascending: false }),
       c.from("friendships").select("requester_id,addressee_id"),
-      c.from("posts").select("id").eq("author_id", me).limit(500)]);
+      RipplApi.enabled ? { data: null } : c.from("posts").select("id").eq("author_id", me).limit(500)]);
     FING = new Set((ing || []).map(x => x.followee_id));
     let likes = 0;
-    if (mp && mp.length) likes = await cnt(c.from("post_likes").select("*", { count: "exact", head: true }).in("post_id", mp.map(x => x.id)));
+    const as = await apiStats;
+    if (as) likes = as.likes;
+    else if (RipplApi.enabled) { // API configured but unavailable: original direct query, in short batches
+      const { data: mp2 } = await c.from("posts").select("id").eq("author_id", me).limit(500);
+      for (let i = 0; i < (mp2 || []).length; i += 60) likes += await cnt(c.from("post_likes").select("*", { count: "exact", head: true }).in("post_id", mp2.slice(i, i + 60).map(x => x.id)));
+    } else if (mp && mp.length) likes = await cnt(c.from("post_likes").select("*", { count: "exact", head: true }).in("post_id", mp.map(x => x.id)));
     const st = document.querySelectorAll("#prof .pstats b");
     if (st.length >= 3) { st[0].textContent = FING.size; st[1].textContent = (ers || []).length; st[2].textContent = likes; }
     const friends = new Set((fr || []).flatMap(f => [f.requester_id, f.addressee_id]));
@@ -50,12 +56,17 @@
   window.openUser = async function (k) {
     if (!me || !UUID.test(k || "") || !USERS[k]) return ou(k);
     try {
-      const { data: pp } = await c.from("posts").select("id").eq("author_id", k).limit(500);
-      const [a, b, l] = await Promise.all([
-        cnt(c.from("follows").select("*", { count: "exact", head: true }).eq("follower_id", k)),
-        cnt(c.from("follows").select("*", { count: "exact", head: true }).eq("followee_id", k)),
-        pp && pp.length ? cnt(c.from("post_likes").select("*", { count: "exact", head: true }).in("post_id", pp.map(x => x.id))) : 0]);
-      USERS[k][2] = a; USERS[k][3] = b; USERS[k][4] = l;
+      const s = await RipplApi.userStats(k); // trusted server counts when the API is available
+      if (s) { USERS[k][2] = s.following; USERS[k][3] = s.followers; USERS[k][4] = s.likes; }
+      else {
+        const { data: pp } = await c.from("posts").select("id").eq("author_id", k).limit(500);
+        let l = 0; const ids = (pp || []).map(x => x.id);
+        for (let i = 0; i < ids.length; i += 60) l += await cnt(c.from("post_likes").select("*", { count: "exact", head: true }).in("post_id", ids.slice(i, i + 60)));
+        const [a, b] = await Promise.all([
+          cnt(c.from("follows").select("*", { count: "exact", head: true }).eq("follower_id", k)),
+          cnt(c.from("follows").select("*", { count: "exact", head: true }).eq("followee_id", k))]);
+        USERS[k][2] = a; USERS[k][3] = b; USERS[k][4] = l;
+      }
     } catch (_) {}
     ou(k);
     const fb = $("upFol"); if (!fb) return;

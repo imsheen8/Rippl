@@ -1,12 +1,14 @@
 /* Rippl service worker (web install only). App files: network first, cache when offline.
    The two CDN libraries are cached too, so the web app can start without internet after the first visit. */
-const CACHE = "rippl-shell-v18";
+const CACHE = "rippl-shell-v20";
 const SHELL = [
   "./",
   "index.html",
   "manifest.webmanifest",
   "icons/logo-mark.png",
   "js/manifest.js",
+  "js/config.js",
+  "js/features/api.js",
   "js/loader.js",
   "css/base.css",
   "css/components/avatars.css",
@@ -27,6 +29,9 @@ const SHELL = [
   "css/pages/servers/servers.css",
   "css/pages/gate/auth-gate.css",
   "css/pages/profile/settings.css",
+  "css/pages/profile/connections.css",
+  "js/features/connections.js",
+  "components/connections.html",
   "css/features/pull-refresh.css",
   "js/features/pull-refresh.js",
   "css/features/scroll-hide.css",

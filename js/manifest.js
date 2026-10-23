@@ -2,6 +2,7 @@
    الملفات تتشارك نطاقًا واحدًا (مثل الملف الأصلي)، فلا تغيّر الترتيب. */
 window.RIPPL_MANIFEST = {
   scripts: [
+    'js/config.js',
     'js/core/app-core.js',
     'js/pages/users/user-profile.js',
     'js/pages/inbox/new-group.js',
@@ -22,7 +23,9 @@ window.RIPPL_MANIFEST = {
     'js/features/offline-db.js',
     'js/features/chats-sync.js',
     'js/features/feed-sync.js',
+    'js/features/api.js',
     'js/features/social-sync.js',
+    'js/features/connections.js',
     'js/features/notifications-sync.js',
     'js/features/live-presence.js',
     'js/features/pull-refresh.js',

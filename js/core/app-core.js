@@ -11,10 +11,10 @@ function hydrate(root){
     el.prepend(im);
   });
 }
-const show=id=>{if($('nmMenu')){$('nmMenu').classList.remove('on');$('nmPlus').classList.remove('on')}if(id==='newmsg'&&typeof rSGN==='function')rSGN();['notif','prof','newmsg','compose','chat','srv','pedit','pset'].forEach(s=>$(s).classList.toggle('on',s===id));syncBar()};
+const show=id=>{if($('nmMenu')){$('nmMenu').classList.remove('on');$('nmPlus').classList.remove('on')}if(id==='newmsg'&&typeof rSGN==='function')rSGN();['notif','prof','newmsg','compose','chat','srv','pedit','pset','conn'].forEach(s=>$(s).classList.toggle('on',s===id));syncBar()};
 const hide=()=>show(null);
 const anyScr=()=>!!document.querySelector('.screen.on');
-function closeAll(){['grp','uprof'].forEach(k=>$(k).classList.remove('on'));show(null)}
+function closeAll(){if(window.closeConn)closeConn();['grp','uprof'].forEach(k=>$(k).classList.remove('on'));show(null)}
 function syncBar(){const sc=anyScr(),on=id=>$(id).classList.contains('on'),home=document.querySelector('.panel').classList.contains('home');
  $('mtHome').classList.toggle('on',!sc&&home);$('mtInbox').classList.toggle('on',!sc&&!home);
  $('mtFriends').classList.toggle('on',on('newmsg')||on('grp'));$('bellBtn').classList.toggle('on',on('notif'))}

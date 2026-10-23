@@ -1,0 +1,34 @@
+  <!-- Connections: Following / Followers / Friends / Suggested -->
+  <div class="screen" id="conn">
+    <div class="cn-head">
+      <button id="cnBack" type="button" aria-label="Back"><i data-lucide="arrow-left"></i></button>
+      <b id="cnTitle" dir="auto"></b>
+      <button id="cnAdd" type="button" aria-label="Add friends"><i data-lucide="user-plus"></i></button>
+    </div>
+    <div class="cn-tabs" id="cnTabs">
+      <button type="button" data-t="ing"></button>
+      <button type="button" data-t="ers"></button>
+      <button type="button" data-t="fri"></button>
+      <button type="button" data-t="sug"></button>
+    </div>
+    <div class="cn-body" id="cnBody">
+      <label class="cn-search"><i data-lucide="search"></i><input id="cnQ" type="search" autocomplete="off" placeholder="Search"></label>
+      <div class="cn-bar" id="cnBar" hidden>
+        <button type="button" id="cnSort"><span>Sort by <span id="cnSortL">Default</span></span><i data-lucide="triangle" class="tri"></i></button>
+        <button type="button" id="cnManage">Manage</button>
+      </div>
+      <div id="cnList"></div>
+      <div class="cn-sub" id="cnSugH" hidden><span id="cnSugT">Suggested accounts</span></div>
+      <div id="cnSug"></div>
+    </div>
+    <div class="cn-mg" id="cnMg" hidden>
+      <div class="cn-head">
+        <button id="cnMgBack" type="button" aria-label="Back"><i data-lucide="arrow-left"></i></button>
+        <b>Manage</b><span class="cn-sp"></span>
+      </div>
+      <div class="cn-body" id="cnMgList"></div>
+      <div class="cn-mgbar"><button type="button" id="cnMgGo" disabled>Unfollow</button></div>
+    </div>
+  </div>
+  <!-- bottom sheets, dialogs and the total-likes dialog (shared layer) -->
+  <div id="cnLayer"></div>
