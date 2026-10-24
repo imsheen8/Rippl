@@ -11,7 +11,7 @@ function pcard(o){
  const d=o.dest?`<span class="fd"><i data-lucide="${o.title?'messages-square':'hash'}"></i><bdi>${esc(o.dest.srv)}</bdi> › <bdi>${esc(o.dest.ch)}</bdi></span>`:'';
  const tg=(o.tags||[]).map(t=>`<em class="ftag">${esc(t)}</em>`).join('');
  return `<div class="fpost" data-n="${o.likes||0}">
- <div class="fh"><div class="av" data-img="${o.k}" data-fb="${esc(nm[0])}"></div><div class="fm"><b class="fn" data-k="${o.k}" dir="auto">${esc(nm)}</b><span>${esc(o.t)} · <i data-lucide="globe"></i></span>${d}</div><button class="fx" aria-label="More"><i data-lucide="ellipsis"></i></button></div>
+ <div class="fh"><div class="av" data-img="${o.k}" data-fb="${esc(nm[0])}"></div><div class="fm"><b class="fn" data-k="${o.k}" data-vid="${o.k}" dir="auto">${esc(nm)}</b><span>${esc(o.t)} · <i data-lucide="globe"></i></span>${d}</div><button class="fx" aria-label="More"><i data-lucide="ellipsis"></i></button></div>
  ${o.title?`<div class="ftitle" dir="auto">${esc(o.title)}</div>`:''}
  ${o.text?`<div class="ft" dir="auto">${esc(o.text)}</div>`:''}
  ${o.img?`<div class="fimg" data-img="fp" data-src="${o.img}">${tg?`<div class="ftags">${tg}</div>`:''}</div>`:(tg?`<div class="ftags in">${tg}</div>`:'')}

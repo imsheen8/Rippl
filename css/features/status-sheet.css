@@ -21,4 +21,6 @@
 .rad{width:24px;height:24px;border-radius:50%;border:2px solid #5a5a64;flex:none;display:flex;align-items:center;justify-content:center}
 .sopt.on .rad{background:var(--blue);border-color:var(--blue)}
 .sopt.on .rad:after{content:"";width:8px;height:8px;border-radius:50%;background:#fff}
-#prof .pname{cursor:pointer}
+/* علامة التوثيق ✓ — تُضاف تلقائيًا لكل عنصر اسم يحمل data-vid إن كان صاحبه موثّقًا */
+.vbadge{display:inline-flex;align-items:center;vertical-align:middle;margin-inline-start:5px;flex:none;line-height:0}
+.vbadge svg{width:1.05em!important;height:1.05em!important;min-width:14px;color:#1d9bf0!important;margin:0!important}

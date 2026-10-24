@@ -1,6 +1,6 @@
 /* Rippl service worker (web install only). App files: network first, cache when offline.
    The two CDN libraries are cached too, so the web app can start without internet after the first visit. */
-const CACHE = "rippl-shell-v20";
+const CACHE = "rippl-shell-v21";
 const SHELL = [
   "./",
   "index.html",
@@ -76,6 +76,7 @@ const SHELL = [
   "js/features/social-sync.js",
   "js/features/notifications-sync.js",
   "js/features/live-presence.js",
+  "js/features/verified.js",
   "js/core/native-shell.js"
 ];
 const LIBS = ["https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2", "https://unpkg.com/lucide@0.453.0/dist/umd/lucide.min.js"];

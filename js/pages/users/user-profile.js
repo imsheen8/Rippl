@@ -27,12 +27,12 @@ function openUser(k,seenEl){
     <div class="dav"><div class="av" data-img="${k}" data-fb="${u[0][0]}"></div><span class="dst" data-st="${st}"></span></div>
   </div>
   <div class="dinfo">
-    <div class="pname" dir="ltr"><bdi>${u[0]}</bdi></div>
-    <div class="dun">@${u[1]}</div>
+    <div class="pname" dir="ltr" data-vid="${k}"><bdi>${esc(u[0])}</bdi></div>
+    <div class="dun">@${esc(u[1])}</div>
     <div class="pstats"><div><b>${u[2]}</b><span>Following</span></div><div><b>${u[3]}</b><span>Followers</span></div><div><b>${u[4]}</b><span>Likes</span></div></div>
   </div>
   <div class="pacts"><button class="fol" id="upFol">Follow</button><button class="msg" id="upMsg">Message</button><button class="addf" aria-label="Add friend"><i data-lucide="user-plus"></i></button></div>
-  <div class="pbio" dir="auto">${u[5].map(x=>x).join('<br>')}${u[6]?`<br><a href="${u[6]}" target="_blank" rel="noopener">${u[6]}</a>`:''}</div>
+  <div class="pbio" dir="auto">${u[5].map(x=>esc(x)).join('<br>')}${u[6]?`<br><a href="${u[6]}" target="_blank" rel="noopener">${u[6]}</a>`:''}</div>
   <div class="ptabs two"><div class="on"><i data-lucide="newspaper"></i></div><div><i data-lucide="repeat-2"></i></div></div>
   <div class="pfeed" id="upPosts">${ps}</div>`;
   hydrate($('upScroll'));lucide.createIcons();loadBan(k);

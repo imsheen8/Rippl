@@ -28,6 +28,7 @@ window.RIPPL_MANIFEST = {
     'js/features/connections.js',
     'js/features/notifications-sync.js',
     'js/features/live-presence.js',
+    'js/features/verified.js',
     'js/features/pull-refresh.js',
     'js/features/scroll-hide.js',
     'js/core/native-shell.js'

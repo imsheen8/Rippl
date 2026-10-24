@@ -12,5 +12,4 @@ const stOpen=o=>{$('stBg').classList.toggle('on',o);$('stSheet').classList.toggl
 $('stBg').onclick=()=>stOpen(false);
 document.querySelectorAll('#stSheet .scard:not(.scus) .sopt').forEach(o=>o.onclick=()=>{curSt=o.dataset.s;stSync();setTimeout(()=>stOpen(false),180)});
 $('stCustom').onclick=()=>stOpen(false);
-document.querySelector('#prof .pname').onclick=()=>{stSync();stOpen(true)};
 stSync();

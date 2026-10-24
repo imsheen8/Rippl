@@ -139,7 +139,7 @@
   function mkRow(p, sub, right) {
     const r = h("div", "cn-r"); r.dataset.id = p.id;
     r.append(avatar(p));
-    const t = h("div", "cn-t"), n = h("b", null, nameOf(p)); n.dir = "auto";
+    const t = h("div", "cn-t"), n = h("b", null, nameOf(p)); n.dir = "auto"; n.dataset.vid = p.id;
     t.append(n); if (sub) { const s = h("small", null, sub); t.append(s); }
     r.append(t); (right || []).forEach(x => x && r.append(x));
     r.onclick = ev => { if (ev.target.closest("button,.av")) return; openUserFrom(p.id); };
@@ -151,7 +151,7 @@
     const dismissBtn = () => { dismiss(g.id); S.sug = S.sug.filter(x => x.id !== g.id); render(); };
     if (card) {
       const r = h("div", "cn-sg"); r.dataset.id = p.id; r.append(avatar(p));
-      const t = h("div", "cn-t"), n = h("b", null, nameOf(p)); n.dir = "auto"; t.append(n);
+      const t = h("div", "cn-t"), n = h("b", null, nameOf(p)); n.dir = "auto"; n.dataset.vid = p.id; t.append(n);
       const s = h("small", null, vp ? "Followed by " : "People you may know");
       if (vp) { const a = avatar(vp); s.append(a); }
       t.append(s);
